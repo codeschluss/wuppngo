@@ -1,9 +1,24 @@
 #logo {
-    width: 20%;
+    // width: 20%;
     margin: 0px auto;
     height: 100px;
 }
 
+#logoSmall {
+    height: 50px;
+    margin-top: 5px;
+}
+
 #navbar {
     margin: 50px 20px 50px 20px;
+}
+
+img#login {
+    width: 50px;
+    margin: 0px 30px;
+}
+
+#navbarHeader{
+    margin-top: 10px;
+    position: relative;
 }
