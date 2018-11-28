@@ -1,0 +1,7 @@
+databaseChangeLog:
+    - include:
+        file: classpath:db/changelogs/dev.intialdb.yaml
+    - include:
+        file: classpath:db/changelogs/dev.intialdata.yaml
+    - include:
+        file: classpath:db/changelogs/0001.renametranslations.yaml
