@@ -23,7 +23,6 @@ export class ActivityCardComponent {
   }
 
   openActivityView(): void {
-    console.log('openActivityView()');
     this.router.navigate(['/public/activities/view/', this.activity.id]);
   }
 

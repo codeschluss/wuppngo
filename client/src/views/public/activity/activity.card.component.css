@@ -2,3 +2,8 @@ mat-card {
   border-radius: 9px;
   min-width: 300px;
 }
+
+.activityCardContent {
+  font-size: 25px;
+  font-family: Open Sans, Bold;
+}

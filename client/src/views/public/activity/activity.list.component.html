@@ -1,27 +1,29 @@
 <div fxFill id="activityList" *ngIf="activities && activities.length">
   <div fxFill>
     <div fxLayout="column" fxLayoutAlign="space-around center" fxLayoutGap="20px grid">
-      <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
-        <mat-chip-list fxFlex="70">
+      <div fxLayout="row wrap" fxFlex="100" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+        <mat-chip-list>
           <mat-chip *ngFor="let category of categories | async" [ngStyle]="{'background-color': category.color}">
             {{category.name}}
           </mat-chip>
         </mat-chip-list>
-        <mat-form-field fxFlex="10">
+        <mat-form-field>
           <mat-select placeholder="Quartiere">
             <mat-option *ngFor="let suburb of suburbs | async" [value]="suburb">
               {{suburb.name}}
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field fxFlex="10">
+        <mat-form-field>
           <mat-select placeholder="Zielgruppe">
             <mat-option *ngFor="let targetGroup of target_groups | async" [value]="targetGroup.name">
               {{targetGroup.name}}
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-chip fxHide fxFlex="10" (click)="openBottomSheetMap()" fxShow.lt-md="true">MAP</mat-chip>
+        <mat-chip id="mapIcon" color="primary" selected fxHide (click)="openBottomSheetMap()" fxShow.lt-md="true">
+          <fa-icon icon="map-marker"></fa-icon>
+        </mat-chip>
       </div>
 
       <div fxLayout="row" id="activityListContent" fxLayoutAlign="space-between">
@@ -31,8 +33,8 @@
           </div>
         </div>
         <div fxHide.lt-md="true" fxFlex="33">
-          <mapping-component [activities]="activities"> 
-          </mapping-component>
+          <!-- <mapping-component [activities]="activities">
+          </mapping-component> -->
         </div>
       </div>
     </div>

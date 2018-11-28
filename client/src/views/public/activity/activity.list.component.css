@@ -16,3 +16,9 @@ html, body{
 #activityListContent {
   height: 100vh;
 }
+
+#mapIcon{
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
