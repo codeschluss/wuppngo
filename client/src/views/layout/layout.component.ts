@@ -1,17 +1,23 @@
-import { Component, } from '@angular/core';
-import { MatToolbarModule } from '@angular/material';
+import { Component } from '@angular/core';
+import { MatToolbarModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatDialogModule, MatExpansionModule } from '@angular/material';
 
 @Component({
   styleUrls: ['layout.component.scss'],
   templateUrl: 'layout.component.html'
 })
 
-export class LayoutComponent {
+export class LayoutComponent 
+{
 
   public routeLinks: any[] = [];
 
   public static readonly imports = [
-    MatToolbarModule
+		MatToolbarModule,
+		MatFormFieldModule,
+		MatInputModule,
+		MatMenuModule,
+		MatDialogModule,
+		MatExpansionModule
   ];
   
   public constructor(
@@ -23,7 +29,7 @@ export class LayoutComponent {
 		this.routeLinks.push(
 		{
 			label: 'Wupp\'n\'go',
-			link: 'activities/home',
+			link: 'home',
 			index: 0
 		},
 		{
@@ -45,5 +51,24 @@ export class LayoutComponent {
 			index: 3
 		});
   }
+
+//   Just Prototyping
+  getAccountRoutes(): any {
+		return [{
+			label: 'Persönlicher Daten',
+			link: 'admin/',
+			index: 0
+		},
+		{
+			label: 'verwaltungsbereich',
+			link: 'admin/',
+			index: 1
+		},
+		{
+			label: 'Abmelden',
+			link: 'admin/',
+			index: 2
+		}]
+	};
 
 }

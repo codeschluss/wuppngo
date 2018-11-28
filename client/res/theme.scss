@@ -121,9 +121,12 @@ h2 {
   font-size: 35px;
 }
 
-.activityCardContent {
+h3 {
+  font-size: 30px;
+}
+
+h4 {
   font-size: 25px;
-  font-family: Open Sans, Bold;
 }
 
 .smallText{
@@ -135,8 +138,12 @@ h2 {
   color: mat-color($custom-primary, default-contrast) !important;
 }
 
-.color-primary {
+.color-contrast-primary {
   color: mat-color($custom-primary, default-contrast) !important;
+}
+
+.color-primary {
+  color: mat-color($custom-primary) !important;
 }
 
 .background-color-secondary {
@@ -144,8 +151,12 @@ h2 {
   color: mat-color($custom-secondary, default-contrast) !important;
 }
 
-.color-secondary {
+.color-contrast-secondary {
   color: mat-color($custom-secondary, default-contrast) !important;
+}
+
+.color-secondary {
+  color: mat-color($custom-secondary) !important;
 }
 
 .background-color-accent {
@@ -153,8 +164,12 @@ h2 {
   color: mat-color($custom-accent, default-contrast) !important;
 }
 
-.color-accent {
+.color-contrast-accent {
   color: mat-color($custom-accent, default-contrast) !important;
+}
+
+.color-accent {
+  color: mat-color($custom-accent) !important;
 }
 
 // Tabs styles
@@ -207,4 +222,10 @@ h2 {
   display: none;
 }
 
-// todo marging
+// customizing expansion panel
+
+fa-icon.collapsableIndicator {
+  position: absolute;
+  right: 20px; 
+  top: 10px;
+}

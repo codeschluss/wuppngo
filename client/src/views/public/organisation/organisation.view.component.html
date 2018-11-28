@@ -1,21 +1,30 @@
-<mat-expansion-panel class="orga-list-collapse-header"  
-    (opened)="panelOpenState = true"
-    (closed)="panelOpenState = false"
-    hideToggle>
-    <mat-expansion-panel-header>
-        <mat-panel-title>
-            <h2 [ngStyle]="{'font-weight': panelOpenState ? 'bold' : 'normal'}" >
-                {{organisation.name}}
-            </h2>
-        </mat-panel-title>
-
-        <mat-panel-description>
-            <fa-icon class="collapsableIndicator" *ngIf="panelOpenState == false" icon="plus"></fa-icon>
-            <fa-icon class="collapsableIndicator" *ngIf="panelOpenState == true" icon="minus"></fa-icon>
-        </mat-panel-description>
-    </mat-expansion-panel-header>
-    <div fxFlex fxLayout="row wrap" fxLayoutAlign="space-around center">
-        <div class="orgaDescription">{{organisation.description}}</div>
-        <organisation-card class="orgaCard" [organisation]="organisation"></organisation-card>
+<div fxLayout="column" fxLayoutGap="50px" class="organisation-view-container" fxFlex="90" fxLayoutAlign="space-between">
+    <h2>{{organisation.name}}</h2>
+    <div fxLayout="row wrap" fxLayoutAlign.lt-md="space-around" fxLayoutAlign="space-between">
+        <div fxFlex="20" fxFlex.lt-md="50"><img src="https://de.wikipedia.org/static/images/project-logos/dewiki.png"></div>
+        <div fxFlex="40" fxFlex.lt-md="100" fxFlexOrder.lt-md="3">{{organisation.description}}</div>
+        <div fxFlex="20" fxLayout="column" fxFlex.lt-md="50" fxLayoutGap="20px" class="background-color-secondary organisation-contact-card">
+            <div fxLayout="column" *ngIf="organisation.address | async as address">
+                <div>{{(address.suburb | async)?.name}}</div>
+                <div>{{address?.street}}</div>
+                <div>{{address?.houseNumber}}</div>
+                <div>{{address?.postalCode}}</div>
+                <div>{{address?.place}}</div>
+            </div>
+            <div fxLayout="column">
+                <div>{{organisation.phone ? 'T: ' + organisation.phone : ''}}</div>
+                <div>{{'E: ' + organisation?.mail}}</div>
+            </div>
+        </div>
     </div>
-</mat-expansion-panel>
+    <div fxLayout="row" fxLayout.lt-md="column">
+        <div fxFlex="20" class="color-primary">
+            <h3>Eingetragene Veranstaltungen</h3>
+        </div>
+        <div fxFlex="80" fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="space-between">
+            <div fxLayout="row" fxLayoutAlign="space-between" class="activityListItem" *ngFor="let activity of activities">
+                <div>{{activity.name}}</div><span class="color-primary" (click)="openActivityView(activity.id)" >Zur Veranstaltung</span>
+            </div>
+        </div>
+    </div>
+</div>

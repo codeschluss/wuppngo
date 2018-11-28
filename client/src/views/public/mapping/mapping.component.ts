@@ -11,7 +11,9 @@ import { AddressModel } from '../../../core/models/address.model';
   templateUrl: 'mapping.component.html',
 })
 
-export class MappingComponent implements AfterViewInit, OnInit, OnDestroy {
+export class MappingComponent implements AfterViewInit, OnInit
+// , OnDestroy
+{
 
   public static readonly imports = [
     AngularOpenlayersModule
@@ -44,10 +46,11 @@ export class MappingComponent implements AfterViewInit, OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.latitude = 41;
-    this.longitude = 7;
-    this.zoomfactor = 14;
-    this.projection = 'EPSG:4326';
+    this.activities[0].address.then(
+      address => {
+        this.latitude = address.latitude;
+        this.longitude = address.longitude;
+      });
 
     // this.activities[0].address.then((address) => {
     //   this.latitude = address.latitude;
@@ -88,6 +91,9 @@ export class MappingComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   public ngAfterViewInit(): void {
+    this.zoomfactor = 14;
+    this.projection = 'EPSG:4326';
+
     (<ol.layer.Vector>this.aolLayer.instance)
       .setStyle((feature: Feature) => this.featureStyle(feature));
 
@@ -103,10 +109,10 @@ export class MappingComponent implements AfterViewInit, OnInit, OnDestroy {
     //   .subscribe(() => this.applyRoutes());
   }
 
-  public ngOnDestroy(): void {
-    this.ngUnsubscribe.next(null);
-    this.ngUnsubscribe.complete();
-  }
+  // public ngOnDestroy(): void {
+  //   this.ngUnsubscribe.next(null);
+  //   this.ngUnsubscribe.complete();
+  // }
 
   public centerAddress(address: AddressModel): void {
     if (address.longitude && address.latitude) {
@@ -200,7 +206,8 @@ export class MappingComponent implements AfterViewInit, OnInit, OnDestroy {
       // this.router.navigate(['/']).then(() => {
       //   this.dialog.open(ActivityDialogComponent, {
       //     // TODO: ngx-openlayers async id binding bug
-      //     // data: feats.map(i => this.activities.find(j => j.id === i.getId()))
+      //     // data: feats.map(i => this.activities.find(
+      //      j => j.id === i.getId()))
       //     data: feats.map(i => i.getStyle().getText().getText())
       //       .map(i => this.activities.find(j => j.id === i))
       //     // ENDTODO

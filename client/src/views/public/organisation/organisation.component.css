@@ -23,12 +23,31 @@ mat-expansion-panel{
     background: #F5F5F5;
 }
 
-fa-icon.collapsableIndicator {
-    position: absolute;
-    right: 20px; 
-}
-
 organisation-card.orgaCard {
     margin: 20px;
 }
 
+.activityListItem {
+    padding: 15px;
+    border-radius: 5px;
+    border: rgb(111,201,163, 0.3) 2px;
+    background-color: rgb(111,201,163, 0.3);
+}
+
+.activityListItem div {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.organisation-view-container {
+    margin: 0 auto;
+}
+
+.organisation-contact-card {
+    padding: 30px;
+    word-wrap: break-word;
+}
+
+.organisation-contact-card * {
+    max-height:inherit !important;
+}

@@ -37,6 +37,10 @@ export class ActivityViewComponent {
   public placeHolderActivity: any;
   public viewSchedules: boolean;
   public activity: ActivityModel;
+  public organisation: OrganisationModel;
+  public targetGroups: TargetGroupModel[];
+  public address: AddressModel;
+  public schedules: ScheduleModel[];
 
   @ViewChild(MappingComponent)
   private mapping: MappingComponent;
@@ -49,7 +53,16 @@ export class ActivityViewComponent {
   ) {
     const id  = route.paramMap.pipe(
       switchMap((params: ParamMap) => activityProvider
-        .findOne(params.get('id')).then(act => this.activity = act))
+        .findOne(params.get('id')).then(
+          act => {
+            this.activity = act;
+            act.address.then(address => this.address = address);
+            this.activity.organisation.then(orga => this.organisation = orga);
+            this.activity.targetGroups.then(targetGroups => this.targetGroups = targetGroups)
+            this.activity.address.then(address => this.address = address)
+            this.activity.schedules.then(schedules => this.schedules = schedules);
+          }
+        ))
     ).subscribe();
 
 
@@ -110,8 +123,8 @@ export class ActivityViewComponent {
   }
 
   openBottomSheetMap(): void {
-    this.bottomSheet.open(BottomSheetMapComponent,
-      { data: { activities: [this.placeHolderActivity] } });
+    // this.bottomSheet.open(BottomSheetMapComponent,
+    //   { data: { activities: [this.placeHolderActivity] } });
   }
 
 }
