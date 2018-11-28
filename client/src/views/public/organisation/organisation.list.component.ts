@@ -16,8 +16,7 @@ export class OrganisationListComponent {
 
   constructor(
   ) {
-    let i = 0;
-    for(i; i < 20; i++){
+    for (let i = 0; i < 20; i++) {
       this.organisations.push(this.buildTestData());
     }
   }
@@ -25,7 +24,7 @@ export class OrganisationListComponent {
   buildTestData(): OrganisationModel {
     const organisation = new OrganisationModel();
 
-    organisation.id="testActivity";
+    organisation.id = 'testActivity';
     organisation.name = 'FakeActivity';
     organisation.mail = 'FakeActivity@internet.de';
 

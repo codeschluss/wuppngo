@@ -1,0 +1,11 @@
+<div id="blog-list">
+        <h2>Neueste Blogbeiträge</h2>
+        <div id="blogContainer" fxLayoutGap="50px" fxLayout="column">
+            <div class="blogListItem" fxLayout="column" fxLayoutAlign="space-around" fxFlex="100" *ngFor="let blog of blogs">
+                <div>{{blog.creationDate}}</div>
+                <div class="color-primary blogTitle">{{blog.title}}</div>
+                <div *ngIf="(blog.activity | async) as activity" class="activityTitle" (click)="openActivityView(activity?.id)">{{activity?.name}}</div>
+                <div>{{blog.postText}}</div>
+            </div> 
+        </div>
+    </div>

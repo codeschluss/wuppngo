@@ -7,10 +7,11 @@ import { OrganisationModel } from 'src/core/models/organisation.model';
 import { AddressModel } from 'src/core/models/address.model';
 import { SuburbModel } from 'src/core/models/suburb.model';
 import { ActivityModel } from 'src/core/models/activity.model';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'blog-list-component',
-    styleUrls: [],
+    styleUrls: ['blog.component.css'],
     templateUrl: 'blog.list.component.html'
 })
 
@@ -20,13 +21,21 @@ export class BlogListComponent {
   public blogs: BlogModel[] = [];
 
   constructor(
+    private router: Router
   ) {
-    this.blogs.push();
+    for (let i = 0; i < 12; i++) {
+      this.blogs.push(this.buildTestBlog());
+    }
+  }
+
+  openActivityView(activityId: string): void {
+    this.router.navigate(['/public/activities/view/', activityId]);
   }
 
   buildTestBlog(): BlogModel {
     const blog = new BlogModel;
     blog.author = 'Franz test';
+    blog.creationDate = new Date().toDateString();
     blog.postText = 'Lorem ipsum ' +
     'dolor sit amet, consetetur sadipscing elitr, sed ' +
     'diam nonumy eirmod tempor invidunt ut labore et ' +
@@ -42,7 +51,6 @@ export class BlogListComponent {
     blog.activity =  new Promise<ActivityModel>((resolve, reject) => {
       resolve(this.buildTestActivity());
     });
-
     return blog;
   }
 
