@@ -1,4 +1,4 @@
-<aol-map *ngIf="activities && activities.length && projection && longitude !== 0 && latitude !== 0">
+<aol-map *ngIf="activities && activities.length && projection && longitude && latitude">
 	<aol-interaction-default>
 	</aol-interaction-default>
 
@@ -21,8 +21,8 @@
 							<aol-geometry-point>
 								<aol-coordinate
 									[srid]="projection"
-									[x]="i.address.longitude"
-									[y]="i.address.latitude">
+									[x]="(i.address | async)?.longitude"
+									[y]="(i.address | async)?.latitude">
 								</aol-coordinate>
 							</aol-geometry-point>
 						</aol-feature>
