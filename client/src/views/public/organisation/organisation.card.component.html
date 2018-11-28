@@ -1,19 +1,26 @@
-<mat-card organisation-cardfxLayout="row" fxFlex="100" fxLayoutAlign="space-between" fxLayoutGap="20px grid">
-    <div fxFlex="20">
-        <img src="https://de.wikipedia.org/static/images/project-logos/dewiki.png">
-    </div>
-
-    <div fxFlex="60" fxLayout="column" fxLayoutGap="10px grid">
-        <div fxLayout="column">
-            <div>{{(organisation.address | async).suburb.name}}</div>
-            <div>{{(organisation.address | async).street}}</div>
-            <div>{{(organisation.address | async).houseNumber}}</div>
-            <div>{{(organisation.address | async).postalCode}}</div>
-            <div>{{(organisation.address | async).place}}</div>
+<mat-card *ngIf="organisation" (click)="openOrganisationView()" class="background-color-primary" fxLayout="column">
+    <h2>{{organisation.name}}</h2>
+    <div 
+    organisation-cardfxLayout="row" 
+    fxFlex="100" 
+    fxLayoutAlign="space-between" 
+    fxLayoutGap="20px grid">
+        <div fxFlex="20">
+            <img src="https://de.wikipedia.org/static/images/project-logos/dewiki.png">
         </div>
-        <div fxLayout="column">
-            <div>{{'T:' + organisation?.phone}}</div>
-            <div>{{'E:' + organisation?.mail}}</div>
+
+        <div fxFlex="60" fxLayout="column" fxLayoutGap="10px grid">
+            <div fxLayout="column" *ngIf="organisation.address | async as address">
+                <div>{{(address.suburb | async)?.name}}</div>
+                <div>{{address?.street}}</div>
+                <div>{{address?.houseNumber}}</div>
+                <div>{{address?.postalCode}}</div>
+                <div>{{address?.place}}</div>
+            </div>
+            <div fxLayout="column">
+                <div>{{'T:' + organisation?.phone}}</div>
+                <div>{{'E:' + organisation?.mail}}</div>
+            </div>
         </div>
     </div>
 </mat-card>

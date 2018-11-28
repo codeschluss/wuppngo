@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { MatExpansionModule } from '@angular/material';
-import { AddressModel } from 'src/core/models/address.model';
 import { OrganisationModel } from 'src/core/models/organisation.model';
+import { AddressModel } from 'src/core/models/address.model';
 import { SuburbModel } from 'src/core/models/suburb.model';
-import { OrganisationProvider } from 'src/core/providers/organisation.provider';
 
 
 @Component({
@@ -13,32 +11,47 @@ import { OrganisationProvider } from 'src/core/providers/organisation.provider';
 
 export class OrganisationListComponent {
 
-  public static readonly imports = [MatExpansionModule];
+  public static readonly imports = [];
   public organisations: OrganisationModel[] = [];
 
   constructor(
-    private organisationProvider: OrganisationProvider,
   ) {
-    let longlat = 0;
-    organisationProvider.findAll().then((i) => {
-      i.forEach(act => {
-        // just for testing
-        const address: any = new AddressModel;
-        address.latitude = longlat;
-        address.longitude = longlat;
-        address.place = 'Wuppertal';
-        address.postalCode = '20400';
-        address.houseNumber = '2b';
-        address.street = 'strassenname';
+    let i = 0;
+    for(i; i < 20; i++){
+      this.organisations.push(this.buildTestData());
+    }
+  }
 
-        const suburb: any = new SuburbModel;
-        suburb.name = 'Elberfeld';
-        address.suburb = suburb;
-        act.address = address;
-        this.organisations.push(act);
-        longlat++;
-      });
+  buildTestData(): OrganisationModel {
+    const organisation = new OrganisationModel();
+
+    organisation.id="testActivity";
+    organisation.name = 'FakeActivity';
+    organisation.mail = 'FakeActivity@internet.de';
+
+    organisation.description = 'This is just a FakeActivity to show'
+      + 'how this could look like.';
+    const testAddress = new AddressModel();
+    testAddress.street = 'samplestreet';
+    testAddress.houseNumber = '42a';
+    testAddress.latitude = 51.00;
+    testAddress.longitude = 7.00;
+    testAddress.postalCode = '63628';
+
+    const testSubUrb = new SuburbModel();
+    testSubUrb.name = 'Elberfeld';
+    testSubUrb.id = '1';
+
+    testAddress.suburb = new Promise<SuburbModel>((resolve, reject) => {
+      resolve(testSubUrb);
     });
+
+    testAddress.place = 'SampleCity';
+    organisation.address = new Promise<AddressModel>((resolve, reject) => {
+      resolve(testAddress);
+    });
+
+    return organisation;
   }
 
 }
