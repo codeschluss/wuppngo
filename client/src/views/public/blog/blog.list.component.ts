@@ -21,15 +21,10 @@ export class BlogListComponent {
   public blogs: BlogModel[] = [];
 
   constructor(
-    private router: Router
   ) {
     for (let i = 0; i < 12; i++) {
       this.blogs.push(this.buildTestBlog());
     }
-  }
-
-  openActivityView(activityId: string): void {
-    this.router.navigate(['/public/activities/view/', activityId]);
   }
 
   buildTestBlog(): BlogModel {

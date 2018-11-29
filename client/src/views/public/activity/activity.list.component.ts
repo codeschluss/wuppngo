@@ -43,9 +43,8 @@ export class ActivityListComponent {
     this.target_groups = targetGroupsProvider.findAll({});
     this.categories = categoryProvider.findAll({});
 
-    
     let i = 0;
-      for(i; i < 20; i++){
+      for (i; i < 20; i++) {
         this.activities.push(this.buildTestActivity());
       }
   }
@@ -57,7 +56,7 @@ export class ActivityListComponent {
 
     buildTestActivity(): ActivityModel {
       const actOne = new ActivityModel;
-      actOne.id="testActivity";
+      actOne.id = 'testActivity';
       actOne.name = 'FakeActivity';
       actOne.description = 'This is just a FakeActivity to show'
         + 'how this could look like.';
@@ -80,7 +79,7 @@ export class ActivityListComponent {
       actOne.address = new Promise<AddressModel>((resolve, reject) => {
         resolve(testAddress);
       });
-      
+
       const category = new CategoryModel;
       category.name = 'party';
       category.color = 'blue';
@@ -93,10 +92,11 @@ export class ActivityListComponent {
       target_group.name = 'youth';
       const targetGroups = [target_group];
 
-      actOne.targetGroups = new Promise<TargetGroupModel[]>((resolve, reject) => {
+      actOne.targetGroups =
+        new Promise<TargetGroupModel[]>((resolve, reject) => {
         resolve(targetGroups);
       });
-      
+
       const schedule = new ScheduleModel;
       schedule.startDate = new Date().toUTCString();
       schedule.endDate = new Date().toUTCString();
@@ -114,17 +114,18 @@ export class ActivityListComponent {
 
         schedules.push(firstDate);
       schedules.push(secondDate);
-      
+
       actOne.schedules = new Promise<ScheduleModel[]>((resolve, reject) => {
         resolve(schedules);
       });
 
       const organisation = new OrganisationModel;
       organisation.name = 'testOrganisation';
-      actOne.organisation = new Promise<OrganisationModel>((resolve, reject) => {
+      actOne.organisation =
+        new Promise<OrganisationModel>((resolve, reject) => {
         resolve(organisation);
       });
-      
+
       return actOne;
   }
 

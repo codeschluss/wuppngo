@@ -22,3 +22,8 @@ html, body{
   bottom: 10px;
   right: 10px;
 }
+
+#activityList {
+  width: 90%;
+  margin: auto;
+}

@@ -1,0 +1,32 @@
+@import 'res/theme.scss';
+
+$app-primary: mat-palette($mat-custom-red);
+$primary: mat-color($app-primary);
+
+#actDateTimePanel {
+    background-image: linear-gradient(to top right, $primary, #780048);
+}
+
+#actDateTimePanel * {
+    color:white;
+}
+
+#calendar-icon {
+    font-size: 1em;
+    margin-left: 2%;
+}
+
+#activityDetail{
+    width: 90%;
+    margin: auto;
+}
+
+.blogCard {
+    margin-bottom: 20px; 
+    padding: 2% !important;
+    border-radius: 5px;
+}
+
+.blogCard * {
+    color: black !important;
+}
