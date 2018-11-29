@@ -10,7 +10,9 @@ $transition_time:.2s;
     display: flex;
 
     .item {
-      width: 100%;
+      width: 90%;
+      margin: auto;
+
       display: block;
       // fade
       opacity: 0;
@@ -39,7 +41,8 @@ $transition_time:.2s;
       }
 
       .img {
-        width: 100%;
+        width: 90% !important;
+        margin: auto !important;
         display: block;
         background-size: cover;
         background-position: center;

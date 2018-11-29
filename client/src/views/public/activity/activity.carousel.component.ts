@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewInit } from '@angular/core';
+import { Component, Input, AfterViewInit, HostListener } from '@angular/core';
 import { ActivityModel } from '../../../core/models/activity.model';
 import { NgxHmCarouselModule } from 'ngx-hm-carousel';
 
@@ -11,7 +11,7 @@ import { NgxHmCarouselModule } from 'ngx-hm-carousel';
 
 export class ActivityCarouselComponent implements AfterViewInit {
 
-  public static readonly imports =[
+  public static readonly imports = [
     NgxHmCarouselModule
   ];
 
@@ -29,9 +29,24 @@ export class ActivityCarouselComponent implements AfterViewInit {
 
   constructor() { }
 
+  onResize(event): void {
+  const innerWidth = event.target.innerWidth;
+  this.fillCluster(innerWidth);
+  }
+
   ngAfterViewInit(): void {
+    this.fillCluster(window.innerWidth);
+  }
+
+  fillCluster(innerWidth: number): void {
+    this.clusteredActivities = [];
     let clusterIndex = 0;
+    let clusterSize = innerWidth / 500;
     let index = 0;
+
+    if (innerWidth < 850) {
+      clusterSize = 1;
+    }
 
     this.activities.forEach(activity => {
       if (!this.clusteredActivities[clusterIndex]) {
@@ -39,11 +54,12 @@ export class ActivityCarouselComponent implements AfterViewInit {
       }
       this.clusteredActivities[clusterIndex].push(activity);
       index++;
-      if (index === 4) {
+      if (index >= clusterSize) {
         index = 0;
         clusterIndex++;
       }
     });
+
   }
 
 }

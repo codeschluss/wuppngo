@@ -12,7 +12,7 @@ export class ActivityCardComponent {
 
   @Input()
   public activity: ActivityModel;
-  
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
