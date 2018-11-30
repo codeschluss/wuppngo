@@ -1,0 +1,26 @@
+blog-list-item {
+    padding: 30px !important;
+    border-radius: 5px;
+}
+
+::ng-deep mat-tab-header.mat-tab-header {
+    margin: auto !important;
+    max-width: 90%;
+}
+
+#searchResultContainer {
+    width: 90%;
+    margin: auto;
+}
+
+::ng-deep div.mat-tab-body-wrapper {
+    margin-top: 20px;
+}
+
+.results-container {
+    margin: 20px;
+}
+
+::ng-deep mat-card {
+    min-width: 200px !important;
+  }

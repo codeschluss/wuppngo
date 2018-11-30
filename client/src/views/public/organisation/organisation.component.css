@@ -51,3 +51,7 @@ organisation-card.orgaCard {
 .organisation-contact-card * {
     max-height:inherit !important;
 }
+
+.organisationCard {
+    margin: 20px;
+}

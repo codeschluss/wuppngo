@@ -3,7 +3,7 @@ import { BlogModel } from 'src/core/models/blog.model';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'blog-list-item-component',
+    selector: 'blog-list-item',
     styleUrls: ['blog.component.css'],
     templateUrl: 'blog.listitem.component.html'
 })

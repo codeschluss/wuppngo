@@ -1,0 +1,29 @@
+
+<div id="searchResultContainer" fxLayout="column">
+    <h2 *ngIf="query">
+        Ergebnisse für '{{query}}'
+    </h2>
+    <div fxFlex="100">
+        <mat-tab-group>
+            <mat-tab label="Aktivitäten"> 
+                <div fxLayout="row wrap" fxFlex="100" >
+                    <div fxFlex.xs="100" class="results-container" *ngFor="let activity of activities">
+                        <activity-card [activity]="activity"></activity-card>
+                    </div> 
+                </div>
+            </mat-tab>
+            <mat-tab label="Organisationen">
+                <div fxLayout="row wrap" fxFlex="100" >
+                    <div class="organisationCard" fxFlex.xs="100" class="results-container" *ngFor="let organisation of organisations">
+                        <organisation-card [organisation]="organisation"></organisation-card>
+                    </div> 
+                </div>
+            </mat-tab>
+            <mat-tab label="Blogs"> 
+                <div *ngFor="let blog of blogs" fxFlex="100" class="results-container" fxLayout="column">
+                    <blog-list-item [blog]="blog" class="background-color-secondary"></blog-list-item>
+                </div>              
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

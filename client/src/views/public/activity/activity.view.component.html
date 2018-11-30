@@ -45,7 +45,7 @@
       </div>
     </div>
     <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-      <div fxFlex="50" fxLayout="column">
+      <div fxFlex="60" fxLayout="column">
         <div>
           <div>
             <h4 class="color-primary">{{ (activity.organisation | async)?.name }}</h4>
@@ -55,9 +55,9 @@
           </div>
         </div>
       </div>
-      <div fxFlex="50" fxLayout="column">
+      <div fxFlex="40" fxLayout="column">
         <div *ngFor="let blog of blogs" fxLayout="column" >
-          <blog-list-item-component [blog]="blog" class="blogCard background-color-secondary"></blog-list-item-component>
+          <blog-list-item [blog]="blog" class="blogCard background-color-secondary"></blog-list-item>
         </div>
       </div>
     </div>

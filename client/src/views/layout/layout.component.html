@@ -1,11 +1,10 @@
 <div fxFlex="100" fxLayout="column">
-    <div  id="navbarHeader">
+    <div id="navbarHeader">
     <!-- desktop version renders as horizontal navbar -->
-    <div fxHide.lt-md="true" fxLayout="column">
-        <div fxLayoutAlign="space-around center">
-            <img id="logo" src="imgs/Logo_bunt_rgb.svg">
-        </div>
-        <div id="navbar" fxFlex="100">
+        <div fxHide.lt-md="true" fxLayout="column">
+            <div fxLayoutAlign="space-around center">
+                <img id="logo" src="imgs/Logo_bunt_rgb.svg">
+            </div>
             <div id="navbar" fxFlex="100">
                 <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between center">
 
@@ -17,48 +16,37 @@
                             </a>
                         </span>
                     </div>
-
                     <div fxLayout="row" fxLayoutAlign="space-around center">
-                        <form class="search-form">
-                            <mat-form-field>
-                                <input matInput placeholder="Suche">
-                            </mat-form-field>
-                        </form>
+                        <search-input></search-input>
                         <img id="login" mat-button [matMenuTriggerFor]="menu" src="imgs/account.svg">
                         <mat-menu #menu="matMenu">
                             <button *ngFor="let route of getAccountRoutes()" [routerLink]="route.link" mat-menu-item>{{route.label}}</button>
                         </mat-menu>
                     </div>
-
                 </div>
             </div>
         </div>
-    </div>
 
 
     <!-- responsive version is mat-expansion-panel -->
-    <mat-accordion fxHide fxShow.lt-md="true" >
+        <mat-accordion fxHide fxShow.lt-md="true" id="navbra-responsive">
             <mat-expansion-panel hideToggle>
-              <mat-expansion-panel-header class="background-color-secondary">
+            <mat-expansion-panel-header class="background-color-secondary">
                 <mat-panel-title>
                     <div><img id="logoSmall" src="imgs/Logo_bunt_rgb.svg"></div>
                 </mat-panel-title>
                 <mat-panel-description>
                         <fa-icon class="collapsableIndicator" icon="bars"></fa-icon>
                 </mat-panel-description>        
-              </mat-expansion-panel-header>
+            </mat-expansion-panel-header>
     
-              <mat-toolbar color="secondary">
+            <mat-toolbar color="secondary">
                     <mat-toolbar-row *ngFor="let routeLink of routeLinks; let i = index;" class="nav-item" [routerLink]="routeLink.link" routerLinkActive="background-color-primary"
                     [routerLinkActiveOptions]="{exact: true}" (click)="activeLinkIndex = i">
                             {{ routeLink.label }}
                     </mat-toolbar-row>
                     <mat-toolbar-row>
-                        <form class="search-form">
-                            <mat-form-field>
-                                <input matInput placeholer="Suche">
-                            </mat-form-field>
-                        </form>
+                        <search-input></search-input>
                     </mat-toolbar-row>
                     <mat-toolbar-row *ngFor="let route of getAccountRoutes()" [routerLink]="route.link">
                         {{ route.label }}

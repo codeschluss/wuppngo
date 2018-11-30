@@ -10,7 +10,9 @@
 }
 
 #navbar {
-    margin: 50px 20px 50px 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 50px;
 }
 
 img#login {
@@ -21,4 +23,9 @@ img#login {
 #navbarHeader{
     margin-top: 10px;
     position: relative;
+    margin-bottom: 15px;
+}
+
+#navbra-responsive {
+    width: 100%;
 }

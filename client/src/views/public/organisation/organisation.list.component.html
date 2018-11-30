@@ -1,7 +1,7 @@
 <div class="orga-list">
         <h2>Organisationen</h2>
-        <div id="organisationContainer" fxLayoutGap="20px grid" fxLayout="row wrap">
-            <div class="organisationCard" fxLayoutAlign="space-around" fxFlex.xs="100" *ngFor="let organisation of organisations">
+        <div id="organisationContainer" fxLayout="row wrap">
+            <div class="organisationCard" fxFlex.xs="100" *ngFor="let organisation of organisations">
                 <organisation-card [organisation]="organisation"></organisation-card>
             </div> 
         </div>
