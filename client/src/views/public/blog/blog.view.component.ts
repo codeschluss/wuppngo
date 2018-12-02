@@ -1,30 +1,54 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { BlogModel } from 'src/core/models/blog.model';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 import { ScheduleModel } from 'src/core/models/schedule.model';
+import { OrganisationModel } from 'src/core/models/organisation.model';
 import { TargetGroupModel } from 'src/core/models/target-group.model';
 import { CategoryModel } from 'src/core/models/category.model';
-import { OrganisationModel } from 'src/core/models/organisation.model';
-import { AddressModel } from 'src/core/models/address.model';
 import { SuburbModel } from 'src/core/models/suburb.model';
+import { AddressModel } from 'src/core/models/address.model';
 import { ActivityModel } from 'src/core/models/activity.model';
-import { Router } from '@angular/router';
 
 @Component({
-    selector: 'blog-list-component',
+    selector: 'blog-view',
     styleUrls: ['blog.component.css'],
-    templateUrl: 'blog.list.component.html'
+    templateUrl: 'blog.view.component.html'
 })
 
-export class BlogListComponent {
+export class BlogViewComponent {
 
   public static readonly imports = [];
-  public blogs: BlogModel[] = [];
+  public blog: BlogModel;
 
   constructor(
+    private router: Router,
+    route: ActivatedRoute,
   ) {
-    for (let i = 0; i < 12; i++) {
-      this.blogs.push(this.buildTestBlog());
-    }
+    // just for testing
+    this.blog = this.buildTestBlog();
+    // const id  = route.paramMap.pipe(
+    //   switchMap((params: ParamMap) => activityProvider
+    //     .findOne(params.get('id')).then(
+    //       act => {
+    //         this.activity = act;
+    //         act.address.then(address => this.address = address);
+    //         this.activity.organisation.then(orga => this.organisation = orga);
+    //         this.activity.targetGroups.then(
+    //           targetGroups => this.targetGroups = targetGroups);
+    //         this.activity.address.then(
+    //           address => this.address = address);
+    //         this.activity.schedules.then(
+    //           schedules => this.schedules = schedules);
+    //       }
+    //     ))
+    // ).subscribe();
+  }
+
+  openActivityView(): void {
+    this.blog.activity.then(activity => {
+        this.router.navigate(['/public/activities/view/', activity.id]);
+    });
   }
 
   buildTestBlog(): BlogModel {
@@ -49,6 +73,7 @@ export class BlogListComponent {
     });
     return blog;
   }
+
 
   buildTestActivity(): ActivityModel {
     const actOne = new ActivityModel;
@@ -122,6 +147,5 @@ export class BlogListComponent {
 
     return actOne;
 }
-
 
 }
