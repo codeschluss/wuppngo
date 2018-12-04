@@ -30,7 +30,7 @@ export class OrganisationViewComponent {
   }
 
   openActivityView(activityId: string): void {
-    this.router.navigate(['/public/activities/view/', activityId]);
+    this.router.navigate(['/view/activities/', activityId]);
   }
 
   buildTestData(): OrganisationModel {

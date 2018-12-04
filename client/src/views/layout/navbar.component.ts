@@ -37,27 +37,27 @@ export class NavBarComponent {
         this.routeLinks.push(
         {
             label: 'Wupp\'n\'go',
-            link: 'home',
+            link: '/home',
             index: 0
         },
         {
             label: 'Veranstaltungen',
-            link: 'activities/list',
+            link: '/list/activities',
             index: 1
         },
         {
             label: 'Organisationen',
-            link: 'organisations/list',
+            link: '/list/organisations',
             index: 2
         },
         {
             label: 'Wissenswertes',
-            link: 'worthknowing',
+            link: '/worthknowing',
             index: 3
         },
         {
             label: 'Blog',
-            link: 'blog',
+            link: '/list/blogs',
             index: 4
         });
   }

@@ -23,7 +23,7 @@ export class ActivityCardComponent {
   }
 
   openActivityView(): void {
-    this.router.navigate(['/public/activities/view/', this.activity.id]);
+    this.router.navigate(['/view/activities/', this.activity.id]);
   }
 
   getImageURI(): string {

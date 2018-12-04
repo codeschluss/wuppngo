@@ -23,7 +23,7 @@ export class OrganisationCardComponent {
   ) {}
 
   openOrganisationView(): void {
-    this.router.navigate(['/public/organisations/view/', this.organisation.id]);
+    this.router.navigate(['/view/organisations/', this.organisation.id]);
   }
 
 }

@@ -33,7 +33,8 @@ export class BlogViewComponent {
     //       act => {
     //         this.activity = act;
     //         act.address.then(address => this.address = address);
-    //         this.activity.organisation.then(orga => this.organisation = orga);
+    //         this.activity.organisation.then(
+    //           orga => this.organisation = orga);
     //         this.activity.targetGroups.then(
     //           targetGroups => this.targetGroups = targetGroups);
     //         this.activity.address.then(
@@ -47,7 +48,7 @@ export class BlogViewComponent {
 
   openActivityView(): void {
     this.blog.activity.then(activity => {
-        this.router.navigate(['/public/activities/view/', activity.id]);
+        this.router.navigate(['/view/activities/', activity.id]);
     });
   }
 

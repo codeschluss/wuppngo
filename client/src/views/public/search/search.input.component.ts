@@ -17,7 +17,7 @@ export class SearchInputComponent {
 
     onSubmit(): void {
         if (this.query) {
-            this.router.navigate(['/public/search/', this.query]);
+            this.router.navigate(['/search/', this.query]);
         }
     }
 

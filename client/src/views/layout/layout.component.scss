@@ -1,3 +1,7 @@
+#publicContainer {
+    min-height: 100vh !important;
+}
+
 #logo {
     // width: 20%;
     margin: 0px auto;
@@ -33,7 +37,8 @@ img#login {
 .footer-container {
     padding: 20px;
     height: 50px;
-    margin-bottom: 20px;
+    bottom: 20px;
+    position: relative;
 }
 
 .footerSection {
