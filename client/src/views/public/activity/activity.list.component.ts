@@ -1,18 +1,18 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatBottomSheet } from '@angular/material';
-import { AddressModel } from 'src/core/models/address.model';
-import { ActivityProvider } from 'src/core/providers/activity.provider';
-import { CategoryProvider } from 'src/core/providers/category.provider';
-import { SuburbProvider } from 'src/core/providers/suburb.provider';
-import { TargetGroupProvider } from 'src/core/providers/target-group.provider';
-import { ActivityModel } from '../../../core/models/activity.model';
-import { CategoryModel } from '../../../core/models/category.model';
-import { SuburbModel } from '../../../core/models/suburb.model';
-import { TargetGroupModel } from '../../../core/models/target-group.model';
+import { ActivityProvider } from 'src/realm/activity/activity.provider';
+import { AddressModel } from 'src/realm/address/address.model';
+import { CategoryProvider } from 'src/realm/category/category.provider';
+import { OrganisationModel } from 'src/realm/organisation/organisation.model';
+import { ScheduleModel } from 'src/realm/schedule/schedule.model';
+import { SuburbProvider } from 'src/realm/suburb/suburb.provider';
+import { TargetGroupProvider } from 'src/realm/target-group/target-group.provider';
+import { ActivityModel } from '../../../realm/activity/activity.model';
+import { CategoryModel } from '../../../realm/category/category.model';
+import { SuburbModel } from '../../../realm/suburb/suburb.model';
+import { TargetGroupModel } from '../../../realm/target-group/target-group.model';
 import { BottomSheetMapComponent } from '../mapping/map.bottomsheet.component';
 import { MappingComponent } from '../mapping/mapping.component';
-import { ScheduleModel } from 'src/core/models/schedule.model';
-import { OrganisationModel } from 'src/core/models/organisation.model';
 
 
 @Component({
@@ -56,7 +56,7 @@ export class ActivityListComponent {
 
     buildTestActivity(): ActivityModel {
       const actOne = new ActivityModel;
-      actOne.id = 'testActivity';
+      // actOne.id = 'testActivity';
       actOne.name = 'FakeActivity';
       actOne.description = 'This is just a FakeActivity to show'
         + 'how this could look like.';
@@ -69,7 +69,7 @@ export class ActivityListComponent {
 
       const testSubUrb = new SuburbModel();
       testSubUrb.name = 'Elberfeld';
-      testSubUrb.id = '1';
+      // testSubUrb.id = '1';
 
       testAddress.suburb = new Promise<SuburbModel>((resolve, reject) => {
         resolve(testSubUrb);

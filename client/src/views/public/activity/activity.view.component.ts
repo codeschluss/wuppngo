@@ -4,14 +4,14 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { ActivityProvider } from 'src/core/providers/activity.provider';
-import { ActivityModel } from '../../../core/models/activity.model';
-import { AddressModel } from '../../../core/models/address.model';
-import { CategoryModel } from '../../../core/models/category.model';
-import { OrganisationModel } from '../../../core/models/organisation.model';
-import { ScheduleModel } from '../../../core/models/schedule.model';
-import { SuburbModel } from '../../../core/models/suburb.model';
-import { TargetGroupModel } from '../../../core/models/target-group.model';
+import { ActivityProvider } from 'src/realm/activity/activity.provider';
+import { ActivityModel } from '../../../realm/activity/activity.model';
+import { AddressModel } from '../../../realm/address/address.model';
+import { CategoryModel } from '../../../realm/category/category.model';
+import { OrganisationModel } from '../../../realm/organisation/organisation.model';
+import { ScheduleModel } from '../../../realm/schedule/schedule.model';
+import { SuburbModel } from '../../../realm/suburb/suburb.model';
+import { TargetGroupModel } from '../../../realm/target-group/target-group.model';
 import { BottomSheetMapComponent } from '../mapping/map.bottomsheet.component';
 import { MappingComponent } from '../mapping/mapping.component';
 import { BottomSheetScheduleComponent } from './schedules.bottom.sheet.component';
@@ -75,7 +75,7 @@ export class ActivityViewComponent {
 
   buildTestActivity(): ActivityModel {
     const actOne = new ActivityModel;
-    actOne.id = 'testActivity';
+    // actOne.id = 'testActivity';
     actOne.name = 'FakeActivity';
     actOne.description = 'Lorem ipsum ' +
     'dolor sit amet, consetetur sadipscing elitr, sed ' +
@@ -97,7 +97,7 @@ export class ActivityViewComponent {
 
     const testSubUrb = new SuburbModel();
     testSubUrb.name = 'Elberfeld';
-    testSubUrb.id = '1';
+    // testSubUrb.id = '1';
 
     testAddress.suburb = new Promise<SuburbModel>((resolve, reject) => {
       resolve(testSubUrb);

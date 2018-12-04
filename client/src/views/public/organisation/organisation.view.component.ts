@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { OrganisationModel } from 'src/core/models/organisation.model';
-import { AddressModel } from 'src/core/models/address.model';
-import { SuburbModel } from 'src/core/models/suburb.model';
-import { ScheduleModel } from 'src/core/models/schedule.model';
-import { TargetGroupModel } from 'src/core/models/target-group.model';
-import { CategoryModel } from 'src/core/models/category.model';
-import { ActivityModel } from 'src/core/models/activity.model';
 import { Router } from '@angular/router';
+import { OrganisationModel } from 'src/realm/organisation/organisation.model';
+import { ActivityModel } from 'src/realm/activity/activity.model';
+import { AddressModel } from 'src/realm/address/address.model';
+import { SuburbModel } from 'src/realm/suburb/suburb.model';
+import { CategoryModel } from 'src/realm/category/category.model';
+import { TargetGroupModel } from 'src/realm/target-group/target-group.model';
+import { ScheduleModel } from 'src/realm/schedule/schedule.model';
 
 @Component({
   selector: 'organisation-view',
@@ -19,9 +19,10 @@ export class OrganisationViewComponent {
   public static readonly imports = [];
   public organisation: OrganisationModel;
   public activities: ActivityModel[] = [];
+  public panelOpenState = false;
 
   constructor(
-    private router: Router
+    private router: Router,
   ) {
     this.organisation = this.buildTestData();
       for (let i = 0; i < 20; i++) {
@@ -31,12 +32,13 @@ export class OrganisationViewComponent {
 
   openActivityView(activityId: string): void {
     this.router.navigate(['/view/activities/', activityId]);
-  }
+}
+
 
   buildTestData(): OrganisationModel {
     const organisation = new OrganisationModel();
 
-    organisation.id = 'testActivity';
+    // organisation.id = 'testActivity';
     organisation.name = 'FakeActivity';
     organisation.mail = 'FakeActivity@internet.de';
 
@@ -51,7 +53,7 @@ export class OrganisationViewComponent {
 
     const testSubUrb = new SuburbModel();
     testSubUrb.name = 'Elberfeld';
-    testSubUrb.id = '1';
+    // testSubUrb.id = '1';
 
     testAddress.suburb = new Promise<SuburbModel>((resolve, reject) => {
       resolve(testSubUrb);
@@ -67,7 +69,7 @@ export class OrganisationViewComponent {
 
   buildTestActivity(): ActivityModel {
     const actOne = new ActivityModel;
-    actOne.id = 'testActivity';
+    // actOne.id = 'testActivity';
     actOne.name = 'FakeActivity';
     actOne.description = 'This is just a FakeActivity to show'
       + 'how this could look like.';
@@ -80,7 +82,7 @@ export class OrganisationViewComponent {
 
     const testSubUrb = new SuburbModel();
     testSubUrb.name = 'Elberfeld';
-    testSubUrb.id = '1';
+    // testSubUrb.id = '1';
 
     testAddress.suburb = new Promise<SuburbModel>((resolve, reject) => {
       resolve(testSubUrb);

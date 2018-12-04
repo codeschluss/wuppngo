@@ -2,13 +2,13 @@ import { Component, Input } from '@angular/core';
 import { BlogModel } from 'src/core/models/blog.model';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { ScheduleModel } from 'src/core/models/schedule.model';
-import { OrganisationModel } from 'src/core/models/organisation.model';
-import { TargetGroupModel } from 'src/core/models/target-group.model';
-import { CategoryModel } from 'src/core/models/category.model';
-import { SuburbModel } from 'src/core/models/suburb.model';
-import { AddressModel } from 'src/core/models/address.model';
-import { ActivityModel } from 'src/core/models/activity.model';
+import { ActivityModel } from 'src/realm/activity/activity.model';
+import { AddressModel } from 'src/realm/address/address.model';
+import { SuburbModel } from 'src/realm/suburb/suburb.model';
+import { CategoryModel } from 'src/realm/category/category.model';
+import { TargetGroupModel } from 'src/realm/target-group/target-group.model';
+import { ScheduleModel } from 'src/realm/schedule/schedule.model';
+import { OrganisationModel } from 'src/realm/organisation/organisation.model';
 
 @Component({
     selector: 'blog-view',
@@ -54,7 +54,7 @@ export class BlogViewComponent {
 
   buildTestBlog(): BlogModel {
     const blog = new BlogModel;
-    blog.id = '0001';
+    // blog.id = '0001';
     blog.author = 'Franz test';
     blog.creationDate = new Date().toDateString();
     blog.postText = 'Lorem ipsum ' +
@@ -78,7 +78,7 @@ export class BlogViewComponent {
 
   buildTestActivity(): ActivityModel {
     const actOne = new ActivityModel;
-    actOne.id = 'testActivity';
+    // actOne.id = 'testActivity';
     actOne.name = 'FakeActivity';
     actOne.description = 'This is just a FakeActivity to show'
       + 'how this could look like.';
@@ -91,7 +91,7 @@ export class BlogViewComponent {
 
     const testSubUrb = new SuburbModel();
     testSubUrb.name = 'Elberfeld';
-    testSubUrb.id = '1';
+    // testSubUrb.id = '1';
 
     testAddress.suburb = new Promise<SuburbModel>((resolve, reject) => {
       resolve(testSubUrb);

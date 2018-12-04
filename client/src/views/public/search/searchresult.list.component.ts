@@ -1,15 +1,15 @@
 import { Component, Input } from '@angular/core';
-import { ActivityModel } from 'src/core/models/activity.model';
 import { BlogModel } from 'src/core/models/blog.model';
-import { OrganisationModel } from 'src/core/models/organisation.model';
-import { AddressModel } from 'src/core/models/address.model';
-import { SuburbModel } from 'src/core/models/suburb.model';
-import { ScheduleModel } from 'src/core/models/schedule.model';
-import { TargetGroupModel } from 'src/core/models/target-group.model';
-import { CategoryModel } from 'src/core/models/category.model';
 import { MatTabsModule } from '@angular/material';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import { OrganisationModel } from 'src/realm/organisation/organisation.model';
+import { ActivityModel } from 'src/realm/activity/activity.model';
+import { AddressModel } from 'src/realm/address/address.model';
+import { SuburbModel } from 'src/realm/suburb/suburb.model';
+import { CategoryModel } from 'src/realm/category/category.model';
+import { TargetGroupModel } from 'src/realm/target-group/target-group.model';
+import { ScheduleModel } from 'src/realm/schedule/schedule.model';
 
 @Component({
     selector: 'search-list',
@@ -33,7 +33,8 @@ export class SearchResultListComponent {
     route.paramMap.pipe(
       switchMap((params: ParamMap) => this.query = params.get('query'))
     ).subscribe();
-    // query will be used to retrieve activities, organisations and blogs in 3 seperated API calls
+    // query will be used to retrieve activities,
+    // organisations and blogs in 3 seperated API calls
 
     // Just for testing
     for (let i = 0; i < 20; i++) {

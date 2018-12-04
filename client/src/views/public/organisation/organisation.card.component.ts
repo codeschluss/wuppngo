@@ -1,9 +1,7 @@
 import { Component, Input } from '@angular/core';
-
-import { AddressModel } from 'src/core/models/address.model';
-import { OrganisationProvider } from 'src/core/providers/organisation.provider';
-import { OrganisationModel } from 'src/core/models/organisation.model';
+import { OrganisationModel } from 'src/realm/organisation/organisation.model';
 import { Router } from '@angular/router';
+
 
 @Component({
     selector: 'organisation-card',
@@ -23,7 +21,7 @@ export class OrganisationCardComponent {
   ) {}
 
   openOrganisationView(): void {
-    this.router.navigate(['/view/organisations/', this.organisation.id]);
+    // this.router.navigate(['/view/organisations/', this.organisation.id]);
   }
 
 }

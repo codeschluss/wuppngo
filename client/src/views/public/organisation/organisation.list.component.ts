@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { OrganisationModel } from 'src/core/models/organisation.model';
-import { AddressModel } from 'src/core/models/address.model';
-import { SuburbModel } from 'src/core/models/suburb.model';
+import { AddressModel } from 'src/realm/address/address.model';
+import { OrganisationModel } from 'src/realm/organisation/organisation.model';
+import { SuburbModel } from 'src/realm/suburb/suburb.model';
 
 
 @Component({
@@ -24,7 +24,7 @@ export class OrganisationListComponent {
   buildTestData(): OrganisationModel {
     const organisation = new OrganisationModel();
 
-    organisation.id = 'testActivity';
+    // organisation.id = 'testActivity';
     organisation.name = 'FakeActivity';
     organisation.mail = 'FakeActivity@internet.de';
 
@@ -39,7 +39,7 @@ export class OrganisationListComponent {
 
     const testSubUrb = new SuburbModel();
     testSubUrb.name = 'Elberfeld';
-    testSubUrb.id = '1';
+    // testSubUrb.id = '1';
 
     testAddress.suburb = new Promise<SuburbModel>((resolve, reject) => {
       resolve(testSubUrb);
