@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'layout-component',
+    selector: 'footer-component',
     styleUrls: ['layout.component.scss'],
-    templateUrl: 'layout.component.html'
+    templateUrl: 'footer.component.html'
 })
 
-export class LayoutComponent {
+export class FooterComponent {
 
     public static readonly imports = [];
-
     public constructor() {}
 
 }
