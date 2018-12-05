@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { OrganisationModel } from 'src/realm/organisation/organisation.model';
 import { ActivityModel } from 'src/realm/activity/activity.model';
 import { AddressModel } from 'src/realm/address/address.model';
@@ -10,7 +10,7 @@ import { ScheduleModel } from 'src/realm/schedule/schedule.model';
 
 @Component({
   selector: 'organisation-view',
-  styleUrls: ['organisation.component.css'],
+  styleUrls: ['organisation.component.scss'],
   templateUrl: 'organisation.view.component.html'
 })
 
@@ -19,20 +19,25 @@ export class OrganisationViewComponent {
   public static readonly imports = [];
   public organisation: OrganisationModel;
   public activities: ActivityModel[] = [];
-  public panelOpenState = false;
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute
   ) {
-    this.organisation = this.buildTestData();
-      for (let i = 0; i < 20; i++) {
-        this.activities.push(this.buildTestActivity());
-      }
+    this.organisation = route.snapshot.data.organisation;
+    // this.organisation = this.buildTestData();
+    //   for (let i = 0; i < 20; i++) {
+    //     this.activities.push(this.buildTestActivity());
+    //   }
   }
 
   openActivityView(activityId: string): void {
     this.router.navigate(['/view/activities/', activityId]);
-}
+  }
+
+  getOrgaImg(): string {
+    return 'https://de.wikipedia.org/static/images/project-logos/dewiki.png';
+  }
 
 
   buildTestData(): OrganisationModel {

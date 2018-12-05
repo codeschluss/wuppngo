@@ -21,8 +21,8 @@
 							<aol-geometry-point>
 								<aol-coordinate
 									[srid]="projection"
-									[x]="(i.address | async)?.longitude"
-									[y]="(i.address | async)?.latitude">
+									[x]="i.address.longitude"
+									[y]="i.address.latitude">
 								</aol-coordinate>
 							</aol-geometry-point>
 						</aol-feature>

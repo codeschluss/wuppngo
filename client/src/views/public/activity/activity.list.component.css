@@ -36,6 +36,5 @@ html, body{
 }
 
 ::ng-deep mat-card {
-  min-width: 200px !important;
   margin: 10px;
 }

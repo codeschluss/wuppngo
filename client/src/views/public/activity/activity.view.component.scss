@@ -22,9 +22,14 @@ $primary: mat-color($app-primary);
 }
 
 .blogCard {
+    margin-bottom: 14px;
     border-radius: 5px;
 }
 
 .blogCard * {
     color: black !important;
+}
+
+#addressCard * {
+    font-size: 35px;
 }

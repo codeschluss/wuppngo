@@ -6,16 +6,16 @@
     fxLayoutAlign="space-between" 
     fxLayoutGap="20px grid">
         <div fxFlex="20">
-            <img src="https://de.wikipedia.org/static/images/project-logos/dewiki.png">
+            <img src={{getOrgaImg()}}>
         </div>
 
-        <div fxFlex="60" fxLayout="column" fxLayoutGap="10px grid">
-            <div fxLayout="column" *ngIf="organisation.address | async as address">
-                <div>{{(address.suburb | async)?.name}}</div>
-                <div>{{address?.street}}</div>
-                <div>{{address?.houseNumber}}</div>
-                <div>{{address?.postalCode}}</div>
-                <div>{{address?.place}}</div>
+        <div class="organisation-contact-card" fxFlex="60" fxLayout="column" fxLayoutGap="10px grid">
+            <div fxLayout="column" *ngIf="organisation.address">
+                <div>{{organisation.address.name}}</div>
+                <div>{{organisation.address.street}}</div>
+                <div>{{organisation.address.houseNumber}}</div>
+                <div>{{organisation.address.postalCode}}</div>
+                <div>{{organisation.address.place}}</div>
             </div>
             <div fxLayout="column">
                 <div>{{'T:' + organisation?.phone}}</div>

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 
 @Component({
     selector: 'organisation-card',
-  styleUrls: ['organisation.component.css'],
+  styleUrls: ['organisation.component.scss'],
   templateUrl: 'organisation.card.component.html'
 })
 
@@ -21,7 +21,11 @@ export class OrganisationCardComponent {
   ) {}
 
   openOrganisationView(): void {
-    // this.router.navigate(['/view/organisations/', this.organisation.id]);
+    this.router.navigate(['/view/organisations/', this.organisation.id]);
+  }
+
+  getOrgaImg(): string {
+    return 'https://de.wikipedia.org/static/images/project-logos/dewiki.png';
   }
 
 }

@@ -4,8 +4,8 @@ import { ActivityModel } from '../../../realm/activity/activity.model';
 
 @Component({
   selector: 'bottom-sheet',
-  template: '<div id="largeMap"><mapping-component ' +
-    '[activities] = activities> ' +
+  template: '<div id="largeMap">' +
+    '<mapping-component [activities] = activities> ' +
     '</mapping-component></div>',
   styleUrls: ['map.bottomsheet.component.css']
 })

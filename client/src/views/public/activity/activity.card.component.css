@@ -3,7 +3,23 @@ mat-card {
   min-width: 300px;
 }
 
-.activityCardContent {
+.activityCardName {
   font-size: 25px;
   font-family: Open Sans, Bold;
+}
+
+#suburbField {
+  word-wrap: break-word;
+}
+
+.smallText {
+  max-width: 50%;
+}
+
+.categoryIcon {
+  filter: brightness(0) invert(1);
+}
+
+.activityCardSmall {
+  color: white;
 }

@@ -14,21 +14,30 @@ export class ActivityCardComponent {
   public activity: ActivityModel;
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
   ) { }
 
-  getDate(): string {
-    return this.activity.schedules[0].startDate;
+  getNextdate(date: string): string {
+    return new Date(date).toLocaleDateString('de-DE');
+  }
+
+  getCategoryImageURI(categoryName: string): string {
+    const uri = '/imgs/categories/' + categoryName + '.svg';
+    if (this.ImageExists(uri)) {
+      return uri;
+    } else {
+      return '/imgs/categories/events.svg';
+    }
   }
 
   openActivityView(): void {
-    // this.router.navigate(['/view/activities/', this.activity.id]);
+    this.router.navigate(['/view/activities/', this.activity.id]);
   }
 
-  getImageURI(): string {
-    // TODO: replace after upload is done
-    return 'https://de.wikipedia.org/static/images/project-logos/dewiki.png';
+  ImageExists(url: string): boolean {
+    const img = new Image();
+    img.src = url;
+    return img.height !== 0;
   }
 
 }

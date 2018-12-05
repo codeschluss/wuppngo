@@ -20,7 +20,7 @@ export class MappingComponent implements AfterViewInit, OnInit
   ];
 
   @Input()
-  public activities: ActivityModel[];
+  public activities: any[];
 
   public clusterspan: number;
   public latitude: number;
@@ -46,53 +46,16 @@ export class MappingComponent implements AfterViewInit, OnInit
   ) { }
 
   public ngOnInit(): void {
-    this.activities[0].address.then(
-      address => {
-        this.latitude = address.latitude;
-        this.longitude = address.longitude;
-      });
-
-    // this.activities[0].address.then((address) => {
-    //   this.latitude = address.latitude;
-    //   this.longitude = address.longitude;
-    //   this.zoomfactor = 14;
-    //   this.projection = 'EPSG:4326';
-    // });
-
-    // TODO: move to db
-    this.clusterspan = 5;
-
-    // if (this.activities.length === 1) {
-    //   this.latitude = this.activities[0].address.latitude;
-    //   this.longitude = this.activities[0].address.longitude;
-    //   this.zoomfactor = 14;
-    //   this.projection = 'EPSG:4326';
-    // } else {
-    //   for (const item of this.route.snapshot.data.configuration) {
-    //     switch (item.item) {
-    //       case 'mapcenterLatitude':
-    //         this.latitude = this.activities[0].address.latitude;
-    //         break;
-    //       case 'mapcenterLongitude':
-    //         this.longitude = this.activities[0].address.longitude;
-    //         break;
-    //       case 'mapProjection':
-    //         this.projection = 'EPSG:4326';
-    //         break;
-    //       case 'zoomfactor':
-    //         this.zoomfactor = 14;
-    //         break;
-    //     }
-    //   }
-    // }
-    // TODO: redo
-    // this.activities = this.route.snapshot.data
-    //   .activities.filter((i) => i.address);
+      this.latitude = this.activities[0].address.latitude;
+      this.longitude = this.activities[0].address.longitude;
+      // TODO: get from DB
+      this.zoomfactor = 14;
+      this.projection = 'EPSG:4326';
+      // TODO: move to db
+      this.clusterspan = 5;
   }
 
   public ngAfterViewInit(): void {
-    this.zoomfactor = 14;
-    this.projection = 'EPSG:4326';
 
     (<ol.layer.Vector>this.aolLayer.instance)
       .setStyle((feature: Feature) => this.featureStyle(feature));

@@ -30,8 +30,8 @@ organisation-card.orgaCard {
 .activityListItem {
     padding: 15px;
     border-radius: 5px;
-    border: rgb(111,201,163, 0.3) 2px;
-    background-color: rgb(111,201,163, 0.3);
+    border: rgba(111,201,163, 0.3) 2px;
+    background-color: rgba(111,201,163, 0.3);
 }
 
 .activityListItem div {
@@ -54,4 +54,13 @@ organisation-card.orgaCard {
 
 .organisationCard {
     margin: 20px;
+    width: 500px;
+}
+
+
+mat-card {
+    height: 350px;
+    h2{
+        word-wrap: break-word; 
+    }
 }
