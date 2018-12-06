@@ -4,6 +4,7 @@ import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.address.AddressService;
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.core.common.ResourceDataService;
+import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.utils.ResourceWithEmbeddable;
 
 import java.util.List;
@@ -83,6 +84,7 @@ public class OrganisationService
       orga.setMail(newOrga.getMail());
       orga.setName(newOrga.getName());
       orga.setPhone(newOrga.getPhone());
+      orga.setVideoUrl(newOrga.getVideoUrl());
       orga.setWebsite(newOrga.getWebsite());
       return repo.save(orga);
     }).orElseGet(() -> {
@@ -130,5 +132,17 @@ public class OrganisationService
     }).collect(Collectors.toList());
 
     return assembler.toListResources(result, null);
+  }
+  
+  /**
+   * Gets the orga activity.
+   *
+   * @param activityId the activity id
+   * @return the orga activity
+   */
+  public OrganisationEntity getOrgaActivity(String activityId) {
+    return repo
+        .findOne(entities.forActivity(activityId))
+        .orElseThrow(() -> new NotFoundException(activityId));
   }
 }
