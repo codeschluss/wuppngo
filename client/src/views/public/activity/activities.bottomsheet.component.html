@@ -1,0 +1,15 @@
+<!-- <div *ngIf="!currentActivity">
+    <mat-nav-list>
+        <ng-container *ngFor="let activity of activities; let i=index">
+            <a mat-list-item (click)="singleActivityView(i)">
+                <img src={{getCategoryImageURI(activity.category.name)}} [style.color]="activity.category.color">
+                {{ activity.name }}
+            </a>
+        </ng-container>
+    </mat-nav-list>
+</div>
+<div *ngIf="currentActivity">
+    <activity-card (click)="closeSheet($event)" [activity]="currentActivity"></activity-card>
+</div> -->
+<h2>{{activities[0].address?.street + ' ' + activities[0].address?.houseNumber + ', '  + activities[0].address?.suburb?.name }}</h2>
+<activity-carousel-component [activities]=activities></activity-carousel-component>

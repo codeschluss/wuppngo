@@ -1,10 +1,13 @@
-import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild, Output } from '@angular/core';
 import { AngularOpenlayersModule, LayerVectorComponent, MapComponent, ViewComponent } from 'ngx-openlayers';
 import { Feature, MapBrowserEvent, proj, style } from 'openlayers';
 import { Subject } from 'rxjs';
-import { ActivityModel } from '../../../realm/activity/activity.model';
 import { AddressModel } from '../../../realm/address/address.model';
+import * as colorConvert from 'color-convert';
+import { MatBottomSheet } from '@angular/material';
+import { ActivitiesBottomsheetComponent } from '../activity/activities.bottomsheet.component';
+import { EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'mapping-component',
@@ -12,8 +15,7 @@ import { AddressModel } from '../../../realm/address/address.model';
 })
 
 export class MappingComponent implements AfterViewInit, OnInit
-// , OnDestroy
-{
+, OnDestroy {
 
   public static readonly imports = [
     AngularOpenlayersModule
@@ -22,11 +24,16 @@ export class MappingComponent implements AfterViewInit, OnInit
   @Input()
   public activities: any[];
 
+  @Output()
+  hoveredActivities: EventEmitter<any[]> = new EventEmitter();
+
   public clusterspan: number;
   public latitude: number;
   public longitude: number;
   public projection: string;
   public zoomfactor: number;
+  public highlightedMarkerId: string;
+  public slectedActivities: any[];
 
   @ViewChild(LayerVectorComponent)
   private aolLayer: LayerVectorComponent;
@@ -40,9 +47,7 @@ export class MappingComponent implements AfterViewInit, OnInit
   private readonly ngUnsubscribe: Subject<null> = new Subject<null>();
 
   public constructor(
-    // private dialog: MatDialog,
-    private route: ActivatedRoute,
-    private router: Router
+    private bottomSheet: MatBottomSheet,
   ) { }
 
   public ngOnInit(): void {
@@ -56,26 +61,26 @@ export class MappingComponent implements AfterViewInit, OnInit
   }
 
   public ngAfterViewInit(): void {
-
     (<ol.layer.Vector>this.aolLayer.instance)
-      .setStyle((feature: Feature) => this.featureStyle(feature));
+      .setStyle((feature: Feature) => this.clusterStyle(feature));
 
     this.aolMap.loadTilesWhileAnimating = true;
     this.aolMap.loadTilesWhileInteracting = true;
-    // this.aolMap.onSingleClick.pipe(takeUntil(this.ngUnsubscribe))
-    //   .subscribe((event: MapBrowserEvent) => this.onClick(event));
+    this.aolMap.onClick
+      .subscribe((event: MapBrowserEvent) => {
+        this.onClick(event);
+          }
+        );
+    this.aolMap.onPointerMove.subscribe((event: MapBrowserEvent) => {
+      this.onHover(event);
+      }
+    );
 
-    // this.router.events
-    //   .pipe(filter(i => i instanceof NavigationEnd))
-    //   .pipe(startWith(null))
-    //   .pipe(takeUntil(this.ngUnsubscribe))
-    //   .subscribe(() => this.applyRoutes());
   }
 
-  // public ngOnDestroy(): void {
-  //   this.ngUnsubscribe.next(null);
-  //   this.ngUnsubscribe.complete();
-  // }
+  public ngOnDestroy(): void {
+    this.bottomSheet.dismiss();
+  }
 
   public centerAddress(address: AddressModel): void {
     if (address.longitude && address.latitude) {
@@ -87,97 +92,133 @@ export class MappingComponent implements AfterViewInit, OnInit
     }
   }
 
-  private applyRoutes(): void {
-    // for (const child of this.route.children) {
-    //   switch (child.component) {
-    //     case AboutActivityComponent:
-    //       this.centerAddress(child.snapshot.data.activity.address);
-    //       break;
-    //     case AboutOrganisationComponent:
-    //       this.centerAddress(child.snapshot.data.organisation.address);
-    //       break;
-    //   }
-    // }
+  public highlightPin(activity: any): void {
+    this.highlightedMarkerId = activity.id;
+    (<ol.layer.Vector>this.aolLayer.instance).changed();
   }
 
-  private featureStyle(feature: Feature): style.Style {
-    // const colors = feature.get('features').map((i) => {
-    //   const activity = this.activities.find(j => i.getId() === j.id);
+  public unHighlightPins() {
+    this.highlightedMarkerId = null;
+    (<ol.layer.Vector>this.aolLayer.instance).changed();
+  }
 
-    //   return colorConvert.keyword.rgb(activity.category.color)
-    //     || colorConvert.hex.rgb(activity.category.color);
-    // });
-
-    // const r = colors.reduce((i, j) => i + j[0], 0) / colors.length;
-    // const g = colors.reduce((i, j) => i + j[1], 0) / colors.length;
-    // const b = colors.reduce((i, j) => i + j[2], 0) / colors.length;
-
-    const colors = { length: 1 };
-
-    return new style.Style({
-      image: new style.Icon({
-        anchor: [.5, 1],
-        // color: '#' + colorConvert.rgb.hex(r, g, b),
-        color: 'blue',
-        imgSize: [60, 96],
-        scale: 1 / (colors.length > 1 ? 2 : 3),
-        src: `${colors.length > 1 ? '/imgs/mapcluster' : '/imgs/mapmarker'}.png`
-      })
+  public zoomOut(): void {
+    this.aolView.instance.animate({
+      center: proj.fromLonLat([
+        this.activities[0].address.longitude,
+        this.activities[0].address.latitude]),
+      // duration: 1000,
+      zoom: 14
     });
+  }
 
-    // const colors = feature.get('features').map(i => {
-    //   const activity = this.activities.find(j => i.getId() === j.id);
+  private clusterStyle(feature: Feature): style.Style[] {
+    let acts;
+      acts = feature.get('features').map(i => {
+        // TODO: ngx-openlayers async id binding bug
+        // const activity = this.activities.find(j => i.getId() === j.id);
+        const id = i.getId();
+        return this.activities.find(j => id === j.id);
+      });
 
-    //   return colorConvert.keyword.rgb(activity.category.color)
-    //     || colorConvert.hex.rgb(activity.category.color);
-    // });
+    if (acts) {
+      let icon = {
+        anchor: [.5, 1],
+        color: '#dd574a',
+        src: `/imgs/map${acts.length > 1 ? 'cluster' : 'marker'}.svg`,
+        scale: this.isHighlighted(acts) ? 1.2 : 1,
+        opacity: this.isHighlighted(acts) ? 1 : 0.9,
+      };
 
-    // const r = colors.reduce((i, j) => i + j[0], 0) / colors.length;
-    // const g = colors.reduce((i, j) => i + j[1], 0) / colors.length;
-    // const b = colors.reduce((i, j) => i + j[2], 0) / colors.length;
+      const categoryIcon = {
+        anchor: [.5, 2],
+        src: `/imgs/categories/holiday.svg`,
+        scale: 0.1
+      };
 
-    // const icon = {
-    //   anchor: [.5, 1],
-    //   color: '#' + colorConvert.rgb.hex(r, g, b),
-    //   scale: 0.9 + colors.length / 10,
-    //   src: '/imgs/mapmarker.svg'
-    // };
+      if (window.navigator.userAgent.match(/(MSIE|Trident)/)) {
+        Object.assign(icon, {
+        imgSize: [60, 96],
+        // scale: 1 / 3,
+        src: `/imgs/map${acts.length > 1 ? 'cluster' : 'marker'}.png`,
+        scale: icon.scale / 3,
+      });
+      }
 
-    // if (window.navigator.userAgent.match(/(MSIE|Trident)/)) {
-    //   Object.defineProperty(icon, {
-    //     imgSize: [60, 96],
-    //     scale: icon.scale / 3,
-    //     src: '/imgs/mapmarker.png'
-    //   });
-    // }
+      let text;
 
-    // return new style.Style({ image: new style.Icon(icon) });
+      if (acts.length > 1) {
+        text = {
+          fill: new style.Fill({color: '#000000'}),
+          offsetY: this.isHighlighted(acts) ? -25 : - 20,
+          scale: 1.2,
+          stroke: new style.Stroke({color: '#000000'}),
+          text: acts.length + '',
+          textAlign: 'center'
+        };
+      }
+      if (this.activities.length === 1) {
+        icon = {
+          anchor: [.5, 1],
+          color: '#dd574a',
+          src: `/imgs/mapmarker.svg`,
+          scale: 1,
+          opacity: 1
+        };
+        return [new style.Style({
+          image: new style.Icon(icon),
+        })];
+      }
+
+      return acts.length > 1 ?
+      [new style.Style({
+        image: new style.Icon(icon),
+        text: acts.length > 1 && new style.Text(text)
+      })] :
+      [new style.Style({
+        image: new style.Icon(icon),
+      }),
+      new style.Style({
+        image: new style.Icon(categoryIcon),
+      })];
+
+    }
   }
 
   private onClick(event: MapBrowserEvent): void {
     const click = this.aolMap.instance.getFeaturesAtPixel(event.pixel);
-    const feats = click && click.length ? click[0].get('features') : [];
-
-    switch (feats.length) {
-      case 0:
-        this.router.navigate(['/']);
-        break;
-      case 1:
-        this.router.navigate(['/activity', feats[0].getId()]);
-        break;
-      default:
-      // this.router.navigate(['/']).then(() => {
-      //   this.dialog.open(ActivityDialogComponent, {
-      //     // TODO: ngx-openlayers async id binding bug
-      //     // data: feats.map(i => this.activities.find(
-      //      j => j.id === i.getId()))
-      //     data: feats.map(i => i.getStyle().getText().getText())
-      //       .map(i => this.activities.find(j => j.id === i))
-      //     // ENDTODO
-      //   }).afterClosed().filter(i => i).subscribe((activity: Activity) =>
-      //     this.router.navigate(['/activity', activity.id]));
-      // });
+    if (click) {
+      const feats = click && click.length ? click[0].get('features') : [];
+      this.slectedActivities = feats.map(i => this.activities.find(
+            j => j.id === i.getId()));
+      this.highlightPin(this.slectedActivities[0]);
+    } else {
+      this.slectedActivities = null;
+      this.unHighlightPins();
     }
+  }
+
+  private onHover(event: MapBrowserEvent): void {
+    const target = this.aolMap.instance.getFeaturesAtPixel(event.pixel);
+    if (target) {
+      const feats = target && target.length ? target[0].get('features') : [];
+      this.hoveredActivities.emit(
+        feats.map(i => this.activities.find(j => j.id === i.getId()))
+        );
+    } else {
+      this.hoveredActivities.emit(null);
+    }
+  }
+
+  public isHighlighted(acts: any[]): boolean {
+    if (this.highlightedMarkerId) {
+      if (acts.find(act => act.id === this.highlightedMarkerId)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return false;
   }
 
 }

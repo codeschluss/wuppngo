@@ -29,6 +29,8 @@ export class ActivityListComponent {
   public suburbs: SuburbModel[];
   public categories: CategoryModel[];
   public target_groups: TargetGroupModel[];
+  public hoveredActivities: ActivityModel[];
+  public showMap: boolean;
 
   @ViewChild(MappingComponent)
   private mapping: MappingComponent;
@@ -43,9 +45,36 @@ export class ActivityListComponent {
     this.categories = route.snapshot.data.categories;
   }
 
-  openBottomSheetMap(): void {
-    this.bottomSheet.open(BottomSheetMapComponent,
-      { data: { activities: this.activities } });
+  toggleMap(): void {
+    this.showMap = !this.showMap;
+  }
+
+  // openBottomSheetMap(): void {
+  //   this.bottomSheet.open(BottomSheetMapComponent,
+  //     { data: { activities: this.activities } });
+  // }
+
+  showOnMap(activity: any): void {
+    this.mapping.highlightPin(activity);
+  }
+
+  handleMapHover(event: ActivityModel[]): void {
+    this.hoveredActivities = event;
+  }
+
+  // getOpacity(id: string): number {
+  //   if (this.hoveredActivities) {
+  //     if (this.hoveredActivities.find(act => act.id === id)) {
+  //       return 1;
+  //     }
+  //     return 0.5;
+  //   } else {
+  //     return 1;
+  //   }
+  // }
+
+  resetHighlighting(): void {
+    this.mapping.unHighlightPins();
   }
 
 }

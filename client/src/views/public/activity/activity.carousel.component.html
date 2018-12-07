@@ -1,4 +1,4 @@
-<div (window:resize)="onResize($event)">
+<div id="carousel" (window:resize)="onResize()">
 
   <ngx-hm-carousel *ngIf="clusteredActivities.length" id="bigCarousel" [(ngModel)]="index" [autoplay-speed]="speed"
     [autoplay]="autoplay" [autoplay-direction]="direction" [infinite]="infinite" [between-delay]="2000" class="carousel c-accent">
@@ -13,12 +13,12 @@
       </article>
     </section>
 
-    <ng-template #carouselPrev>
+    <ng-template *ngIf="clusteredActivities.length > 1" #carouselPrev>
       <div class="click-area">
         <i class="material-icons">&lt;</i>
       </div>
     </ng-template>
-    <ng-template #carouselNext>
+    <ng-template *ngIf="clusteredActivities.length > 1" #carouselNext>
       <div class="click-area">
         <i class="material-icons">&gt;</i>
       </div>

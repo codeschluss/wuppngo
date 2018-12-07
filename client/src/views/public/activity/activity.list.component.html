@@ -1,9 +1,9 @@
 <div id="activityList" *ngIf="activities && activities.length">
-  <div fxLayout="row wrap">
+  <div fxLayout="row wrap" *ngIf="!showMap" >
     <div fxFlex="100" fxLayout="row wrap" id="activity-filter" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
       <mat-chip-list>
-        <mat-chip *ngFor="let category of categories" [ngStyle]="{'background-color': category.color}">
-          {{category.name}}
+        <mat-chip *ngFor="let category of categories" [ngStyle]="{'background-color' : category.color}">
+          {{category.name + ' ' + category.color}}
         </mat-chip>
       </mat-chip-list>
       <mat-form-field>
@@ -20,18 +20,22 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-chip id="mapIcon" color="primary" selected fxHide (click)="openBottomSheetMap()" fxShow.lt-md="true">
-        <fa-icon icon="map-marker"></fa-icon>
-      </mat-chip>
+      
     </div>
     <div id="activitiesContainer" fxFlex="66" fxLayout="row wrap" fxFlex.lt-md="100">
       <div class="activityCard" fxLayoutAlign="space-around" fxFlex.xs="100" *ngFor="let activity of activities">
-        <activity-card [activity]="activity"></activity-card>
+        <activity-card (mouseenter)="showOnMap(activity)" (mouseleave)="resetHighlighting()" [activity]="activity"></activity-card>
       </div>
     </div>
     <div fxHide.lt-md="true" id="map-container">
-      <mapping-component [activities]="activities">
+      <mapping-component [activities]="activities" (hoveredActivities)="handleMapHover($event)">
       </mapping-component>
     </div>
   </div>
+  <mapping-component *ngIf="showMap" [activities]="activities" id="largeMap">
+  </mapping-component>
+  <mat-chip id="mapIcon" color="primary" selected fxHide (click)="toggleMap()" fxShow.lt-md="true">
+      <fa-icon *ngIf="!showMap" icon="map-marker"></fa-icon>
+      <fa-icon *ngIf="showMap" icon="list"></fa-icon>
+  </mat-chip>
 </div>

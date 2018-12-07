@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
+import { AfterViewInit, Component, Input, ElementRef } from '@angular/core';
 import { NgxHmCarouselModule } from 'ngx-hm-carousel';
 import { ActivityModel } from '../../../realm/activity/activity.model';
 
@@ -27,15 +27,16 @@ export class ActivityCarouselComponent implements AfterViewInit {
   directionToggle = true;
   autoplay = false;
 
-  constructor() { }
+  constructor(
+    private el: ElementRef
+  ) { }
 
-  onResize(event): void {
-  const innerWidth = event.target.innerWidth;
-  this.fillCluster(innerWidth);
+  onResize(): void {
+    this.fillCluster(document.getElementById('carousel').offsetWidth);
   }
 
   ngAfterViewInit(): void {
-    this.fillCluster(window.innerWidth);
+    this.fillCluster(document.getElementById('carousel').offsetWidth);
   }
 
   fillCluster(innerWidth: number): void {

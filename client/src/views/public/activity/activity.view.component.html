@@ -33,7 +33,7 @@
                   {{ activity.address.place }}
                 </p>
               </div>
-                <mapping-component fxFlex="50" fxFlexAlign="start" (click)="openBottomSheetMap()" [activities]="[activity]">
+                <mapping-component *ngIf="activity" fxFlex="50" fxFlexAlign="start" (click)="openBottomSheetMap()" [activities]="[activity]">
                 </mapping-component>
             </div>
             <div *ngIf="activity.schedules" fxLayout="row" (click)="openBottomSheetSchedules(activity.schedules)">
