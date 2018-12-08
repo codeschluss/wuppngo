@@ -2,7 +2,7 @@ package de.codeschluss.portal.integration.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import de.codeschluss.portal.components.configuration.ConfigurationController;
+import de.codeschluss.portal.core.configuration.ConfigurationController;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
 import java.net.URISyntaxException;
@@ -29,11 +29,11 @@ public class ConfigurationControllerDeleteTest {
   @WithUserDetails("super@user")
   public void deleteSuperUserOk() throws URISyntaxException {
     String configurationId = "00000000-0000-0000-0001-000000000011";
-    assertThat(controller.findOne(configurationId)).isNotNull();
+    assertThat(controller.readOne(configurationId)).isNotNull();
 
     controller.delete(configurationId);
 
-    controller.findOne(configurationId);
+    controller.readOne(configurationId);
   }
 
   @Test(expected = AccessDeniedException.class)

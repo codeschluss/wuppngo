@@ -1,10 +1,10 @@
 package de.codeschluss.portal.components.user;
 
 import de.codeschluss.portal.components.provider.ProviderEntity;
-import de.codeschluss.portal.core.common.ResourceDataService;
+import de.codeschluss.portal.core.api.ResourceDataService;
+import de.codeschluss.portal.core.api.dto.ResourceWithEmbeddable;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.mail.MailService;
-import de.codeschluss.portal.core.utils.ResourceWithEmbeddable;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,9 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class UserService extends ResourceDataService<UserEntity, UserQueryBuilder> {
-
-  /** The default sort prop. */
-  protected final String defaultSortProp = "username";
 
   /** The bcrypt password encoder. */
   private final BCryptPasswordEncoder bcryptPasswordEncoder;
@@ -69,13 +66,6 @@ public class UserService extends ResourceDataService<UserEntity, UserQueryBuilde
     return repo.exists(entities.withUsername(username));
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.common.ResourceDataService#getExisting(de.codeschluss.
-   * portal.core.common.BaseEntity)
-   */
   @Override
   public UserEntity getExisting(UserEntity user) {
     try {
@@ -97,25 +87,12 @@ public class UserService extends ResourceDataService<UserEntity, UserQueryBuilde
         .orElseThrow(() -> new NotFoundException(username));
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.common.ResourceDataService#add(de.codeschluss.portal.core.
-   * common.BaseEntity)
-   */
   @Override
   public UserEntity add(UserEntity newUser) {
     newUser.setPassword(bcryptPasswordEncoder.encode(newUser.getPassword()));
     return repo.save(newUser);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.codeschluss.portal.core.common.ResourceDataService#update(java.lang.String,
-   * de.codeschluss.portal.core.common.BaseEntity)
-   */
   @Override
   public UserEntity update(String id, UserEntity newUser) {
     return repo.findById(id).map(user -> {

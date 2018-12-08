@@ -6,9 +6,9 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 
 import de.codeschluss.portal.components.provider.ProviderEntity;
-import de.codeschluss.portal.core.common.QueryBuilder;
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.i18n.language.LanguageService;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
+import de.codeschluss.portal.core.service.QueryBuilder;
 
 import java.util.List;
 
@@ -20,6 +20,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
+  
+  /** The default sort prop. */
+  protected final String defaultSortProp = "translatables.name";
   
   /** The language service. */
   private final LanguageService languageService;
@@ -34,25 +37,65 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
     this.languageService = languageService;
   }
   
+  @Override
+  protected String prepareSort(String sortProp) {
+    return sortProp.equals("name") || sortProp.equals("description")
+        ? "translatables." + sortProp
+        : sortProp;
+  }
+
+  @Override
+  public boolean localized() {
+    return true;
+  }
+  
   /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.common
+   * @see de.codeschluss.portal.core.service
    * .QueryBuilder#search(de.codeschluss.portal.core.utils.FilterSortPaginate)
    */
   @Override
   public Predicate search(FilterSortPaginate p) {
     ActivityQueryParam params = validateParams(p);
+    List<String> locales = languageService.getCurrentReadLocales();
+    BooleanBuilder search = new BooleanBuilder(withLocalized(locales));
     
+    return params.isEmptyQuery()
+        ? search.getValue()
+        : searchFiltered(search, params, locales);
+  }
+  
+  /**
+   * With localized.
+   *
+   * @param locales the locales
+   * @return the predicate
+   */
+  private Predicate withLocalized(List<String> locales) {
+    return query.translatables.any().language.locale.in(locales);
+  }
+
+  /**
+   * Search filtered.
+   *
+   * @param search the search
+   * @param params the params
+   * @param locales the locales
+   * @return the predicate
+   */
+  private Predicate searchFiltered(
+      BooleanBuilder search, 
+      ActivityQueryParam params,
+      List<String> locales) {
     String filter = params.getFilter();
-    BooleanBuilder search = new BooleanBuilder();
     if (params.getCurrent() != null && params.getCurrent()) {
       search.and(withCurrentSchedulesOnly());
     }
     
     return filter != null && !filter.isEmpty()
-        ? fuzzyTextSearch(params, search)
+        ? fuzzyTextSearch(params, search, locales)
         : advancedSearch(params, search);
   }
-  
+
   /**
    * Fuzzy text search.
    *
@@ -60,8 +103,10 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
    * @param search the search
    * @return the predicate
    */
-  public Predicate fuzzyTextSearch(ActivityQueryParam params, BooleanBuilder search) {
-    List<String> locales = languageService.getCurrentReadLocales();
+  public Predicate fuzzyTextSearch(
+      ActivityQueryParam params, 
+      BooleanBuilder search,
+      List<String> locales) {
     String filter = prepareFilter(params.getFilter());
     BooleanExpression textSearch = query.translatables.any().language.locale.in(locales)
         .and(
@@ -189,7 +234,7 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
   }
   
   /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.common.QueryBuilder#withId(java.lang.String)
+   * @see de.codeschluss.portal.core.service.QueryBuilder#withId(java.lang.String)
    */
   public BooleanExpression withId(String id) {
     return query.id.eq(id);

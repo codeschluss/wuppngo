@@ -3,11 +3,11 @@ package de.codeschluss.portal.components.tag;
 import static org.springframework.http.ResponseEntity.ok;
 
 import de.codeschluss.portal.components.tag.TagEntity;
-import de.codeschluss.portal.core.common.CrudController;
+import de.codeschluss.portal.core.api.CrudController;
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
 import de.codeschluss.portal.core.security.permissions.ProviderOrSuperUserPermission;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
@@ -43,21 +43,21 @@ public class TagController extends CrudController<TagEntity, TagService> {
 
   @Override
   @GetMapping("/tags")
-  public ResponseEntity<?> findAll(FilterSortPaginate params) {
-    return super.findAll(params);
+  public ResponseEntity<?> readAll(FilterSortPaginate params) {
+    return super.readAll(params);
   }
 
   @Override
   @GetMapping("/tags/{tagId}")
-  public Resource<TagEntity> findOne(@PathVariable String tagId) {
-    return super.findOne(tagId);
+  public Resource<TagEntity> readOne(@PathVariable String tagId) {
+    return super.readOne(tagId);
   }
 
   @Override
   @PostMapping("/tags")
   @ProviderOrSuperUserPermission
-  public ResponseEntity<?> add(@RequestBody TagEntity newTag) throws URISyntaxException {
-    return super.add(newTag);
+  public ResponseEntity<?> create(@RequestBody TagEntity newTag) throws URISyntaxException {
+    return super.create(newTag);
   }
 
   @Override

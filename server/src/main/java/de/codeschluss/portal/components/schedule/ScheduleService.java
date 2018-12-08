@@ -1,6 +1,9 @@
 package de.codeschluss.portal.components.schedule;
 
-import de.codeschluss.portal.core.common.ResourceDataService;
+import com.querydsl.core.types.Predicate;
+
+import de.codeschluss.portal.core.api.ResourceDataService;
+import de.codeschluss.portal.core.api.dto.CustomSort;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
 import java.util.List;
@@ -19,9 +22,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class ScheduleService extends ResourceDataService<ScheduleEntity, ScheduleQueryBuilder> {
 
-  /** The default sort prop. */
-  protected final String defaultSortProp = "startDate";
-
   /**
    * Instantiates a new schedule service.
    *
@@ -38,13 +38,6 @@ public class ScheduleService extends ResourceDataService<ScheduleEntity, Schedul
     super(repo, entities, assembler);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.common.ResourceDataService#getExisting(de.codeschluss.
-   * portal.core.common.BaseEntity)
-   */
   @Override
   public ScheduleEntity getExisting(ScheduleEntity newSchedule) {
     return repo.findById(newSchedule.getId()).orElse(null);
@@ -53,26 +46,19 @@ public class ScheduleService extends ResourceDataService<ScheduleEntity, Schedul
   /**
    * Gets the resource by activity.
    *
-   * @param activityId
-   *          the activity id
+   * @param activityId the activity id
+   * @param params the params
    * @return the resource by activity
    */
-  public Resources<?> getResourceByActivity(String activityId) {
-    List<ScheduleEntity> schedules = repo.findAll(
-        entities.forActivityAndCurrentOnly(activityId));
+  public Resources<?> getResourceByActivity(String activityId, CustomSort params) {
+    Predicate query = entities.forActivityAndCurrentOnly(activityId);
+    List<ScheduleEntity> schedules = repo.findAll(query, entities.createSort(params));
     if (schedules == null || schedules.isEmpty()) {
       throw new NotFoundException(activityId);
     }
-    
-    return assembler.entitiesToResources(schedules, null);
+    return assembler.entitiesToResources(schedules, params);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.codeschluss.portal.core.common.ResourceDataService#update(java.lang.String,
-   * de.codeschluss.portal.core.common.BaseEntity)
-   */
   @Override
   public ScheduleEntity update(String id, ScheduleEntity newSchedule) {
     return repo.findById(id).map(schedule -> {

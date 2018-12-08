@@ -1,7 +1,7 @@
 package de.codeschluss.portal.components.address;
 
 import de.codeschluss.portal.components.suburb.SuburbEntity;
-import de.codeschluss.portal.core.common.ResourceDataService;
+import de.codeschluss.portal.core.api.ResourceDataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
 import org.springframework.hateoas.Resource;
@@ -16,9 +16,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AddressService extends ResourceDataService<AddressEntity, AddressQueryBuilder> {
-
-  /** The default sort prop. */
-  protected final String defaultSortProp = "street";
 
   /**
    * Instantiates a new address service.
@@ -69,8 +66,8 @@ public class AddressService extends ResourceDataService<AddressEntity, AddressQu
   /*
    * (non-Javadoc)
    * 
-   * @see de.codeschluss.portal.core.common.ResourceDataService#update(java.lang.String,
-   * de.codeschluss.portal.core.common.BaseEntity)
+   * @see de.codeschluss.portal.core.service.ResourceDataService#update(java.lang.String,
+   * de.codeschluss.portal.core.service.BaseEntity)
    */
   @Override
   public AddressEntity update(String id, AddressEntity newAddress) {

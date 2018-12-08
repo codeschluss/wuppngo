@@ -2,10 +2,11 @@ package de.codeschluss.portal.components.organisation;
 
 import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.address.AddressService;
+import de.codeschluss.portal.components.images.organisation.OrganisationImageEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
-import de.codeschluss.portal.core.common.ResourceDataService;
+import de.codeschluss.portal.core.api.ResourceDataService;
+import de.codeschluss.portal.core.api.dto.ResourceWithEmbeddable;
 import de.codeschluss.portal.core.exception.NotFoundException;
-import de.codeschluss.portal.core.utils.ResourceWithEmbeddable;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,9 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class OrganisationService 
     extends ResourceDataService<OrganisationEntity, OrganisationQueryBuilder> {
-
-  /** The default sort prop. */
-  protected final String defaultSortProp = "name";
 
   /**
    * Instantiates a new organisation service.
@@ -59,24 +57,11 @@ public class OrganisationService
     return repo.exists(entities.withName(name));
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.common.DataService#getExisting(de.codeschluss.
-   * portal.core.common.BaseEntity)
-   */
   @Override
   public OrganisationEntity getExisting(OrganisationEntity orga) {
     return repo.findOne(entities.withName(orga.getName())).orElse(null);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.codeschluss.portal.core.common.DataService#update(java.lang.String,
-   * de.codeschluss.portal.core.common.BaseEntity)
-   */
   @Override
   public OrganisationEntity update(String id, OrganisationEntity newOrga) {
     return repo.findById(id).map(orga -> {
@@ -144,5 +129,31 @@ public class OrganisationService
     return repo
         .findOne(entities.forActivity(activityId))
         .orElseThrow(() -> new NotFoundException(activityId));
+  }
+
+  /**
+   * Adds the image.
+   *
+   * @param organisationId the organisation id
+   * @param image the image
+   * @return the list
+   */
+  public List<OrganisationImageEntity> addImage(
+      String organisationId, OrganisationImageEntity image) {
+    OrganisationEntity organisation = getById(organisationId);
+    organisation.getImages().add(image);
+    return repo.save(organisation).getImages();
+  }
+
+  /**
+   * Delete images.
+   *
+   * @param organisationId the organisation id
+   * @param imagesIds the images ids
+   */
+  public void deleteImages(String organisationId, List<String> imagesIds) {
+    OrganisationEntity organisation = getById(organisationId);
+    organisation.getImages().removeIf(image -> imagesIds.contains(image.getId()));
+    repo.save(organisation);
   }
 }

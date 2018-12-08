@@ -2,8 +2,8 @@ package de.codeschluss.portal.integration.language;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.i18n.language.LanguageController;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +27,7 @@ public class LanguageControllerFindAllTest {
   public void findAllWithoutPaginationOk() {
     FilterSortPaginate params = new FilterSortPaginate(null, null, null, "name", "asc");
 
-    Resources<?> result = (Resources<?>) controller.findAll(params).getBody();
+    Resources<?> result = (Resources<?>) controller.readAll(params).getBody();
 
     assertThat(result.getContent()).isNotEmpty();
   }
@@ -36,20 +36,20 @@ public class LanguageControllerFindAllTest {
   public void findAllEmptyParamsOk() {
     FilterSortPaginate params = new FilterSortPaginate(null, null, null, null, null);
 
-    Resources<?> result = (Resources<?>) controller.findAll(params).getBody();
+    Resources<?> result = (Resources<?>) controller.readAll(params).getBody();
 
     assertThat(result.getContent()).isNotEmpty();
   }
 
   @Test
   public void findAllWithPaginationOk() {
-    PagedResources<?> result = (PagedResources<?>) controller.findAll(params).getBody();
+    PagedResources<?> result = (PagedResources<?>) controller.readAll(params).getBody();
     assertThat(result.getContent()).isNotEmpty();
   }
 
   @Test(expected = PropertyReferenceException.class)
   public void findAllWrongParams() {
     FilterSortPaginate params = new FilterSortPaginate("to", 1, 5, "blablabla123", "wrong");
-    controller.findAll(params);
+    controller.readAll(params);
   }
 }

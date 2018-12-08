@@ -25,28 +25,28 @@ class CategoryControllerService extends BaseService {
   }
 
   /**
-   * @param params The `CategoryControllerService.CategoryControllerFindAllParams` containing the following parameters:
-   *
-   * - `page`:
-   *
-   * - `size`:
+   * @param params The `CategoryControllerService.CategoryControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
    *
    * - `dir`:
    *
+   * - `page`:
+   *
+   * - `size`:
+   *
    * - `filter`:
    *
    * @return OK
    */
-  categoryControllerFindAllResponse(params: CategoryControllerService.CategoryControllerFindAllParams): Observable<StrictHttpResponse<{}>> {
+  categoryControllerReadAllResponse(params: CategoryControllerService.CategoryControllerReadAllParams): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (params.page != null) __params = __params.set('page', params.page.toString());
-    if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.sort != null) __params = __params.set('sort', params.sort.toString());
     if (params.dir != null) __params = __params.set('dir', params.dir.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.filter != null) __params = __params.set('filter', params.filter.toString());
     let req = new HttpRequest<any>(
       'GET',
@@ -66,22 +66,22 @@ class CategoryControllerService extends BaseService {
     );
   }
   /**
-   * @param params The `CategoryControllerService.CategoryControllerFindAllParams` containing the following parameters:
-   *
-   * - `page`:
-   *
-   * - `size`:
+   * @param params The `CategoryControllerService.CategoryControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
    *
    * - `dir`:
    *
+   * - `page`:
+   *
+   * - `size`:
+   *
    * - `filter`:
    *
    * @return OK
    */
-  categoryControllerFindAll(params: CategoryControllerService.CategoryControllerFindAllParams): Observable<{}> {
-    return this.categoryControllerFindAllResponse(params).pipe(
+  categoryControllerReadAll(params: CategoryControllerService.CategoryControllerReadAllParams): Observable<{}> {
+    return this.categoryControllerReadAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -90,7 +90,7 @@ class CategoryControllerService extends BaseService {
    * @param newCategory newCategory
    * @return OK
    */
-  categoryControllerAddResponse(newCategory: CategoryEntity): Observable<StrictHttpResponse<{}>> {
+  categoryControllerCreateResponse(newCategory: CategoryEntity): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -116,8 +116,8 @@ class CategoryControllerService extends BaseService {
    * @param newCategory newCategory
    * @return OK
    */
-  categoryControllerAdd(newCategory: CategoryEntity): Observable<{}> {
-    return this.categoryControllerAddResponse(newCategory).pipe(
+  categoryControllerCreate(newCategory: CategoryEntity): Observable<{}> {
+    return this.categoryControllerCreateResponse(newCategory).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -126,7 +126,7 @@ class CategoryControllerService extends BaseService {
    * @param categoryId categoryId
    * @return OK
    */
-  categoryControllerFindOneResponse(categoryId: string): Observable<StrictHttpResponse<ResourceCategoryEntity>> {
+  categoryControllerReadOneResponse(categoryId: string): Observable<StrictHttpResponse<ResourceCategoryEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -152,8 +152,8 @@ class CategoryControllerService extends BaseService {
    * @param categoryId categoryId
    * @return OK
    */
-  categoryControllerFindOne(categoryId: string): Observable<ResourceCategoryEntity> {
-    return this.categoryControllerFindOneResponse(categoryId).pipe(
+  categoryControllerReadOne(categoryId: string): Observable<ResourceCategoryEntity> {
+    return this.categoryControllerReadOneResponse(categoryId).pipe(
       __map(_r => _r.body as ResourceCategoryEntity)
     );
   }
@@ -234,18 +234,54 @@ class CategoryControllerService extends BaseService {
       __map(_r => _r.body as {})
     );
   }
+
+  /**
+   * @param categoryId categoryId
+   * @return OK
+   */
+  categoryControllerFindTranslationsResponse(categoryId: string): Observable<StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/categories/${categoryId}/translations`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param categoryId categoryId
+   * @return OK
+   */
+  categoryControllerFindTranslations(categoryId: string): Observable<{}> {
+    return this.categoryControllerFindTranslationsResponse(categoryId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
 }
 
 module CategoryControllerService {
 
   /**
-   * Parameters for categoryControllerFindAll
+   * Parameters for categoryControllerReadAll
    */
-  export interface CategoryControllerFindAllParams {
-    page?: number;
-    size?: number;
+  export interface CategoryControllerReadAllParams {
     sort?: string;
     dir?: string;
+    page?: number;
+    size?: number;
     filter?: string;
   }
 }

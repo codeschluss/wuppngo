@@ -3,7 +3,7 @@ package de.codeschluss.portal.integration.suburb;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.suburb.SuburbController;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +27,7 @@ public class SuburbControllerFindAllTest {
   public void findAllWithoutPaginationOk() {
     FilterSortPaginate params = new FilterSortPaginate(null, null, null, "name", "asc");
 
-    Resources<?> result = (Resources<?>) controller.findAll(params).getBody();
+    Resources<?> result = (Resources<?>) controller.readAll(params).getBody();
 
     assertThat(result.getContent()).isNotEmpty();
   }
@@ -36,20 +36,20 @@ public class SuburbControllerFindAllTest {
   public void findAllEmptyParamsOk() {
     FilterSortPaginate params = new FilterSortPaginate(null, null, null, null, null);
 
-    Resources<?> result = (Resources<?>) controller.findAll(params).getBody();
+    Resources<?> result = (Resources<?>) controller.readAll(params).getBody();
 
     assertThat(result.getContent()).isNotEmpty();
   }
 
   @Test
   public void findAllWithPaginationOk() {
-    PagedResources<?> result = (PagedResources<?>) controller.findAll(params).getBody();
+    PagedResources<?> result = (PagedResources<?>) controller.readAll(params).getBody();
     assertThat(result.getContent()).isNotEmpty();
   }
 
   @Test(expected = PropertyReferenceException.class)
   public void findAllWrongParams() {
     FilterSortPaginate params = new FilterSortPaginate("suburb", 1, 5, "blablabla123", "wrong");
-    controller.findAll(params);
+    controller.readAll(params);
   }
 }

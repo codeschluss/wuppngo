@@ -3,7 +3,7 @@ package de.codeschluss.portal.core.i18n.language;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-import de.codeschluss.portal.core.common.PagingAndSortingAssembler;
+import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class LanguageResourceAssembler extends PagingAndSortingAssembler<Languag
     List<Link> links = new ArrayList<Link>();
 
     links.add(linkTo(methodOn(LanguageController.class)
-        .findOne(language.getId())).withSelfRel());
+        .readOne(language.getId())).withSelfRel());
 
     return links;
   }

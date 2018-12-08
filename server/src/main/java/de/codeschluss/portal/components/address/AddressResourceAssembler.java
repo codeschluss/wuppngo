@@ -3,7 +3,7 @@ package de.codeschluss.portal.components.address;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-import de.codeschluss.portal.core.common.PagingAndSortingAssembler;
+import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class AddressResourceAssembler extends PagingAndSortingAssembler<AddressE
     List<Link> links = new ArrayList<Link>();
 
     links.add(linkTo(methodOn(AddressController.class)
-        .findOne(address.getId())).withSelfRel());
+        .readOne(address.getId())).withSelfRel());
     links.add(linkTo(methodOn(AddressController.class)
         .findSuburb(address.getId())).withRel("suburb"));
 

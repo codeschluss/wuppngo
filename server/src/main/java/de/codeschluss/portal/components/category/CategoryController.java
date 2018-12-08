@@ -3,10 +3,10 @@ package de.codeschluss.portal.components.category;
 import static org.springframework.http.ResponseEntity.ok;
 
 import de.codeschluss.portal.components.category.CategoryEntity;
-import de.codeschluss.portal.core.common.CrudController;
+import de.codeschluss.portal.core.api.CrudController;
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
@@ -42,21 +42,22 @@ public class CategoryController extends CrudController<CategoryEntity, CategoryS
 
   @Override
   @GetMapping("/categories")
-  public ResponseEntity<?> findAll(FilterSortPaginate params) {
-    return super.findAll(params);
+  public ResponseEntity<?> readAll(FilterSortPaginate params) {
+    return super.readAll(params);
   }
 
   @Override
   @GetMapping("/categories/{categoryId}")
-  public Resource<CategoryEntity> findOne(@PathVariable String categoryId) {
-    return super.findOne(categoryId);
+  public Resource<CategoryEntity> readOne(@PathVariable String categoryId) {
+    return super.readOne(categoryId);
   }
 
   @Override
   @PostMapping("/categories")
   @SuperUserPermission
-  public ResponseEntity<?> add(@RequestBody CategoryEntity newCategory) throws URISyntaxException {
-    return super.add(newCategory);
+  public ResponseEntity<?> create(@RequestBody CategoryEntity newCategory) 
+      throws URISyntaxException {
+    return super.create(newCategory);
   }
 
   @Override

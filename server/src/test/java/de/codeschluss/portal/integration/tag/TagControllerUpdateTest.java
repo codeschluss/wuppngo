@@ -30,19 +30,19 @@ public class TagControllerUpdateTest {
   @Test
   @WithUserDetails("super@user")
   public void updateSuperUserOk() throws URISyntaxException {
-    TagEntity tag = new TagEntity("updateSuperUserOk", "updateSuperUserOk", null);
+    TagEntity tag = new TagEntity("updateSuperUserOk", "updateSuperUserOk", null, null);
     String tagId = "00000000-0000-0000-0002-110000000000";
 
     controller.update(tag, tagId);
 
-    Resource<TagEntity> result = (Resource<TagEntity>) controller.findOne(tagId);
+    Resource<TagEntity> result = (Resource<TagEntity>) controller.readOne(tagId);
     assertThat(result.getContent().getName()).isEqualTo(tag.getName());
   }
 
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void updateSuperUserDuplicatedName() throws URISyntaxException {
-    TagEntity tag = new TagEntity("tag1", "tag1", null);
+    TagEntity tag = new TagEntity("tag1", "tag1", null, null);
     String tagId = "00000000-0000-0000-0002-110000000000";
 
     controller.update(tag, tagId);
@@ -52,7 +52,7 @@ public class TagControllerUpdateTest {
   @WithUserDetails("provider1@user")
   public void updateProviderUserDenied() throws URISyntaxException {
     TagEntity tag = new TagEntity("updateProviderUserDenied", "updateProviderUserDenied",
-        null);
+        null, null);
     String tagId = "00000000-0000-0000-0002-100000000000";
 
     controller.update(tag, tagId);
@@ -60,7 +60,7 @@ public class TagControllerUpdateTest {
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void updateNoUserDenied() throws URISyntaxException {
-    TagEntity tag = new TagEntity("updateNoUserDenied", "updateNoUserDenied", null);
+    TagEntity tag = new TagEntity("updateNoUserDenied", "updateNoUserDenied", null, null);
     String tagId = "00000000-0000-0000-0002-100000000000";
 
     controller.update(tag, tagId);

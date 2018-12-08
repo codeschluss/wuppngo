@@ -3,7 +3,7 @@ package de.codeschluss.portal.components.category;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-import de.codeschluss.portal.core.common.PagingAndSortingAssembler;
+import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class CategoryResourceAssembler extends PagingAndSortingAssembler<Categor
     List<Link> links = new ArrayList<Link>();
 
     links.add(linkTo(methodOn(CategoryController.class)
-        .findOne(category.getId())).withSelfRel());
+        .readOne(category.getId())).withSelfRel());
     links.add(linkTo(methodOn(CategoryController.class)
         .findTranslations(category.getId())).withRel("translations"));
 

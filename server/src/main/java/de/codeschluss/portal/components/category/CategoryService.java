@@ -1,6 +1,6 @@
 package de.codeschluss.portal.components.category;
 
-import de.codeschluss.portal.core.common.ResourceDataService;
+import de.codeschluss.portal.core.api.ResourceDataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
 import org.springframework.hateoas.Resource;
@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CategoryService extends ResourceDataService<CategoryEntity, CategoryQueryBuilder> {
-
-  /** The default sort prop. */
-  protected final String defaultSortProp = "color";
-
+  
   /**
    * Instantiates a new category service.
    *
@@ -34,13 +31,6 @@ public class CategoryService extends ResourceDataService<CategoryEntity, Categor
     super(repo, entities, assembler);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.common.ResourceDataService#getExisting(de.codeschluss.
-   * portal.core.common.BaseEntity)
-   */
   @Override
   public CategoryEntity getExisting(CategoryEntity newCategory) {
     return repo.findOne(entities.withName(newCategory.getName())).orElse(null);
@@ -59,12 +49,6 @@ public class CategoryService extends ResourceDataService<CategoryEntity, Categor
     return assembler.toResource(category);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.codeschluss.portal.core.common.ResourceDataService#update(java.lang.String,
-   * de.codeschluss.portal.core.common.BaseEntity)
-   */
   @Override
   public CategoryEntity update(String id, CategoryEntity newCategory) {
     return repo.findById(id).map(category -> {

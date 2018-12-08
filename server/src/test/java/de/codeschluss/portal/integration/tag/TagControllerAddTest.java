@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.tag.TagController;
 import de.codeschluss.portal.components.tag.TagEntity;
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import java.net.URISyntaxException;
 
@@ -31,9 +31,9 @@ public class TagControllerAddTest {
   @Test
   @WithUserDetails("super@user")
   public void addSuperUserOk() throws URISyntaxException {
-    TagEntity tag = new TagEntity("addSuperUserOk", "addSuperUserOk", null);
+    TagEntity tag = new TagEntity("addSuperUserOk", "addSuperUserOk", null, null);
 
-    controller.add(tag);
+    controller.create(tag);
 
     assertContaining(tag);
   }
@@ -41,9 +41,9 @@ public class TagControllerAddTest {
   @Test
   @WithUserDetails("provider1@user")
   public void addProviderUserOk() throws URISyntaxException {
-    TagEntity tag = new TagEntity("addProviderUserOk", "addProviderUserOk", null);
+    TagEntity tag = new TagEntity("addProviderUserOk", "addProviderUserOk", null, null);
 
-    controller.add(tag);
+    controller.create(tag);
 
     assertContaining(tag);
   }
@@ -51,30 +51,30 @@ public class TagControllerAddTest {
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void addSuperUserDuplicated() throws URISyntaxException {
-    TagEntity tag = new TagEntity("tag1", "tag1", null);
+    TagEntity tag = new TagEntity("tag1", "tag1", null, null);
 
-    controller.add(tag);
+    controller.create(tag);
   }
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("new@user")
   public void addNotApprovedDenied() throws URISyntaxException {
-    TagEntity tag = new TagEntity("addNotApprovedDenied", "addNotApprovedDenied", null);
+    TagEntity tag = new TagEntity("addNotApprovedDenied", "addNotApprovedDenied", null, null);
 
-    controller.add(tag);
+    controller.create(tag);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void addNoUserDenied() throws URISyntaxException {
-    TagEntity tag = new TagEntity("addNoUserDenied", "addNoUserDenied", null);
+    TagEntity tag = new TagEntity("addNoUserDenied", "addNoUserDenied", null, null);
 
-    controller.add(tag);
+    controller.create(tag);
   }
 
   @SuppressWarnings("unchecked")
   private void assertContaining(TagEntity tag) {
     Resources<Resource<TagEntity>> result = (Resources<Resource<TagEntity>>) controller
-        .findAll(new FilterSortPaginate()).getBody();
+        .readAll(new FilterSortPaginate()).getBody();
     assertThat(result.getContent()).haveAtLeastOne(
         new Condition<>(p -> p.getContent().getName().equals(tag.getName()), "tag exists"));
   }

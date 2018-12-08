@@ -1,8 +1,8 @@
 package de.codeschluss.portal.core.i18n.language;
 
-import de.codeschluss.portal.core.common.CrudController;
+import de.codeschluss.portal.core.api.CrudController;
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import java.net.URISyntaxException;
 
@@ -31,21 +31,22 @@ public class LanguageController extends CrudController<LanguageEntity, LanguageS
 
   @Override
   @GetMapping("/languages")
-  public ResponseEntity<?> findAll(FilterSortPaginate params) {
-    return super.findAll(params);
+  public ResponseEntity<?> readAll(FilterSortPaginate params) {
+    return super.readAll(params);
   }
 
   @Override
   @GetMapping("/languages/{languageId}")
-  public Resource<LanguageEntity> findOne(@PathVariable String languageId) {
-    return super.findOne(languageId);
+  public Resource<LanguageEntity> readOne(@PathVariable String languageId) {
+    return super.readOne(languageId);
   }
 
   @Override
   @PostMapping("/languages")
   @SuperUserPermission
-  public ResponseEntity<?> add(@RequestBody LanguageEntity newLanguage) throws URISyntaxException {
-    return super.add(newLanguage);
+  public ResponseEntity<?> create(@RequestBody LanguageEntity newLanguage) 
+      throws URISyntaxException {
+    return super.create(newLanguage);
   }
 
   @Override

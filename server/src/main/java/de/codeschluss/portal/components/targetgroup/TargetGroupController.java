@@ -3,10 +3,10 @@ package de.codeschluss.portal.components.targetgroup;
 import static org.springframework.http.ResponseEntity.ok;
 
 import de.codeschluss.portal.components.targetgroup.TargetGroupEntity;
-import de.codeschluss.portal.core.common.CrudController;
+import de.codeschluss.portal.core.api.CrudController;
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
@@ -42,22 +42,22 @@ public class TargetGroupController extends CrudController<TargetGroupEntity, Tar
 
   @Override
   @GetMapping("/targetgroups")
-  public ResponseEntity<?> findAll(FilterSortPaginate params) {
-    return super.findAll(params);
+  public ResponseEntity<?> readAll(FilterSortPaginate params) {
+    return super.readAll(params);
   }
 
   @Override
   @GetMapping("/targetgroups/{targetGroupId}")
-  public Resource<TargetGroupEntity> findOne(@PathVariable String targetGroupId) {
-    return super.findOne(targetGroupId);
+  public Resource<TargetGroupEntity> readOne(@PathVariable String targetGroupId) {
+    return super.readOne(targetGroupId);
   }
 
   @Override
   @PostMapping("/targetgroups")
   @SuperUserPermission
-  public ResponseEntity<?> add(@RequestBody TargetGroupEntity newTargetGroup)
+  public ResponseEntity<?> create(@RequestBody TargetGroupEntity newTargetGroup)
       throws URISyntaxException {
-    return super.add(newTargetGroup);
+    return super.create(newTargetGroup);
   }
 
   @Override

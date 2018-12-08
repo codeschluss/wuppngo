@@ -3,7 +3,7 @@ package de.codeschluss.portal.components.user;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-import de.codeschluss.portal.core.common.PagingAndSortingAssembler;
+import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class UserResourceAssembler extends PagingAndSortingAssembler<UserEntity>
     List<Link> links = new ArrayList<Link>();
 
     links.add(linkTo(methodOn(UserController.class)
-        .findOne(user.getId())).withSelfRel());
+        .readOne(user.getId())).withSelfRel());
     links.add(linkTo(methodOn(UserController.class)
         .findOrganisations(user.getId())).withRel("organisations"));
     links.add(linkTo(methodOn(UserController.class)

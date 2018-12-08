@@ -1,6 +1,6 @@
 package de.codeschluss.portal.components.targetgroup;
 
-import de.codeschluss.portal.core.common.ResourceDataService;
+import de.codeschluss.portal.core.api.ResourceDataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
 import java.util.List;
@@ -18,9 +18,6 @@ import org.springframework.stereotype.Service;
 public class TargetGroupService 
     extends ResourceDataService<TargetGroupEntity, TargetGroupQueryBuilder> {
 
-  /** The default sort prop. */
-  protected final String defaultSortProp = "description";
-
   /**
    * Instantiates a new target group service.
    *
@@ -37,13 +34,6 @@ public class TargetGroupService
     super(repo, entities, assembler);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.common.ResourceDataService#getExisting(de.codeschluss.
-   * portal.core.common.BaseEntity)
-   */
   @Override
   public TargetGroupEntity getExisting(TargetGroupEntity newTargetGroup) {
     return repo.findOne(entities.withName(newTargetGroup.getName())).orElse(null);
@@ -66,12 +56,6 @@ public class TargetGroupService
     return assembler.entitiesToResources(targetGroups, null);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.codeschluss.portal.core.common.ResourceDataService#update(java.lang.String,
-   * de.codeschluss.portal.core.common.BaseEntity)
-   */
   @Override
   public TargetGroupEntity update(String id, TargetGroupEntity newTargetGroup) {
     return repo.findById(id).map(tag -> {

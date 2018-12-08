@@ -7,14 +7,14 @@ import de.codeschluss.portal.components.activity.ActivityService;
 import de.codeschluss.portal.components.organisation.OrganisationService;
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.components.provider.ProviderService;
-import de.codeschluss.portal.core.common.CrudController;
+import de.codeschluss.portal.core.api.CrudController;
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.security.permissions.OwnUserOrSuperUserPermission;
 import de.codeschluss.portal.core.security.permissions.OwnUserPermission;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -71,49 +71,26 @@ public class UserController extends CrudController<UserEntity, UserService> {
     this.organisationService = organisationService;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.codeschluss.portal.core.common.CrudController#findAll(de.codeschluss.
-   * portal.core.utils.FilterSortPaginate)
-   */
   @Override
   @GetMapping("/users")
   @SuperUserPermission
-  public ResponseEntity<?> findAll(FilterSortPaginate params) {
-    return super.findAll(params);
+  public ResponseEntity<?> readAll(FilterSortPaginate params) {
+    return super.readAll(params);
   }
 
-  /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.common.CrudController#findOne(java.lang.String)
-   */
   @Override
   @GetMapping("/users/{userId}")
   @OwnUserOrSuperUserPermission
-  public Resource<UserEntity> findOne(@PathVariable String userId) {
-    return super.findOne(userId);
+  public Resource<UserEntity> readOne(@PathVariable String userId) {
+    return super.readOne(userId);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.common.CrudController#add(de.codeschluss.portal.
-   * core.common.BaseEntity)
-   */
   @Override
   @PostMapping("/users")
-  public ResponseEntity<?> add(@RequestBody UserEntity newUser) throws URISyntaxException {
-    return super.add(newUser);
+  public ResponseEntity<?> create(@RequestBody UserEntity newUser) throws URISyntaxException {
+    return super.create(newUser);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.common.CrudController#update(de.codeschluss.portal
-   * .core.common.BaseEntity, java.lang.String)
-   */
   @Override
   @PutMapping("/users/{userId}")
   @OwnUserPermission
@@ -122,9 +99,6 @@ public class UserController extends CrudController<UserEntity, UserService> {
     return super.update(newUser, userId);
   }
 
-  /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.common.CrudController#delete(java.lang.String)
-   */
   @Override
   @DeleteMapping("/users/{userId}")
   @OwnUserOrSuperUserPermission

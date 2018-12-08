@@ -3,11 +3,11 @@ package de.codeschluss.portal.components.address;
 import static org.springframework.http.ResponseEntity.ok;
 
 import de.codeschluss.portal.components.suburb.SuburbService;
-import de.codeschluss.portal.core.common.CrudController;
+import de.codeschluss.portal.core.api.CrudController;
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.security.permissions.ProviderOrSuperUserPermission;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import java.net.URISyntaxException;
 
@@ -47,51 +47,25 @@ public class AddressController extends CrudController<AddressEntity, AddressServ
     this.suburbService = suburbService;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.codeschluss.portal.core.common.CrudController#findAll(de.codeschluss.
-   * portal.core.utils.FilterSortPaginate)
-   */
   @Override
   @GetMapping("/addresses")
-  public ResponseEntity<?> findAll(FilterSortPaginate params) {
-    return super.findAll(params);
+  public ResponseEntity<?> readAll(FilterSortPaginate params) {
+    return super.readAll(params);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.common.CrudController#findOne(java.lang.String)
-   */
   @Override
   @GetMapping("/addresses/{addressId}")
-  public Resource<AddressEntity> findOne(@PathVariable String addressId) {
-    return super.findOne(addressId);
+  public Resource<AddressEntity> readOne(@PathVariable String addressId) {
+    return super.readOne(addressId);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.common.CrudController#add(de.codeschluss.portal.
-   * core.common.BaseEntity)
-   */
   @Override
   @PostMapping("/addresses")
   @ProviderOrSuperUserPermission
-  public ResponseEntity<?> add(@RequestBody AddressEntity newAddress) throws URISyntaxException {
-    return super.add(newAddress);
+  public ResponseEntity<?> create(@RequestBody AddressEntity newAddress) throws URISyntaxException {
+    return super.create(newAddress);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.common.CrudController#update(de.codeschluss.portal
-   * .core.common.BaseEntity, java.lang.String)
-   */
   @Override
   @PutMapping("/addresses/{addressId}")
   @SuperUserPermission
@@ -100,12 +74,6 @@ public class AddressController extends CrudController<AddressEntity, AddressServ
     return super.update(newAddress, addressId);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.common.CrudController#delete(java.lang.String)
-   */
   @Override
   @DeleteMapping("/addresses/{addressId}")
   @SuperUserPermission

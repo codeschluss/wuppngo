@@ -2,8 +2,8 @@ package de.codeschluss.portal.components.user;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 
-import de.codeschluss.portal.core.common.QueryBuilder;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
+import de.codeschluss.portal.core.service.QueryBuilder;
 
 import org.springframework.stereotype.Service;
 
@@ -16,6 +16,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserQueryBuilder extends QueryBuilder<QUserEntity> {
+  
+  /** The default sort prop. */
+  protected final String defaultSortProp = "username";
   
   /**
    * Instantiates a new user query builder.

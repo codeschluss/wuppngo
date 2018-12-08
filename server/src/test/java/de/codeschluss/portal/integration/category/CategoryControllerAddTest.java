@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.category.CategoryController;
 import de.codeschluss.portal.components.category.CategoryEntity;
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import java.net.URISyntaxException;
 
@@ -33,12 +33,12 @@ public class CategoryControllerAddTest {
   @SuppressWarnings("unchecked")
   public void addSuperUserOk() throws URISyntaxException {
     CategoryEntity category = new CategoryEntity("addSuperUserOk", "addSuperUserOk",
-        "addSuperUserOk", null);
+        "addSuperUserOk", null, null);
 
-    controller.add(category);
+    controller.create(category);
 
     Resources<Resource<CategoryEntity>> result = (Resources<Resource<CategoryEntity>>) controller
-        .findAll(new FilterSortPaginate()).getBody();
+        .readAll(new FilterSortPaginate()).getBody();
     assertThat(result.getContent()).haveAtLeastOne(new Condition<>(
         p -> p.getContent().getName().equals(category.getName()), "category exists"));
   }
@@ -47,25 +47,25 @@ public class CategoryControllerAddTest {
   @WithUserDetails("super@user")
   public void addSuperUserDuplicated() throws URISyntaxException {
     CategoryEntity category = new CategoryEntity("addSuperUserDuplicatedName",
-        "addSuperUserDuplicatedName", "category1", null);
+        "addSuperUserDuplicatedName", "category1", null, null);
 
-    controller.add(category);
+    controller.create(category);
   }
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void addProviderDenied() throws URISyntaxException {
     CategoryEntity category = new CategoryEntity("addProviderDenied", "addProviderDenied",
-        "addProviderDenied", null);
+        "addProviderDenied", null, null);
 
-    controller.add(category);
+    controller.create(category);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void addNoUserDenied() throws URISyntaxException {
     CategoryEntity category = new CategoryEntity("addNoUserDenied", "addNoUserDenied",
-        "addNoUserDenied", null);
+        "addNoUserDenied", null, null);
 
-    controller.add(category);
+    controller.create(category);
   }
 }

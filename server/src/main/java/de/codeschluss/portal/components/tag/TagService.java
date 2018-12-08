@@ -1,6 +1,6 @@
 package de.codeschluss.portal.components.tag;
 
-import de.codeschluss.portal.core.common.ResourceDataService;
+import de.codeschluss.portal.core.api.ResourceDataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
 import java.util.List;
@@ -18,9 +18,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class TagService extends ResourceDataService<TagEntity, TagQueryBuilder> {
 
-  /** The default sort prop. */
-  protected final String defaultSortProp = "description";
-
   /**
    * Instantiates a new tag service.
    *
@@ -36,13 +33,6 @@ public class TagService extends ResourceDataService<TagEntity, TagQueryBuilder> 
     super(repo, entities, assembler);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.common.ResourceDataService#getExisting(de.codeschluss.
-   * portal.core.common.BaseEntity)
-   */
   @Override
   public TagEntity getExisting(TagEntity newTag) {
     return repo.findOne(entities.withName(newTag.getName())).orElse(null);
@@ -63,12 +53,6 @@ public class TagService extends ResourceDataService<TagEntity, TagQueryBuilder> 
     return assembler.entitiesToResources(tags, null);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.codeschluss.portal.core.common.ResourceDataService#update(java.lang.String,
-   * de.codeschluss.portal.core.common.BaseEntity)
-   */
   @Override
   public TagEntity update(String id, TagEntity newTag) {
     return repo.findById(id).map(tag -> {
