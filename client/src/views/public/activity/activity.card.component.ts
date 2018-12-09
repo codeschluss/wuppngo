@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ActivityModel } from '../../../realm/activity/activity.model';
+import { Router } from '@angular/router';
+import { ActivityModel } from 'src/realm/activity/activity.model';
 
 @Component({
   selector: 'activity-card',

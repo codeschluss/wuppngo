@@ -3,7 +3,6 @@ import { AngularOpenlayersModule, LayerVectorComponent, MapComponent, ViewCompon
 import { Feature, MapBrowserEvent, proj, style } from 'openlayers';
 import { Subject } from 'rxjs';
 import { AddressModel } from '../../../realm/address/address.model';
-import * as colorConvert from 'color-convert';
 import { MatBottomSheet } from '@angular/material';
 import { EventEmitter } from '@angular/core';
 
@@ -23,6 +22,9 @@ export class MappingComponent implements AfterViewInit, OnInit
   @Input()
   public activities: any[];
 
+  @Input()
+  public disabledPointerAction: boolean;
+
   @Output()
   hoveredActivities: EventEmitter<any[]> = new EventEmitter();
 
@@ -32,7 +34,7 @@ export class MappingComponent implements AfterViewInit, OnInit
   public projection: string;
   public zoomfactor: number;
   public highlightedMarkerId: string;
-  public slectedActivities: any[];
+  public selectedActivities: any[];
 
   @ViewChild(LayerVectorComponent)
   private aolLayer: LayerVectorComponent;
@@ -65,15 +67,17 @@ export class MappingComponent implements AfterViewInit, OnInit
 
     this.aolMap.loadTilesWhileAnimating = true;
     this.aolMap.loadTilesWhileInteracting = true;
-    this.aolMap.onClick
+    if (!this.disabledPointerAction) {
+      this.aolMap.onClick
       .subscribe((event: MapBrowserEvent) => {
         this.onClick(event);
           }
         );
-    this.aolMap.onPointerMove.subscribe((event: MapBrowserEvent) => {
-      this.onHover(event);
-      }
-    );
+      this.aolMap.onPointerMove.subscribe((event: MapBrowserEvent) => {
+        this.onHover(event);
+        }
+      );
+    }
 
   }
 
@@ -188,11 +192,11 @@ export class MappingComponent implements AfterViewInit, OnInit
     const click = this.aolMap.instance.getFeaturesAtPixel(event.pixel);
     if (click) {
       const feats = click && click.length ? click[0].get('features') : [];
-      this.slectedActivities = feats.map(i => this.activities.find(
+      this.selectedActivities = feats.map(i => this.activities.find(
             j => j.id === i.getId()));
-      this.highlightPin(this.slectedActivities[0]);
+      this.highlightPin(this.selectedActivities[0]);
     } else {
-      this.slectedActivities = null;
+      this.selectedActivities = null;
       this.unHighlightPins();
     }
   }

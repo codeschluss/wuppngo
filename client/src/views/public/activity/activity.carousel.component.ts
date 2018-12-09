@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, Input, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, Input } from '@angular/core';
 import { NgxHmCarouselModule } from 'ngx-hm-carousel';
-import { ActivityModel } from '../../../realm/activity/activity.model';
+import { ActivityModel } from 'src/realm/activity/activity.model';
 
 @Component({
   selector: 'activity-carousel-component',
@@ -18,7 +18,7 @@ export class ActivityCarouselComponent implements AfterViewInit {
   @Input()
   public activities: ActivityModel[];
 
-  public clusteredActivities: ActivityModel[][] = [];
+  public clusteredActivities: ActivityModel[][];
 
   index = 0;
   speed = 5000;
@@ -28,15 +28,20 @@ export class ActivityCarouselComponent implements AfterViewInit {
   autoplay = false;
 
   constructor(
-    private el: ElementRef
   ) { }
 
   onResize(): void {
-    this.fillCluster(document.getElementById('carousel').offsetWidth);
+    if (document.getElementById('carousel')
+      && document.getElementById('carousel').offsetWidth) {
+      this.fillCluster(document.getElementById('carousel').offsetWidth);
+    }
   }
 
   ngAfterViewInit(): void {
-    this.fillCluster(document.getElementById('carousel').offsetWidth);
+    if (document.getElementById('carousel')
+      && document.getElementById('carousel').offsetWidth) {
+      this.fillCluster(document.getElementById('carousel').offsetWidth);
+    }
   }
 
   fillCluster(innerWidth: number): void {

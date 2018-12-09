@@ -2,5 +2,5 @@
     <div fxLayout="row" fxLayoutAlign="space-between"><div>{{blog.creationDate}}</div><div>{{blog.author}}</div></div>
     <div class="color-primary blogTitle">{{blog.title}}</div>
     <div *ngIf="(blog.activity | async) as activity" class="activityTitle" (click)="openActivityView()">{{activity?.name}}</div>
-    <div>{{blog.postText.substring(1, 100) + '...'}}</div><span (click)="openBlogView()">mehr lesen</span>
+    <div>{{blog.postText.substring(0, 100) + '...'}}</div><span (click)="openBlogView()">mehr lesen</span>
 </div> 
