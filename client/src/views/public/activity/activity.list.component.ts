@@ -43,6 +43,7 @@ export class ActivityListComponent {
     this.suburbs = route.snapshot.data.suburbs;
     this.target_groups = route.snapshot.data.targetGroups;
     this.categories = route.snapshot.data.categories;
+
   }
 
   toggleMap(): void {

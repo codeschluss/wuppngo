@@ -49,10 +49,6 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
     return true;
   }
   
-  /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.service
-   * .QueryBuilder#search(de.codeschluss.portal.core.utils.FilterSortPaginate)
-   */
   @Override
   public Predicate search(FilterSortPaginate p) {
     ActivityQueryParam params = validateParams(p);
@@ -71,6 +67,10 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
    * @return the predicate
    */
   private Predicate withLocalized(List<String> locales) {
+    String defaultLang = languageService.getDefaultLocale();
+    if (!locales.contains(defaultLang)) {
+      locales.add(defaultLang);
+    }
     return query.translatables.any().language.locale.in(locales);
   }
 
@@ -220,7 +220,7 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
    */
   public BooleanExpression forIdWithAnyOfProviders(
       String activityId, List<ProviderEntity> providers) {
-    return withId(activityId).and(withAnyOfProviders(providers));
+    return withAnyOfProviders(providers).and(withId(activityId));
   }
   
   /**
@@ -231,13 +231,6 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
    */
   public BooleanExpression withAnyOfProviders(List<ProviderEntity> providers) {
     return query.provider.in(providers);
-  }
-  
-  /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.service.QueryBuilder#withId(java.lang.String)
-   */
-  public BooleanExpression withId(String id) {
-    return query.id.eq(id);
   }
 
   /**

@@ -61,7 +61,8 @@ public class OrganisationQueryBuilder extends QueryBuilder<QOrganisationEntity> 
   }
 
   @Override
-  public Predicate search(FilterSortPaginate params) {
+  public Predicate search(FilterSortPaginate p) {
+    OrganisationQueryParam params = validateParams(p);
     List<String> locales = languageService.getCurrentReadLocales();
     BooleanBuilder search = new BooleanBuilder(withLocalized(locales));
     return params.isEmptyQuery()
@@ -76,6 +77,10 @@ public class OrganisationQueryBuilder extends QueryBuilder<QOrganisationEntity> 
    * @return the predicate
    */
   private Predicate withLocalized(List<String> locales) {
+    String defaultLang = languageService.getDefaultLocale();
+    if (!locales.contains(defaultLang)) {
+      locales.add(defaultLang);
+    }
     return query.translatables.any().language.locale.in(locales);
   }
   
@@ -86,7 +91,10 @@ public class OrganisationQueryBuilder extends QueryBuilder<QOrganisationEntity> 
    * @param params the params
    * @return the predicate
    */
-  private Predicate searchFiltered(BooleanBuilder search, FilterSortPaginate params) {
+  private Predicate searchFiltered(BooleanBuilder search, OrganisationQueryParam params) {
+    if (params.getApproved() != null && params.getApproved()) {
+      search.and(withApprovedOnly());
+    }
     String filter = prepareFilter(params.getFilter());
     return search.and(
         query.name.likeIgnoreCase(filter)
@@ -99,6 +107,15 @@ public class OrganisationQueryBuilder extends QueryBuilder<QOrganisationEntity> 
         .or(query.address.street.likeIgnoreCase(filter)));
   }
   
+  /**
+   * With approved only.
+   *
+   * @return the predicate
+   */
+  private Predicate withApprovedOnly() {
+    return query.approved.isTrue();
+  }
+
   /**
    * Description.
    *
@@ -113,5 +130,20 @@ public class OrganisationQueryBuilder extends QueryBuilder<QOrganisationEntity> 
 
   public BooleanExpression forActivity(String activityId) {
     return query.providers.any().activities.any().id.eq(activityId);
+  }
+  
+  /**
+   * Validate params.
+   *
+   * @param <P> the generic type
+   * @param p the p
+   * @return the organisation query param
+   */
+  private <P extends FilterSortPaginate> OrganisationQueryParam validateParams(P p) {
+    if (p instanceof OrganisationQueryParam) {
+      return (OrganisationQueryParam) p;
+    }
+    throw new RuntimeException(
+        "Must be of type " + OrganisationQueryParam.class + " but is " + p.getClass());
   }
 }

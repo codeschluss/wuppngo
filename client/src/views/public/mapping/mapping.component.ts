@@ -5,7 +5,6 @@ import { Subject } from 'rxjs';
 import { AddressModel } from '../../../realm/address/address.model';
 import * as colorConvert from 'color-convert';
 import { MatBottomSheet } from '@angular/material';
-import { ActivitiesBottomsheetComponent } from '../activity/activities.bottomsheet.component';
 import { EventEmitter } from '@angular/core';
 
 
