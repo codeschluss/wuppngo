@@ -10,6 +10,7 @@ import { ScheduleModel } from 'src/realm/schedule/schedule.model';
 import { OrganisationImageModel } from 'src/realm/image/organisation-image.model';
 import { MatDialog } from '@angular/material';
 import { OrgaMediaDialogComponent } from './organisation.mediacontent.dialog.component';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'organisation-view',
@@ -23,15 +24,21 @@ export class OrganisationViewComponent {
   public organisation: any;
   public activities: ActivityModel[] = [];
   public images: any[] = [];
+  public videoUrl;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _sanitizer: DomSanitizer
   ) {
     this.organisation = route.snapshot.data.organisation;
     if (this.organisation.images) {
       this.initOrgaImg(this.organisation.images);
+    }
+    if (this.organisation.videoUrl) {
+      this.videoUrl = _sanitizer.bypassSecurityTrustResourceUrl(
+        this.organisation.videoUrl.replace('watch?v=', 'embed/'));
     }
   }
 
@@ -50,7 +57,7 @@ export class OrganisationViewComponent {
       width: '50vw',
       data: {
         images: this.images,
-        videoUrl: this.organisation.videoUrl
+        videoUrl: this.videoUrl
       }
     });
 

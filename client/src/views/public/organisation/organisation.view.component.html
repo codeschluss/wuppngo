@@ -4,6 +4,7 @@
         <div fxFlex="20" fxFlex.lt-md="50" id="imagePreviewSection" *ngIf="images && images.length">
             <img (click)="openImagesPopUp()" class="previewImage" [src]="images[0]">
             <p class="smallText">Click for more pictures</p>
+            <iframe class="videoContent" [src]='videoUrl' frameborder="0" allowfullscreen></iframe>
         </div>
         <div fxFlex="40" fxFlex.lt-md="100" fxFlexOrder.lt-md="3">{{organisation.description}}</div>
         <div fxFlex="30" fxLayout="column" fxFlex.lt-md="50" fxLayoutGap="20px" class="background-color-secondary organisation-contact-card">
