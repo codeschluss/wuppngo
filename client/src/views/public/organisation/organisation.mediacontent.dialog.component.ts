@@ -5,13 +5,16 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 @Component({
     selector: 'orga-media-dialog',
     templateUrl: 'organisation.mediacontent.dialog.component.html',
-    styleUrls: ['organisation.mediacontent.component.scss']
+    styleUrls: [
+      'organisation.mediacontent.component.scss',
+      'organisation.component.scss'
+    ]
   })
   export class OrgaMediaDialogComponent {
 
     index = 0;
     speed = 5000;
-    infinite = false;
+    infinite = true;
     direction = 'right';
     directionToggle = true;
     autoplay = false;
@@ -24,9 +27,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
       @Inject(MAT_DIALOG_DATA) public data: any
       ) {
         if (data.videoUrl) {
-          this.videoUrl =
-          _sanitizer.bypassSecurityTrustResourceUrl(
-            data.videoUrl.replace('watch?v=', 'embed/'));
+          this.videoUrl = data.videoUrl;
         }
         this.images = data.images;
       }

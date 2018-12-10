@@ -6,8 +6,12 @@ import {
     MatMenuModule,
     MatDialogModule,
     MatExpansionModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialog
 } from '@angular/material';
+import { LanguageProvider } from 'src/realm/language/language.provider';
+import { LanguageModel } from 'src/realm/language/language.model';
+import { LangaugeChooserDialogComponent } from './languagecooser.component';
 
 @Component({
     selector: 'navbar-component',
@@ -29,7 +33,9 @@ export class NavBarComponent {
 
     public routeLinks: any[] = [];
 
-    public constructor() {
+    public constructor(
+        public dialog: MatDialog
+    ) {
         this.initGlobalTabs();
     }
 
@@ -80,6 +86,16 @@ export class NavBarComponent {
             index: 2
         }];
     }
+
+    openLanguageChooser(): void {
+        const dialogRef = this.dialog.open(LangaugeChooserDialogComponent, {
+          width: '50vw'
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+        });
+      }
+
 
 
 }
