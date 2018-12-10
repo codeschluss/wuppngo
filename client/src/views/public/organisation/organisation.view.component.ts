@@ -7,6 +7,9 @@ import { SuburbModel } from 'src/realm/suburb/suburb.model';
 import { CategoryModel } from 'src/realm/category/category.model';
 import { TargetGroupModel } from 'src/realm/target-group/target-group.model';
 import { ScheduleModel } from 'src/realm/schedule/schedule.model';
+import { OrganisationImageModel } from 'src/realm/image/organisation-image.model';
+import { MatDialog } from '@angular/material';
+import { OrgaMediaDialogComponent } from './organisation.mediacontent.dialog.component';
 
 @Component({
   selector: 'organisation-view',
@@ -17,26 +20,43 @@ import { ScheduleModel } from 'src/realm/schedule/schedule.model';
 export class OrganisationViewComponent {
 
   public static readonly imports = [];
-  public organisation: OrganisationModel;
+  public organisation: any;
   public activities: ActivityModel[] = [];
+  public images: any[] = [];
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public dialog: MatDialog
   ) {
     this.organisation = route.snapshot.data.organisation;
-    // this.organisation = this.buildTestData();
-    //   for (let i = 0; i < 20; i++) {
-    //     this.activities.push(this.buildTestActivity());
-    //   }
+    if (this.organisation.images) {
+      this.initOrgaImg(this.organisation.images);
+    }
   }
 
   openActivityView(activityId: string): void {
     this.router.navigate(['/view/activities/', activityId]);
   }
 
-  getOrgaImg(): string {
-    return 'https://de.wikipedia.org/static/images/project-logos/dewiki.png';
+  initOrgaImg(imgs: OrganisationImageModel[]): void {
+    imgs.forEach(img => this.images.push('data:' + img.mimeType + ';base64,'
+      + atob(img.image))
+    );
+  }
+
+  openImagesPopUp(): void {
+    const dialogRef = this.dialog.open(OrgaMediaDialogComponent, {
+      width: '50vw',
+      data: {
+        images: this.images,
+        videoUrl: this.organisation.videoUrl
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
 
