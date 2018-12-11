@@ -25,7 +25,13 @@ export class OrganisationCardComponent {
   }
 
   getOrgaImg(): string {
-    return 'https://de.wikipedia.org/static/images/project-logos/dewiki.png';
+    if (this.organisation.images && this.organisation.images[0]) {
+      const image = this.organisation.images[0];
+      return 'data:' + image.mimeType + ';base64,'
+      + atob(image.image);
+    } else {
+      return 'imgs/placeHolder.jpg';
+    }
   }
 
 }

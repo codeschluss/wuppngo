@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { OrganisationModel } from 'src/realm/organisation/organisation.model';
 import { ActivatedRoute } from '@angular/router';
 
 
@@ -11,12 +10,10 @@ import { ActivatedRoute } from '@angular/router';
 export class OrganisationListComponent {
 
   public static readonly imports = [];
-  public organisations: OrganisationModel[] = [];
+  public organisations: any[];
 
-  constructor(
-    route: ActivatedRoute
-  ) {
+  constructor(route: ActivatedRoute) {
     this.organisations = route.snapshot.data.organisations;
-
   }
+
 }
