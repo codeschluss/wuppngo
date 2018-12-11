@@ -6,7 +6,8 @@
         <section ngx-hm-carousel-container class="content">
           <article class="item cursor-pointer visible_important" ngx-hm-carousel-item *ngFor="let image of images">
             <div class="img">
-                <img class="orgaImg" [src]="image">
+                <img class="orgaImg" [src]="image.url">
+                <div>{{image.caption}}</div>
             </div>
             <!-- <img class="img" [style.width]="'350px'" [src]="image.replace(/(\r\n|\n|\r)/gm,'')"> -->
             <!-- <div class="img" fxLayoutGap="2%" fxLayout="row" fxLayoutAlign="space-evenly center">
@@ -17,12 +18,13 @@
           </article>
         </section>
   
-        <ng-template *ngIf="images.length > 1" #carouselPrev>
+        <ng-template #carouselPrev>
           <div class="click-area">
             <i class="material-icons">&lt;</i>
           </div>
         </ng-template>
-        <ng-template *ngIf="images.length > 1" #carouselNext>
+
+        <ng-template #carouselNext>
           <div class="click-area">
             <i class="material-icons">&gt;</i>
           </div>

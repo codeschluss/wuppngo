@@ -10,7 +10,7 @@ import { ScheduleModel } from 'src/realm/schedule/schedule.model';
 import { OrganisationImageModel } from 'src/realm/image/organisation-image.model';
 import { MatDialog } from '@angular/material';
 import { OrgaMediaDialogComponent } from './organisation.mediacontent.dialog.component';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'organisation-view',
@@ -37,9 +37,8 @@ export class OrganisationViewComponent {
       this.initOrgaImg(this.organisation.images);
     }
     if (this.organisation.videoUrl) {
-      this.videoUrl = _sanitizer.bypassSecurityTrustResourceUrl(
-        this.organisation.videoUrl.replace('watch?v=', 'embed/'));
-    }
+      this.videoUrl = this.parseVideo();
+      }
   }
 
   openActivityView(activityId: string): void {
@@ -47,14 +46,15 @@ export class OrganisationViewComponent {
   }
 
   initOrgaImg(imgs: OrganisationImageModel[]): void {
-    imgs.forEach(img => this.images.push('data:' + img.mimeType + ';base64,'
-      + atob(img.image))
+    imgs.forEach(img =>
+      this.images.push({url: 'data:' + img.mimeType + ';base64,'
+      + atob(img.image), caption: img.caption})
     );
   }
 
   openImagesPopUp(): void {
     const dialogRef = this.dialog.open(OrgaMediaDialogComponent, {
-      width: '50vw',
+      width: '90vw',
       data: {
         images: this.images,
         videoUrl: this.videoUrl
@@ -64,6 +64,24 @@ export class OrganisationViewComponent {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
+  }
+
+  parseVideo(): SafeResourceUrl {
+    const videoUrl = this.organisation.videoUrl;
+    if (videoUrl.includes('www.youtube')) {
+      return this._sanitizer.bypassSecurityTrustResourceUrl(
+        videoUrl.replace('watch?v=', 'embed/'));
+    }
+    if (videoUrl.includes('vimeo.com')) {
+        return this._sanitizer.bypassSecurityTrustResourceUrl(
+          videoUrl.replace('https://vimeo.com/',
+          'https://player.vimeo.com/video/'));
+    }
+    if (videoUrl.includes('https://youtu.be/')) {
+      return this._sanitizer.bypassSecurityTrustResourceUrl(
+        videoUrl.replace('https://youtu.be/',
+        'https://www.youtube.com/embed/'));
+    }
   }
 
 
