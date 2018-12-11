@@ -1,15 +1,19 @@
 <div class="footer-container background-color-secondary">
     <div fxLayout="row wrap" fxLayoutAlign="space-between center">
         <div class="footerSection">
-            IconFacebook
-            IconSnapChat
+            <div fxLayout="row wrap">
+                <fb-like [ngStyle]="{'margin-right': '10px'}" ></fb-like>
+                <a class="iconContainer" [style.width]="'30px'" href="whatsapp://send?text=\' + {{getWhatsAppText()}} + ">
+                    <img src="imgs/whatsApp.svg">
+                </a>
+            </div>
         </div>
         <div class="footerSection">
             C 2018
         </div>
-        <div class="footerSection">    
-            Datenschutz
-            <span (click)="openImprintDialog()">Impressum</span>
+        <div class="footerSection" (click)="openImprintDialog()">    
+            <span [style.margin-right]="'10px'">Datenschutz</span>
+            <span >Impressum</span>
         </div>
     </div>
 </div>

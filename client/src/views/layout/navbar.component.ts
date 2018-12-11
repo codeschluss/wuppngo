@@ -9,8 +9,6 @@ import {
     MatButtonModule,
     MatDialog
 } from '@angular/material';
-import { LanguageProvider } from 'src/realm/language/language.provider';
-import { LanguageModel } from 'src/realm/language/language.model';
 import { LangaugeChooserDialogComponent } from './languagecooser.component';
 
 @Component({

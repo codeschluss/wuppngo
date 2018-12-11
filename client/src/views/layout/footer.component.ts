@@ -11,15 +11,26 @@ import { ImprintDialogComponent } from './imprint.dialog.component';
 export class FooterComponent {
 
     public static readonly imports = [MatDialog];
-    public constructor(public dialog: MatDialog) {}
+    public instagramUrl: string;
+
+    constructor(
+        public dialog: MatDialog,
+        ) {
+            // TODO: get from DB
+            this.instagramUrl = 'www.instagram.com/wuppngo/';
+        }
 
     openImprintDialog(): void {
         const dialogRef = this.dialog.open(ImprintDialogComponent, {
-          width: '250px'
+          width: '80vh',
         });
 
         dialogRef.afterClosed().subscribe(result => {
         });
       }
+
+    getWhatsAppText(): string {
+        return 'Kennst du das schon? ' + window.location.origin;
+    }
 
 }
