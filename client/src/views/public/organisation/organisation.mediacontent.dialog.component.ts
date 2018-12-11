@@ -7,7 +7,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
     templateUrl: 'organisation.mediacontent.dialog.component.html',
     styleUrls: [
       'organisation.mediacontent.component.scss',
-      'organisation.component.scss'
+      'organisation.component.scss',
+      '../carousel.component.scss'
     ]
   })
   export class OrgaMediaDialogComponent {

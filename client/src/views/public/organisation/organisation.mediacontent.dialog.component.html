@@ -1,20 +1,30 @@
 <div id="carousel">
     <ng-container *ngIf="images.length">
-      <ngx-hm-carousel id="bigCarousel" [(ngModel)]="index" [autoplay-speed]="speed"
-        [autoplay]="autoplay" [autoplay-direction]="direction" [infinite]="infinite" [between-delay]="2000" class="carousel c-accent">
+      <ngx-hm-carousel id="bigCarousel" 
+        [(ngModel)]="index" 
+        [autoplay-speed]="speed"
+        [autoplay]="autoplay" 
+        [autoplay-direction]="direction" 
+        [infinite]="infinite" 
+        [between-delay]="2000" 
+        class="carousel c-accent">
   
         <section ngx-hm-carousel-container class="content">
-          <article class="item cursor-pointer visible_important" ngx-hm-carousel-item *ngFor="let image of images">
+          <article class="item cursor-pointer visible_important" 
+            ngx-hm-carousel-item 
+            *ngFor="let image of images">
             <div class="img">
                 <img class="orgaImg" [src]="image.url">
                 <div>{{image.caption}}</div>
             </div>
-            <!-- <img class="img" [style.width]="'350px'" [src]="image.replace(/(\r\n|\n|\r)/gm,'')"> -->
-            <!-- <div class="img" fxLayoutGap="2%" fxLayout="row" fxLayoutAlign="space-evenly center">
-            </div> -->
           </article>
-          <article *ngIf="videoUrl" class="item cursor-pointer visible_important" ngx-hm-carousel-item >
-              <iframe class="videoContent" [src]='videoUrl' frameborder="0" allowfullscreen></iframe>
+          <article *ngIf="videoUrl" 
+            class="item cursor-pointer visible_important" 
+            ngx-hm-carousel-item >
+              <iframe class="videoContent" 
+                [src]='videoUrl' 
+                frameborder="0" 
+                allowfullscreen></iframe>
           </article>
         </section>
   
@@ -29,6 +39,7 @@
             <i class="material-icons">&gt;</i>
           </div>
         </ng-template>
+        
       </ngx-hm-carousel>
     </ng-container>
   </div>

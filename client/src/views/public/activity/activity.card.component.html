@@ -1,4 +1,7 @@
-<mat-card class="activityCardSmall" (click)="openActivityView()" *ngIf="activity && activity.category" [ngStyle]="{'background-color' : activity.category.color}">
+<mat-card class="activityCardSmall" 
+(click)="openActivityView()" 
+*ngIf="activity && activity.category" 
+[ngStyle]="{'background-color' : activity.category.color}">
   <mat-card-content>
     <div fxLayout="row" fxLayoutAlign="space-between end" fxLayoutGap="5px">
       <div class="smallText">

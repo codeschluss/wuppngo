@@ -5,7 +5,8 @@ import { ActivityModel } from 'src/realm/activity/activity.model';
 @Component({
   selector: 'activity-carousel-component',
   styleUrls: [
-    'activity.carousel.component.scss'],
+    '../carousel.component.scss'
+  ],
   templateUrl: 'activity.carousel.component.html'
 })
 

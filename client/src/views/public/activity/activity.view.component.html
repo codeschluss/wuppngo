@@ -2,16 +2,22 @@
   <div fxLayout="column" fxLayoutGap="20px">
     <h3 class="color-primary">{{ activity.name }}</h3>
     <mat-chip-list>
-      <mat-chip id="category" [ngStyle]="{'background-color':activity.category.color}">{{ activity.category.name }}</mat-chip>
+      <mat-chip id="category" 
+      [ngStyle]="{'background-color':activity.category.color}">
+        {{ activity.category.name }}
+      </mat-chip>
     </mat-chip-list>
     <div>
-      <span *ngFor="let targetGroup of activity.targetGroups" class="color-primary">{{targetGroup.name}}</span>
+      <span *ngFor="let targetGroup of activity.targetGroups" class="color-primary">
+        {{targetGroup.name}}
+      </span>
     </div>
     <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
       <div fxFlex="60" fxLayout="column">
         <p>{{ activity.description }}</p>
         <div>
-          <socail-media-component *ngIf="activity" [entity]="activity"></socail-media-component>
+          <socail-media-component *ngIf="activity" [entity]="activity">
+          </socail-media-component>
         </div>
       </div>
       <div fxFlex="40" fxLayout="column">
@@ -29,14 +35,21 @@
                   {{ activity.address.place }}
                 </p>
               </div>
-                <mapping-component *ngIf="activity" fxFlex="50" fxFlexAlign="start" (click)="openBottomSheetMap()" [disabledPointerAction]="true" [activities]="[activity]">
+                <mapping-component *ngIf="activity" 
+                fxFlex="50" 
+                fxFlexAlign="start" 
+                (click)="openBottomSheetMap()" 
+                [disabledPointerAction]="true" 
+                [activities]="[activity]">
                 </mapping-component>
             </div>
-            <div *ngIf="activity.schedules && activity.schedules.length" fxLayout="row" (click)="openBottomSheetSchedules(activity.schedules)">
+            <div *ngIf="activity.schedules && activity.schedules.length" 
+            fxLayout="row" 
+            (click)="openBottomSheetSchedules(activity.schedules)">
               <div fxLayout="column" id="addressCard">
                 <div fxLayout="row">
                   <span>{{ getNextdate(activity.schedules[0].startDate) }}</span>
-                  <fa-icon id="calendar-icon" icon="calendar-alt" ></fa-icon>
+                  <fa-icon id="calendar-icon" icon="calendar-alt"></fa-icon>
                 </div>
                 <div>
                   {{ getNextdateTime(activity.schedules[0].startDate) }}
@@ -60,7 +73,8 @@
       </div>
       <div fxFlex="40">
         <div *ngFor="let blog of blogs" fxLayout="column" >
-          <blog-list-item [blog]="blog" class="blogCard background-color-secondary"></blog-list-item>
+          <blog-list-item [blog]="blog" class="blogCard background-color-secondary">
+          </blog-list-item>
         </div>
       </div>
     </div>

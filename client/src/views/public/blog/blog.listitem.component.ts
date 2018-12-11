@@ -24,6 +24,10 @@ export class BlogListItemComponent {
         // this.router.navigate(['/view/blogs/', this.blog.id]);
   }
 
+  getDate(date: string): string {
+    return new Date(date).toLocaleDateString('de-DE');
+  }
+
   openActivityView(): void {
     this.blog.activity.then(activity => {
         this.router.navigate(['/view/activities/', activity.id]);

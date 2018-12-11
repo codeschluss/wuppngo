@@ -1,9 +1,16 @@
-<div id="blog-container" *ngIf="blog" fxLayout="column" fxLayoutAlign="space-between">
-    <div class="color-primary blogTitle">{{blog.title}}</div>
+<div id="blog-container" 
+    *ngIf="blog" 
+    fxLayout="column" 
+    fxLayoutAlign="space-between">
+    <div class="color-primary blogTitle">
+        {{blog.title}}
+    </div>
     <div>{{blog.creationDate}}</div>
     <div id="authorContainer">{{'Autor: ' + blog.author}}</div>
     <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between center">
-        <div class="blogTextContainer background-color-secondary">{{blog.postText}}</div>
+        <div class="blogTextContainer background-color-secondary">
+            {{blog.postText}}
+        </div>
         <div class="blogActivityContainer" *ngIf="(blog.activity | async) as activity">
             <activity-card [activity]="activity"></activity-card>
         </div>

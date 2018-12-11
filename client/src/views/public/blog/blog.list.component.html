@@ -1,6 +1,14 @@
 <div id="blog-container">
-    <h2>Neueste Blogbeiträge</h2>
-    <div id="blogContainer" fxLayoutGap="50px" fxLayout="column" *ngFor="let blog of blogs">
-        <blog-list-item [blog]="blog"></blog-list-item>
+    <h2>
+        <i18n i18n="@@latestBlogPosts">
+            latestBlogPosts
+        </i18n>
+    </h2>
+    <div id="blogContainer" 
+        fxLayoutGap="50px" 
+        fxLayout="column" 
+        *ngFor="let blog of blogs">
+        <blog-list-item [blog]="blog">
+        </blog-list-item>
     </div>
 </div>

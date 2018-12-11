@@ -5,7 +5,8 @@
         <span class="color-primary">{{entity.likes}}</span>
     </span>
     <fb-like [ngStyle]="{'margin-right': '10px'}" ></fb-like>
-    <a class="iconContainer" href="whatsapp://send?text=\' + {{getWhatsAppText()}} + ">
+    <a class="iconContainer" 
+    href="whatsapp://send?text=\' + {{getWhatsAppText()}} + ">
         <img src="imgs/whatsApp.svg">
     </a>
 </div>

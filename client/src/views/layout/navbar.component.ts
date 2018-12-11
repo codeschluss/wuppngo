@@ -10,6 +10,7 @@ import {
     MatDialog
 } from '@angular/material';
 import { LangaugeChooserDialogComponent } from './languagecooser.component';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'navbar-component',
@@ -32,7 +33,8 @@ export class NavBarComponent {
     public routeLinks: any[] = [];
 
     public constructor(
-        public dialog: MatDialog
+        public dialog: MatDialog,
+        private router: Router
     ) {
         this.initGlobalTabs();
     }
@@ -40,27 +42,27 @@ export class NavBarComponent {
   initGlobalTabs(): void {
         this.routeLinks.push(
         {
-            label: 'Wupp\'n\'go',
+            label: 'portalName',
             link: '/home',
             index: 0
         },
         {
-            label: 'Veranstaltungen',
+            label: 'activities',
             link: '/list/activities',
             index: 1
         },
         {
-            label: 'Organisationen',
+            label: 'organisations',
             link: '/list/organisations',
             index: 2
         },
         {
-            label: 'Wissenswertes',
+            label: 'worthKnowing',
             link: '/worthknowing',
             index: 3
         },
         {
-            label: 'Blog',
+            label: 'blogs',
             link: '/list/blogs',
             index: 4
         });
@@ -92,7 +94,11 @@ export class NavBarComponent {
 
         dialogRef.afterClosed().subscribe(result => {
         });
-      }
+    }
+
+    goToHome(): void {
+        this.router.navigate(['/home']);
+    }
 
 
 

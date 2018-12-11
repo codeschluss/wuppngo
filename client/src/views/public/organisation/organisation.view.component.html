@@ -5,11 +5,14 @@
     fxLayoutAlign="space-between">
     
     <h2>{{organisation.name}}</h2>
-    <div fxLayout="row wrap" fxLayoutAlign.lt-md="space-around" fxLayoutAlign="space-between">
+    <div fxLayout="row wrap" 
+        fxLayoutAlign.lt-md="space-around" 
+        fxLayoutAlign="space-between">
+        
         <div fxFlex="20" fxFlex.lt-md="100" [style.margin]="'10px'">
             <div id="imagePreviewSection" *ngIf="images && images.length">
                 <img (click)="openImagesPopUp()" class="previewImage" [src]="images[0].url">
-                <p class="smallText">Click for more pictures</p>
+                <i18n i18n="@@clickForMorePictures" class="smallText">clickForMorePictures</i18n>
             </div>
             <iframe 
                 fxHide.lt-md="true" 
@@ -19,7 +22,9 @@
                 frameborder="0" 
                 allowfullscreen></iframe>
         </div>
-        <div fxFlex="40" fxFlex.lt-md="100" fxFlexOrder.lt-md="4">{{organisation.description}}</div>
+        <div fxFlex="40" fxFlex.lt-md="100" fxFlexOrder.lt-md="4">
+            {{organisation.description}}
+        </div>
         <iframe fxFlex.lt-md="100"
             fxFlexOrder.lt-md="3"
             fxHide fxShow.lt-md="true" 
@@ -29,9 +34,15 @@
             [src]='videoUrl' 
             frameborder="0" allowfullscreen></iframe>
 
-        <div fxFlex="30" fxLayout="column" fxFlex.lt-md="100" fxLayoutGap="20px" 
+        <div fxFlex="30" 
+            fxLayout="column" 
+            fxFlex.lt-md="100" 
+            fxLayoutGap="20px" 
             class="background-color-secondary organisation-contact-card">
-            <div fxLayout="column" *ngIf="organisation.address" class="contactCard" [style.margin]="'10px'">
+            <div fxLayout="column" 
+                *ngIf="organisation.address" 
+                class="contactCard" 
+                [style.margin]="'10px'">
                 <div>{{organisation.address.street}}</div>
                 <div>{{organisation.address.houseNumber}}</div>
                 <div>{{organisation.address.postalCode}}</div>
@@ -39,26 +50,34 @@
             </div>
             <div fxLayout="column" class="contactCard">
                 <div *ngIf="organisation.phone">
-                    <a [href]="'tel:' + organisation.phone" target='_blank'>T: {{organisation.phone}}</a>
+                    <a [href]="'tel:' + organisation.phone" target='_blank'>
+                        T: {{organisation.phone}}
+                    </a>
                 </div>
                 <div *ngIf="organisation.mail">
-                    <a [href]="'mailto:' + organisation.mail" target='_blank'>E: {{organisation.mail}}</a>
+                    <a [href]="'mailto:' + organisation.mail" target='_blank'>
+                        E: {{organisation.mail}}
+                    </a>
                 </div>
             </div>
         </div>
     </div>
     <div fxLayout="row" fxLayout.lt-md="column">
         <div fxFlex="20" class="color-primary">
-            <h3>Eingetragene Veranstaltungen</h3>
+            <h3><i18n i18n="@@enteredActivities">enteredActivities</i18n></h3>
         </div>
-        <div fxFlex="80" fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="space-between">
+        <div fxFlex="80" 
+            fxLayout="column" 
+            fxLayoutGap="20px" 
+            fxLayoutAlign="space-between">
+            
             <div fxLayout="row" 
                 fxLayoutAlign="space-between" 
                 class="activityListItem" 
                 *ngFor="let activity of organisation.activities">
                 <div>{{activity.name}}</div>
                 <span class="color-primary" (click)="openActivityView(activity.id)" >
-                    Zur Veranstaltung
+                    <i18n i18n="@@toActivity">toActivity</i18n>
                 </span>
             </div>
         </div>

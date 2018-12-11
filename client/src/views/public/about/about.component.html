@@ -3,10 +3,18 @@
   <div fxLayout="column">
     <div class="header background-color-secondary">
       <div>
-        <h2 id="headline"><i18n i18n="@@newActivity">newActivity</i18n>Neue Veranstaltungen <br> in Wuppertal</h2>
+        <h2 id="headline">
+          <i18n i18n="@@newActivities">newActivities</i18n>
+          <br>
+            <i18n i18n="@@inWuppertal">inWuppertal</i18n>
+        </h2>
       </div>
       <div class="roundPin background-color-primary" fxHide.lt-md="true">
-        <div id="landingPageBadge">Willkommen bei Wupp'n'go deinem online Event-Portal!</div>
+        <div id="landingPageBadge">
+          <i18n i18n="@@portalSubtitle">
+            portalSubtitle
+          </i18n>
+        </div>
       </div>
     </div>
     <ng-container *ngIf="activities && activities.length">
@@ -19,7 +27,8 @@
   <div fxLayout="row" fxLayout.lt-md="column" 
     fxLayoutAlign="space-evenly center">
     <div fxFlex="45">
-      <h2>Die Geschichte des Wupportals</h2>
+      <h2><i18n i18n="@@aboutPageTextHeadLine">aboutPageTextHeadLine</i18n></h2>
+      <!-- TODO: have to be replaced -->
       <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
         et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
         ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
@@ -28,7 +37,7 @@
       </div>
     </div>
     <div fxFlex="45">
-      <img class="aboutImage" src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+      <img class="aboutImage" [src]="getAboutPageImageUrl()">
     </div>
   </div>
 

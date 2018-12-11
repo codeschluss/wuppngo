@@ -32,6 +32,9 @@
 		</ng-container>
 	</aol-layer-vector>
 </aol-map>
-<div [style.position]="'relative'" [style.top]="'-240px'" *ngIf="selectedActivities && selectedActivities.length">
-	<activity-carousel-component [activities]=selectedActivities></activity-carousel-component>
+<div [style.position]="'relative'" 
+	[style.top]="'-240px'" 
+	*ngIf="selectedActivities && selectedActivities.length">
+	<activity-carousel-component [activities]=selectedActivities>
+	</activity-carousel-component>
 </div>
