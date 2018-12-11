@@ -11,11 +11,7 @@
       <div fxFlex="60" fxLayout="column">
         <p>{{ activity.description }}</p>
         <div>
-          <span (click)="like()">
-            <fa-icon icon="heart" class="color-primary"></fa-icon> 
-            <span class="color-primary">137</span>
-            <!-- <span class="color-primary">{{activity.likes}}</span> -->
-          </span>
+          <socail-media-component *ngIf="activity" [entity]="activity"></socail-media-component>
         </div>
       </div>
       <div fxFlex="40" fxLayout="column">

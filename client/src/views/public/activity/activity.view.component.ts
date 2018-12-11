@@ -8,7 +8,6 @@ import { TargetGroupModel } from '../../../realm/target-group/target-group.model
 import { BottomSheetMapComponent } from '../mapping/map.bottomsheet.component';
 import { BottomSheetScheduleComponent } from './schedules.bottom.sheet.component';
 import { BlogModel } from 'src/core/models/blog.model';
-import { ActivityProvider } from 'src/realm/activity/activity.provider';
 
 
 @Component({
@@ -29,7 +28,6 @@ export class ActivityViewComponent {
   constructor(
     private bottomSheet: MatBottomSheet,
     route: ActivatedRoute,
-    private activityProvider: ActivityProvider
   ) {
     this.activity = route.snapshot.data.activity;
     for (let i = 0; i < 3; i++) {
@@ -73,27 +71,5 @@ export class ActivityViewComponent {
     this.bottomSheet.open(BottomSheetMapComponent,
       { data: { activities: [this.activity] } });
     }
-
-  like(): void {
-    const likedActivitiesIds
-      = window.localStorage.getItem('likedActivitiesIds')
-      ? JSON.parse(window.localStorage.getItem('likedActivitiesIds')) : [];
-
-
-      if (likedActivitiesIds.find(
-      actId => this.activity.id === actId)) {
-        console.log('allready liked');
-      } else {
-        likedActivitiesIds.push(this.activity.id);
-        window.localStorage.setItem(
-          'likedActivitiesIds', JSON.stringify(likedActivitiesIds));
-
-        // pending till server component is ready
-
-        // this.activity.likes++;
-        // this.activityProvider.update(this.activity.id, this.activity);
-
-      }
-  }
 
 }

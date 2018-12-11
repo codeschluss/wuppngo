@@ -18,8 +18,10 @@ mat-card {
 
 .categoryIcon {
   filter: brightness(0) invert(1);
+  height: 60px;
 }
 
 .activityCardSmall {
   color: white;
+  height: 150px;
 }

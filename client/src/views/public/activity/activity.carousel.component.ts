@@ -16,9 +16,9 @@ export class ActivityCarouselComponent implements AfterViewInit {
   ];
 
   @Input()
-  public activities: ActivityModel[];
+  public activities: ActivityModel[] = [];
 
-  public clusteredActivities: ActivityModel[][];
+  public clusteredActivities: ActivityModel[][] = [[]];
 
   index = 0;
   speed = 5000;

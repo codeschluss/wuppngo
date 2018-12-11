@@ -1,6 +1,6 @@
 
 <div id="carousel" (window:resize)="onResize()">
-  <ng-container *ngIf="clusteredActivities.length">
+  <ng-container>
     <ngx-hm-carousel id="bigCarousel" [(ngModel)]="index" [autoplay-speed]="speed"
       [autoplay]="autoplay" [autoplay-direction]="direction" [infinite]="infinite" [between-delay]="2000" class="carousel c-accent">
 
@@ -8,18 +8,18 @@
         <article class="item cursor-pointer visible_important" ngx-hm-carousel-item *ngFor="let activity of clusteredActivities; let i = index">
           <div class="img" fxLayoutGap="2%" fxLayout="row" fxLayoutAlign="space-evenly center">
             <div *ngFor="let act of activity">
-              <activity-card [activity]="act"></activity-card>
+              <activity-card *ngIf="act" [activity]="act"></activity-card>
             </div>
           </div>
         </article>
       </section>
 
-      <ng-template *ngIf="clusteredActivities.length > 1" #carouselPrev>
+      <ng-template #carouselPrev>
         <div class="click-area">
           <i class="material-icons">&lt;</i>
         </div>
       </ng-template>
-      <ng-template *ngIf="clusteredActivities.length > 1" #carouselNext>
+      <ng-template #carouselNext>
         <div class="click-area">
           <i class="material-icons">&gt;</i>
         </div>
