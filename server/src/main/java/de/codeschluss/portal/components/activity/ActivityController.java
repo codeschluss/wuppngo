@@ -123,17 +123,29 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
     this.authService = authService;
   }
 
+  /**
+   * Read all.
+   *
+   * @param params the params
+   * @return the response entity
+   */
   @GetMapping("/activities")
   public ResponseEntity<?> readAll(ActivityQueryParam params) {
     return super.readAll(params);
   }
 
+  /* (non-Javadoc)
+   * @see de.codeschluss.portal.core.api.CrudController#readOne(java.lang.String)
+   */
   @Override
   @GetMapping("/activities/{activityId}")
   public Resource<ActivityEntity> readOne(@PathVariable String activityId) {
     return super.readOne(activityId);
   }
 
+  /* (non-Javadoc)
+   * @see de.codeschluss.portal.core.api.CrudController#create(de.codeschluss.portal.core.entity.BaseResource)
+   */
   @Override
   @PostMapping("/activities")
   @ProviderPermission
@@ -154,6 +166,9 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
     return created(new URI(resource.getId().expand().getHref())).body(resource);
   }
 
+  /* (non-Javadoc)
+   * @see de.codeschluss.portal.core.api.CrudController#update(de.codeschluss.portal.core.entity.BaseResource, java.lang.String)
+   */
   @Override
   @PutMapping("/activities/{activityId}")
   @OwnOrOrgaActivityOrSuperUserPermission
@@ -162,6 +177,9 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
     return super.update(newActivity, activityId);
   }
 
+  /* (non-Javadoc)
+   * @see de.codeschluss.portal.core.api.CrudController#delete(java.lang.String)
+   */
   @Override
   @DeleteMapping("/activities/{activityId}")
   @OwnOrOrgaActivityOrSuperUserPermission
@@ -272,8 +290,8 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   /**
    * Read tags.
    *
-   * @param activityId
-   *          the activity id
+   * @param activityId          the activity id
+   * @param params the params
    * @return the response entity
    */
   @GetMapping("/activities/{activityId}/tags")
@@ -345,8 +363,8 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   /**
    * Read target groups.
    *
-   * @param activityId
-   *          the activity id
+   * @param activityId          the activity id
+   * @param params the params
    * @return the response entity
    */
   @GetMapping("/activities/{activityId}/targetgroups")
@@ -407,8 +425,8 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   /**
    * Find schedules.
    *
-   * @param activityId
-   *          the activity id
+   * @param activityId          the activity id
+   * @param params the params
    * @return the response entity
    */
   @GetMapping("/activities/{activityId}/schedules")
@@ -502,6 +520,22 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
     } catch (NoSuchMethodException | SecurityException | IllegalAccessException
         | IllegalArgumentException | InvocationTargetException | IOException e) {
       throw new RuntimeException(e.getMessage());
+    }
+  }
+  
+  /**
+   * Increase like.
+   *
+   * @param activityId the activity id
+   * @return the response entity
+   */
+  @PutMapping("/activities/{activityId}/like")
+  public ResponseEntity<?> increaseLike(@PathVariable String activityId) {
+    try {
+      service.increaseLike(activityId);
+      return noContent().build();
+    } catch (NotFoundException e) {
+      throw new BadParamsException("Given Activity does not exist");
     }
   }
 }

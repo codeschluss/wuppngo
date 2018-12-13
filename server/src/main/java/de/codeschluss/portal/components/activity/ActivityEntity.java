@@ -96,6 +96,8 @@ public class ActivityEntity extends BaseResource {
   @Transient
   private String description;
   
+  private int likes;
+  
   private String mail;
   
   @JsonSerialize
@@ -167,6 +169,11 @@ public class ActivityEntity extends BaseResource {
   @JsonIgnore
   public String getCategoryId() {
     return this.categoryId;
+  }
+  
+  @JsonIgnore
+  public void setLikes(int likes) {
+    this.likes = likes;
   }
 
   @JsonIgnore

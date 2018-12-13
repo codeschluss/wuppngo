@@ -292,4 +292,15 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
     List<ActivityEntity> activitiesToDelete = getByProviders(providers, null);
     repo.deleteAll(activitiesToDelete);
   }
+
+  /**
+   * Increase like.
+   *
+   * @param activityId the activity id
+   */
+  public void increaseLike(String activityId) {
+    ActivityEntity activity = getById(activityId);
+    activity.setLikes(activity.getLikes() + 1);
+    repo.save(activity);
+  }
 }
