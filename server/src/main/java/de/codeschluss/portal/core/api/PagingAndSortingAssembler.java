@@ -179,7 +179,7 @@ public class PagingAndSortingAssembler {
             .invoke(entity);
       } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
           | IntrospectionException | NoSuchFieldException | SecurityException e) {
-        break;
+        continue;
       }
 
       if (helper.isValidSubResource(fieldValue, field)) {
@@ -192,8 +192,30 @@ public class PagingAndSortingAssembler {
         }
         embeddables.put(node.getName(), resource);
       }
+      
+      if (helper.isValidSubList(fieldValue, field)) {
+        List<?> subEntity = (List<?>) fieldValue;
+        Object listResource = subEntity.stream()
+            .map(subRes -> toResource((E) subRes))
+            .collect(Collectors.toList());
+        embeddables.put(node.getName(), listResource);
+      }        
     }
-    return helper.resourceWithEmbeddable(entity, embeddables);
+    return resourceWithEmbeddable(entity, embeddables);
+  }
+  
+  /**
+   * Resource with embeddable.
+   *
+   * @param <E> the element type
+   * @param entity the entity
+   * @param embeddables the embeddables
+   * @return the resource
+   */
+  @SuppressWarnings("unchecked")
+  public <E extends BaseResource> Resource<E> resourceWithEmbeddable(Object entity,
+      Map<String, Object> embeddables) {
+    return helper.resourceWithEmbeddable((E) entity, embeddables);
   }
 
   /**
