@@ -1,11 +1,11 @@
 package de.codeschluss.portal.components.suburb;
 
-import de.codeschluss.portal.core.service.DataRepository;
+import de.codeschluss.portal.core.repository.DataRepository;
 
 import org.springframework.stereotype.Repository;
 
 /**
- * The Interface SuburbRepository.
+ * The Interface ContactRepository.
  * 
  * @author Valmir Etemi
  *

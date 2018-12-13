@@ -16,16 +16,16 @@ import de.codeschluss.portal.components.tag.TagService;
 import de.codeschluss.portal.components.targetgroup.TargetGroupService;
 import de.codeschluss.portal.components.user.UserService;
 import de.codeschluss.portal.core.api.CrudController;
-import de.codeschluss.portal.core.api.dto.CustomSort;
+import de.codeschluss.portal.core.api.dto.BaseParams;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
 import de.codeschluss.portal.core.security.permissions.OwnActivityPermission;
 import de.codeschluss.portal.core.security.permissions.OwnOrOrgaActivityOrSuperUserPermission;
 import de.codeschluss.portal.core.security.permissions.ProviderPermission;
-import de.codeschluss.portal.core.security.permissions.ShowUserOrSuperUserPermission;
 import de.codeschluss.portal.core.security.services.AuthorizationService;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -62,9 +62,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   /** The provider service. */
   private final ProviderService providerService;
 
-  /** The user service. */
-  private final UserService userService;
-
   /** The tag service. */
   private final TagService tagService;
 
@@ -86,17 +83,28 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   /**
    * Instantiates a new activity controller.
    *
-   * @param service the service
-   * @param addressService the address service
-   * @param categoryService the category service
-   * @param providerService the provider service
-   * @param userService the user service
-   * @param tagService the tag service
-   * @param targetGroupService the target group service
-   * @param scheduleService the schedule service
-   * @param organisationService the organisation service
-   * @param translationService the translation service
-   * @param authService the auth service
+   * @param service
+   *          the service
+   * @param addressService
+   *          the address service
+   * @param categoryService
+   *          the category service
+   * @param providerService
+   *          the provider service
+   * @param userService
+   *          the user service
+   * @param tagService
+   *          the tag service
+   * @param targetGroupService
+   *          the target group service
+   * @param scheduleService
+   *          the schedule service
+   * @param organisationService
+   *          the organisation service
+   * @param translationService
+   *          the translation service
+   * @param authService
+   *          the auth service
    */
   public ActivityController(ActivityService service, AddressService addressService,
       CategoryService categoryService, ProviderService providerService, UserService userService,
@@ -107,7 +115,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
     this.addressService = addressService;
     this.categoryService = categoryService;
     this.providerService = providerService;
-    this.userService = userService;
     this.tagService = tagService;
     this.targetGroupService = targetGroupService;
     this.scheduleService = scheduleService;
@@ -127,11 +134,10 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
     return super.readOne(activityId);
   }
 
-
   @Override
   @PostMapping("/activities")
   @ProviderPermission
-  public ResponseEntity<?> create(@RequestBody ActivityEntity newActivity) 
+  public ResponseEntity<?> create(@RequestBody ActivityEntity newActivity)
       throws URISyntaxException {
     validateCreate(newActivity);
 
@@ -166,12 +172,13 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   /**
    * Read address.
    *
-   * @param activityId the activity id
+   * @param activityId
+   *          the activity id
    * @return the response entity
    */
   @GetMapping("/activities/{activityId}/address")
   public ResponseEntity<?> readAddress(@PathVariable String activityId) {
-    return ok(addressService.getResourcesWithSuburbsByActivity(activityId));
+    return ok(addressService.getResourcesByActivity(activityId));
   }
 
   /**
@@ -198,7 +205,8 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   /**
    * Read category.
    *
-   * @param activityId the activity id
+   * @param activityId
+   *          the activity id
    * @return the response entity
    */
   @GetMapping("/activities/{activityId}/category")
@@ -227,17 +235,17 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
     }
   }
 
-
   /**
    * Read organisation.
    *
-   * @param activityId the activity id
+   * @param activityId
+   *          the activity id
    * @return the response entity
    */
   @GetMapping("/activities/{activityId}/organisation")
   public ResponseEntity<?> readOrganisation(@PathVariable String activityId) {
     ProviderEntity provider = providerService.getProviderByActivity(activityId);
-    return ok(organisationService.convertToResource(provider));
+    return ok(organisationService.getResourceByProvider(provider));
   }
 
   /**
@@ -262,20 +270,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   }
 
   /**
-   * Read user.
-   *
-   * @param activityId
-   *          the activity id
-   * @return the response entity
-   */
-  @GetMapping("/activities/{activityId}/user")
-  @ShowUserOrSuperUserPermission
-  public ResponseEntity<?> readUser(@PathVariable String activityId) {
-    ProviderEntity provider = providerService.getProviderByActivity(activityId);
-    return ok(userService.getResourceByProvider(provider));
-  }
-
-  /**
    * Read tags.
    *
    * @param activityId
@@ -283,8 +277,14 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    * @return the response entity
    */
   @GetMapping("/activities/{activityId}/tags")
-  public ResponseEntity<?> readTags(@PathVariable String activityId) {
-    return ok(tagService.getResourcesByActivity(activityId));
+  public ResponseEntity<?> readTags(
+      @PathVariable String activityId,
+      BaseParams params) {
+    try {
+      return ok(tagService.getResourcesByActivity(activityId, params));
+    } catch (IOException e) {
+      throw new RuntimeException(e.getMessage());
+    }
   }
 
   /**
@@ -301,8 +301,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   public ResponseEntity<?> addTags(@PathVariable String activityId,
       @RequestBody TagEntity... tags) {
     try {
-      service.addTags(activityId, tagService.addAll(Arrays.asList(tags)));
-      return readTags(activityId);
+      return ok(service.addTags(activityId, tagService.addAll(Arrays.asList(tags))));
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Activity does not exist");
     }
@@ -337,8 +336,14 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    * @return the response entity
    */
   @GetMapping("/activities/{activityId}/targetgroups")
-  public ResponseEntity<?> readTargetGroups(@PathVariable String activityId) {
-    return ok(targetGroupService.getResourceByActivity(activityId));
+  public ResponseEntity<?> readTargetGroups(
+      @PathVariable String activityId,
+      BaseParams params) {
+    try {
+      return ok(targetGroupService.getResourceByActivity(activityId, params));
+    } catch (IOException e) {
+      throw new RuntimeException(e.getMessage());
+    }
   }
 
   /**
@@ -357,8 +362,8 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
     try {
       List<String> distinctTargetGroups = Arrays.asList(targetGroupIds).stream().distinct()
           .collect(Collectors.toList());
-      service.addTargetGroups(activityId, targetGroupService.getByIds(distinctTargetGroups));
-      return readTargetGroups(activityId);
+      return ok(
+          service.addTargetGroups(activityId, targetGroupService.getByIds(distinctTargetGroups)));
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Target Group or Activity do not exist");
     }
@@ -393,10 +398,12 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    * @return the response entity
    */
   @GetMapping("/activities/{activityId}/schedules")
-  public ResponseEntity<?> readSchedules(
-      @PathVariable String activityId,
-      CustomSort params) {
-    return ok(scheduleService.getResourceByActivity(activityId, params));
+  public ResponseEntity<?> readSchedules(@PathVariable String activityId, BaseParams params) {
+    try {
+      return ok(scheduleService.getResourceByActivity(activityId, params));
+    } catch (IOException e) {
+      throw new RuntimeException(e.getMessage());
+    }
   }
 
   /**
@@ -456,20 +463,17 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   /**
    * Read translations.
    *
-   * @param activityId the activity id
+   * @param activityId
+   *          the activity id
    * @return the response entity
-   * @throws Throwable the throwable
    */
   @GetMapping("/activities/{activityId}/translations")
   public ResponseEntity<?> readTranslations(@PathVariable String activityId) {
     try {
       return ok(translationService.getAllTranslations(service.getById(activityId), this));
-    } catch (NoSuchMethodException 
-        | SecurityException 
-        | IllegalAccessException
-        | IllegalArgumentException
-        | InvocationTargetException e) {
-      throw new RuntimeException("Translations are not available");
+    } catch (NoSuchMethodException | SecurityException | IllegalAccessException
+        | IllegalArgumentException | InvocationTargetException | IOException e) {
+      throw new RuntimeException(e.getMessage());
     }
   }
 }

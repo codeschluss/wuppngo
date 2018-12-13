@@ -37,14 +37,12 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
     this.languageService = languageService;
   }
   
-  @Override
   protected String prepareSort(String sortProp) {
     return sortProp.equals("name") || sortProp.equals("description")
         ? "translatables." + sortProp
         : sortProp;
   }
 
-  @Override
   public boolean localized() {
     return true;
   }
@@ -112,6 +110,9 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
         .and(
             query.translatables.any().name.likeIgnoreCase(filter)
             .or(query.translatables.any().description.likeIgnoreCase(filter)))
+        .or(query.phone.likeIgnoreCase(filter))
+        .or(query.mail.likeIgnoreCase(filter))
+        .or(query.contactName.likeIgnoreCase(filter))
         .or(query.address.street.likeIgnoreCase(filter))
         .or(query.address.place.likeIgnoreCase(filter))
         .or(query.address.houseNumber.likeIgnoreCase(filter))
@@ -220,7 +221,11 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
    */
   public BooleanExpression forIdWithAnyOfProviders(
       String activityId, List<ProviderEntity> providers) {
-    return withAnyOfProviders(providers).and(withId(activityId));
+    return withAnyOfProviders(providers).and(query.id.eq(activityId));
+  }
+  
+  public BooleanExpression forUser(String userId) {
+    return query.provider.user.id.eq(userId);
   }
   
   /**
@@ -256,5 +261,4 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
     throw new RuntimeException(
         "Must be of type " + ActivityQueryParam.class + " but is " + p.getClass());
   }
-
 }
