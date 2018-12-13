@@ -41,3 +41,8 @@
   border-radius: 1%;
 }
 
+#introVideoContainer {
+  margin: 0 auto; 
+  width: 500px;
+}
+

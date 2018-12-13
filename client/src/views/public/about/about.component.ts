@@ -24,8 +24,4 @@ export class AboutComponent {
     this.activities = this.route.snapshot.data.activities;
   }
 
-  getAboutPageImageUrl(): string {
-    return 'imgs/placeHolder.jpg';
-  }
-
 }
