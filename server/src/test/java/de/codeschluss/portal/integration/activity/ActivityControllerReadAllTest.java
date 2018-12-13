@@ -27,11 +27,13 @@ import org.springframework.hateoas.Resources;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Base64Utils;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @DirtiesContext(classMode = ClassMode.BEFORE_CLASS)
+@Transactional
 public class ActivityControllerReadAllTest {
 
   @Autowired
@@ -203,18 +205,15 @@ public class ActivityControllerReadAllTest {
     providerList.add(organisation);
     provider.setNodes(providerList);
     
-    EmbeddedGraph activities = new EmbeddedGraph();
-    activities.setName("activities");
     List<EmbeddedGraph> activityList = new ArrayList<>();
     activityList.add(address);
     activityList.add(category);
     activityList.add(provider);
     activityList.add(tags);
     activityList.add(schedules);
-    activities.setNodes(activityList);
     
     ObjectMapper mapper = new ObjectMapper();
-    return Base64Utils.encodeToString(mapper.writeValueAsString(activities).getBytes());
+    return Base64Utils.encodeToString(mapper.writeValueAsString(activityList).getBytes());
   }
 
   @Test(expected = NotFoundException.class)
