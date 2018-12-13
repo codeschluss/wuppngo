@@ -1,0 +1,13 @@
+databaseChangeLog:
+- changeSet:
+    id: 1544734309522-11
+    author: vetemi (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            constraints:
+                nullable: false
+            name: likes
+            type: integer
+        tableName: activities
