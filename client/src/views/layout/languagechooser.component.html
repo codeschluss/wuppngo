@@ -1,11 +1,12 @@
 <div fxLayout="column">
-    <h2><i18n i18n="@@selectLanguage">selectLanguage</i18n></h2>
+  <h2><i18n i18n="@@selectLanguage">selectLanguage</i18n></h2>
+  <div *ngFor="let lang of languages">
     <button mat-raised-button 
     color="primary" 
-    *ngFor="let lang of languages" 
     (click)="changeLanguage(lang.locale)"
     [ngStyle]="{'margin': '10px' }">
       {{lang.name}}
     </button>
+  </div>
 </div>
       
