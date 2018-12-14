@@ -1,19 +1,19 @@
-package de.codeschluss.portal.components.blog.blogger;
-
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+package de.codeschluss.portal.components.blogger;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import de.codeschluss.portal.components.category.CategoryController;
+import de.codeschluss.portal.components.blog.BlogEntity;
 import de.codeschluss.portal.components.user.UserEntity;
 import de.codeschluss.portal.core.entity.BaseResource;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -51,17 +51,15 @@ public class BloggerEntity extends BaseResource {
   @ToString.Exclude
   @JoinColumn(nullable = false)
   private UserEntity user;
+  
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "blogger", cascade = CascadeType.REMOVE)
+  @ToString.Exclude
+  @JsonIgnore
+  private List<BlogEntity> blogs;
 
   @Override
   public List<Link> createResourceLinks() {
-    List<Link> links = new ArrayList<Link>();
-
-    links.add(linkTo(methodOn(CategoryController.class)
-        .readOne(id)).withSelfRel());
-    links.add(linkTo(methodOn(CategoryController.class)
-        .readTranslations(id)).withRel("translations"));
-
-    return links;
+    return new ArrayList<Link>();
   }
 
 }

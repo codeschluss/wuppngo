@@ -1,0 +1,194 @@
+databaseChangeLog:
+- changeSet:
+    id: 1544810018638-11
+    author: vetemi (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: blog_translatablesPK
+            name: id
+            type: CHAR(36)
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: created
+            type: datetime
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: modified
+            type: datetime
+        - column:
+            constraints:
+              nullable: false
+            name: content
+            type: TEXT
+        - column:
+            constraints:
+              nullable: false
+            name: title
+            type: VARCHAR(36)(255)
+        - column:
+            name: language_id
+            type: CHAR(36)
+        - column:
+            constraints:
+              nullable: false
+            name: parent_id
+            type: CHAR(36)
+        tableName: blog_translatables
+- changeSet:
+    id: 1544810018638-12
+    author: vetemi (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: bloggersPK
+            name: id
+            type: CHAR(36)
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: created
+            type: datetime
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: modified
+            type: datetime
+        - column:
+            constraints:
+              nullable: false
+            name: approved
+            type: BIT(1)
+        - column:
+            constraints:
+              nullable: false
+            name: user_id
+            type: CHAR(36)
+        tableName: bloggers
+- changeSet:
+    id: 1544810018638-13
+    author: vetemi (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: blogsPK
+            name: id
+            type: CHAR(36)
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: created
+            type: datetime
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: modified
+            type: datetime
+        - column:
+            constraints:
+              nullable: false
+            name: likes
+            type: integer
+        - column:
+            constraints:
+              nullable: false
+            name: activity_id
+            type: CHAR(36)
+        - column:
+            constraints:
+              nullable: false
+            name: blogger_id
+            type: CHAR(36)
+        tableName: blogs
+- changeSet:
+    id: 1544810018638-14
+    author: vetemi (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: blogger_id
+            type: CHAR(36)
+        tableName: users
+- changeSet:
+    id: 1544810018638-19
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: activity_id
+        baseTableName: blogs
+        constraintName: FK7agx8fdl98pseepq3ojb83yoc
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: activities
+        validate: true
+- changeSet:
+    id: 1544810018638-20
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: language_id
+        baseTableName: blog_translatables
+        constraintName: FK9g9vxxwi0rhnc35g39ya1lw1
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: languages
+        validate: true
+- changeSet:
+    id: 1544810018638-21
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: user_id
+        baseTableName: bloggers
+        constraintName: FK9oc3iov1rrm4suxik4p4kdo9x
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: users
+        validate: true
+- changeSet:
+    id: 1544810018638-22
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: blogger_id
+        baseTableName: users
+        constraintName: FKpcyw1ikcp6ylbkbq2qi9bw836
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: bloggers
+        validate: true
+- changeSet:
+    id: 1544810018638-23
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: parent_id
+        baseTableName: blog_translatables
+        constraintName: FKqbrimq1cjnagpioadb5523odo
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: blogs
+        validate: true

@@ -34,6 +34,12 @@ public class JwtUserDetails extends User {
   
   /** The created activities. */
   private String[] createdActivities;
+  
+  /** The is blogger. */
+  private boolean blogger;
+  
+  /** The created blogs. */
+  private String[] createdBlogs;
 
   /**
    * Instantiates a new jwt user details.
@@ -44,12 +50,14 @@ public class JwtUserDetails extends User {
    * @param createdActivities the created activities
    */
   public JwtUserDetails(UserEntity user, String[] approvedOrgas, String[] adminOrgas,
-      String[] createdActivities) {
+      String[] createdActivities, boolean isBlogger, String[] createdBlogs) {
     super(user.getUsername(), user.getPassword(), Collections.emptyList());
     this.user = user;
     this.approvedOrganisations = approvedOrgas;
     this.adminOrgas = adminOrgas;
     this.createdActivities = createdActivities;
+    this.blogger = isBlogger;
+    this.createdBlogs = createdBlogs;
   }
 
   /**

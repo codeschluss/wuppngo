@@ -32,6 +32,8 @@ public class JwtConfiguration {
   private String claimApprovedOrgas;
   private String claimAdminOrgas;
   private String claimCreatedActivities;
+  private String claimBlogger;
+  private String claimCreatedBlogs;
   private String claimScopes;
   private String scopeRefresh;
   private String scopeAccess;

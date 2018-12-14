@@ -6,6 +6,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import de.codeschluss.portal.components.blogger.BloggerEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.core.entity.BaseResource;
 import de.codeschluss.portal.core.security.Sensible;
@@ -16,7 +17,9 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AccessLevel;
@@ -46,6 +49,12 @@ import org.springframework.hateoas.core.Relation;
 public class UserEntity extends BaseResource {
 
   private static final long serialVersionUID = 1L;
+  
+  @OneToOne
+  @JsonIgnore
+  @ToString.Exclude
+  @JoinColumn(nullable = true)
+  private BloggerEntity blogger;
 
   private String name;
 

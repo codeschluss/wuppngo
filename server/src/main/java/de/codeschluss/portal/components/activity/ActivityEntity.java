@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import de.codeschluss.portal.components.activity.translations.ActivityTranslatablesEntity;
 import de.codeschluss.portal.components.address.AddressEntity;
+import de.codeschluss.portal.components.blog.BlogEntity;
 import de.codeschluss.portal.components.category.CategoryEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.components.schedule.ScheduleEntity;
@@ -77,6 +78,11 @@ public class ActivityEntity extends BaseResource {
   @ToString.Exclude
   @JsonIgnore
   private AddressEntity address;
+  
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "activity", cascade = CascadeType.REMOVE)
+  @ToString.Exclude
+  @JsonIgnore
+  private List<BlogEntity> blogs;
 
   @Transient
   @JsonDeserialize

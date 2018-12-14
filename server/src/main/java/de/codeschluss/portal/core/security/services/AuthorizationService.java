@@ -149,6 +149,35 @@ public class AuthorizationService {
     }
     throw new RuntimeException("Something went wrong. UserDetails are configured wrongly");
   }
+
+  /**
+   * Checks if is blogger.
+   *
+   * @param authentication the authentication
+   * @return true, if is blogger
+   */
+  public boolean isBlogger(Authentication authentication) {
+    if (authentication.getPrincipal() instanceof JwtUserDetails) {
+      JwtUserDetails jwtUserDetails = (JwtUserDetails) authentication.getPrincipal();
+      return jwtUserDetails.isBlogger();
+    }
+    return false;
+  }
+  
+  /**
+   * Checks if is own blog.
+   *
+   * @param authentication the authentication
+   * @param blogId the blog id
+   * @return true, if is own blog
+   */
+  public boolean isOwnBlog(Authentication authentication, String blogId) {
+    if (authentication.getPrincipal() instanceof JwtUserDetails) {
+      JwtUserDetails jwtUserDetails = (JwtUserDetails) authentication.getPrincipal();
+      return Arrays.asList(jwtUserDetails.getCreatedBlogs()).contains(blogId);
+    }
+    return false;
+  }
   
   /**
    * Validate user.
