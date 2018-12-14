@@ -31,12 +31,14 @@ export class NavBarComponent {
     ];
 
     public routeLinks: any[] = [];
+    public accountRouts: any[] = [];
 
     public constructor(
         public dialog: MatDialog,
         private router: Router
     ) {
         this.initGlobalTabs();
+        this.initAccountRouts();
     }
 
   initGlobalTabs(): void {
@@ -69,21 +71,22 @@ export class NavBarComponent {
   }
 
 //   Just Prototyping
-  getAccountRoutes(): any {
-        return [{
-            label: 'Persönlicher Daten',
-            link: 'admin/',
-            index: 0
+  initAccountRouts() {
+    this.accountRouts = [{
+            label: 'personalData',
+            link: '/admin/',
         },
         {
-            label: 'verwaltungsbereich',
-            link: 'admin/',
-            index: 1
+            label: 'adminArea',
+            link: '/admin/',
         },
         {
             label: 'Abmelden',
-            link: 'admin/',
-            index: 2
+            link: '/admin/',
+        },
+        {
+            label: 'Anmelden',
+            link: '/admin/login',
         }];
     }
 
@@ -94,6 +97,10 @@ export class NavBarComponent {
 
         dialogRef.afterClosed().subscribe(result => {
         });
+    }
+
+    navigateTo(route: string): void {
+        this.router.navigate([route]);
     }
 
     goToHome(): void {

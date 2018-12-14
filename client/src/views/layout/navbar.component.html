@@ -28,10 +28,8 @@
                             [matMenuTriggerFor]="menu" 
                             src="imgs/account.svg">
                         <mat-menu #menu="matMenu">
-                            <button *ngFor="let route of getAccountRoutes()" 
-                            [routerLink]="route.link" 
-                            mat-menu-item>
-                            <i18n i18n='"@@" + route.label'>{{route.label}}</i18n>
+                            <button mat-menu-item *ngFor="let route of accountRouts" (click)="navigateTo(route.link)">
+                                <i18n i18n='"@@" + route.label'>{{route.label}}</i18n>
                             </button>
                             <button mat-menu-item (click)="openLanguageChooser()">
                                 <i18n i18n="@@selectLanguage">selectLanguage</i18n>
@@ -67,7 +65,7 @@
                 <mat-toolbar-row>
                     <search-input></search-input>
                 </mat-toolbar-row>
-                <mat-toolbar-row *ngFor="let route of getAccountRoutes()" [routerLink]="route.link">
+                <mat-toolbar-row *ngFor="let route of accountRouts" [routerLink]="route.link">
                     <i18n i18n='"@@" + route.label'>{{route.label}}</i18n>
                 </mat-toolbar-row>
                 <mat-toolbar-row (click)="openLanguageChooser()">
