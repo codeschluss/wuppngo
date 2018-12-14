@@ -111,7 +111,7 @@ public class BlogController extends CrudController<BlogEntity, BlogService> {
   @GetMapping("/activities/{blogId}/translations")
   public ResponseEntity<?> readTranslations(@PathVariable String blogId) {
     try {
-      return ok(translationService.getAllTranslations(service.getById(blogId), this));
+      return ok(translationService.getAllTranslations(service.getById(blogId)));
     } catch (NoSuchMethodException | SecurityException | IllegalAccessException
         | IllegalArgumentException | InvocationTargetException | IOException e) {
       throw new RuntimeException(e.getMessage());
