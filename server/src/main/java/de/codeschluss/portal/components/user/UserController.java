@@ -1,5 +1,6 @@
 package de.codeschluss.portal.components.user;
 
+import static org.springframework.http.ResponseEntity.created;
 import static org.springframework.http.ResponseEntity.noContent;
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -13,7 +14,6 @@ import de.codeschluss.portal.core.api.CrudController;
 import de.codeschluss.portal.core.api.dto.BaseParams;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.exception.BadParamsException;
-import de.codeschluss.portal.core.exception.DuplicateEntryException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.security.permissions.Authenticated;
 import de.codeschluss.portal.core.security.permissions.OwnUserOrSuperUserPermission;
@@ -22,10 +22,10 @@ import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
 import de.codeschluss.portal.core.security.services.AuthorizationService;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.mail.MessagingException;
 
@@ -109,7 +109,19 @@ public class UserController extends CrudController<UserEntity, UserService> {
   @Override
   @PostMapping("/users")
   public ResponseEntity<?> create(@RequestBody UserEntity newUser) throws URISyntaxException {
-    return super.create(newUser);
+    validateCreate(newUser);
+    try {
+      UserEntity createdUser = service.add(newUser);
+      
+      if (newUser.getOrganisations() != null && !newUser.getOrganisations().isEmpty()) {
+        providerService.createApplication(createdUser, newUser.getOrganisations());
+      }
+      
+      return created(new URI(createdUser.toResource().getId().expand().getHref()))
+          .body(createdUser.toResource());
+    } catch (NotFoundException | NullPointerException e) {
+      throw new BadParamsException("User or Organisation are null or do not exist!");
+    }
   }
 
   @Override
@@ -176,17 +188,9 @@ public class UserController extends CrudController<UserEntity, UserService> {
   @OwnUserOrSuperUserPermission
   public ResponseEntity<?> addOrganisation(@PathVariable String userId,
       @RequestBody String... organisationParam) {
-    List<String> distinctOrgas = Arrays.asList(organisationParam).stream().distinct()
-        .collect(Collectors.toList());
-
-    if (providerService.isDuplicate(userId, distinctOrgas)) {
-      throw new DuplicateEntryException("User with one or more Organisations already exists");
-    }
-
     try {
-      List<ProviderEntity> providers = providerService.addAllResourcesWithMail(
-          providerService.createProviders(service.getById(userId), distinctOrgas));
-      return ok(providers);
+      return ok(providerService.createApplication(
+          service.getById(userId), Arrays.asList(organisationParam)));
     } catch (NotFoundException | NullPointerException e) {
       throw new BadParamsException("User or Organisation are null or do not exist!");
     }

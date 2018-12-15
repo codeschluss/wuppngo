@@ -48,28 +48,28 @@ export class ActivityViewComponent {
     blog.author = 'Franz test';
     blog.creationDate = new Date().toDateString();
     blog.postText = 'Lorem ipsum ' +
-    'dolor sit amet, consetetur sadipscing elitr, sed ' +
-    'diam nonumy eirmod tempor invidunt ut labore et ' +
-    'dolore magna aliquyam erat, sed diam voluptua. At ' +
-    'vero eos et accusam et justo duo dolores et ea rebum. ' +
-    'Stet clita kasd gubergren, no sea takimata sanctus est ' +
-    'Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, ' +
-    'consetetur sadipscing elitr, sed diam nonumy eirmod tempor ' +
-    'invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ' +
-    'At vero eos et accusam et justo duo dolores et ea rebum. Stet clita ' +
-    'kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.';
+      'dolor sit amet, consetetur sadipscing elitr, sed ' +
+      'diam nonumy eirmod tempor invidunt ut labore et ' +
+      'dolore magna aliquyam erat, sed diam voluptua. At ' +
+      'vero eos et accusam et justo duo dolores et ea rebum. ' +
+      'Stet clita kasd gubergren, no sea takimata sanctus est ' +
+      'Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, ' +
+      'consetetur sadipscing elitr, sed diam nonumy eirmod tempor ' +
+      'invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ' +
+      'At vero eos et accusam et justo duo dolores et ea rebum. Stet clita ' +
+      'kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.';
     blog.title = 'Great Test Blogpost';
     return blog;
   }
 
   openBottomSheetSchedules(schedules: ScheduleModel[]): void {
-      this.bottomSheet.open(BottomSheetScheduleComponent,
-        { data: { schedules: schedules } });
+    this.bottomSheet.open(BottomSheetScheduleComponent,
+      { data: { schedules: schedules } });
   }
 
   openBottomSheetMap(): void {
     this.bottomSheet.open(BottomSheetMapComponent,
       { data: { activities: [this.activity] } });
-    }
+  }
 
 }
