@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnChanges } from '@angular/core';
 import {
     MatToolbarModule,
     MatFormFieldModule,
@@ -10,7 +10,8 @@ import {
     MatDialog
 } from '@angular/material';
 import { LangaugeChooserDialogComponent } from './languagecooser.component';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { SessionModel, SessionProvider } from '@portal/core';
 
 @Component({
     selector: 'navbar-component',
@@ -18,7 +19,7 @@ import { Router } from '@angular/router';
     templateUrl: 'navbar.component.html'
 })
 
-export class NavBarComponent {
+export class NavBarComponent implements OnChanges {
 
     public static readonly imports = [
         MatToolbarModule,
@@ -32,12 +33,28 @@ export class NavBarComponent {
 
     public routeLinks: any[] = [];
     public accountRouts: any[] = [];
+    private token;
 
     public constructor(
         public dialog: MatDialog,
-        private router: Router
-    ) {
+        private router: Router,
+        private route: ActivatedRoute,
+        private session: SessionProvider
+
+        ) {
         this.initGlobalTabs();
+        this.session.subscribe((next) => {
+            this.token = next.accessToken;
+          });
+        console.log(this.token);
+        this.initAccountRouts();
+    }
+
+    ngOnChanges(): void {
+        this.session.subscribe((next) => {
+            this.token = next.accessToken;
+          });
+        console.log(this.token);
         this.initAccountRouts();
     }
 
@@ -46,33 +63,34 @@ export class NavBarComponent {
         {
             label: 'portalName',
             link: '/home',
-            index: 0
         },
         {
             label: 'activities',
             link: '/list/activities',
-            index: 1
         },
         {
             label: 'organisations',
             link: '/list/organisations',
-            index: 2
         },
         {
             label: 'worthKnowing',
             link: '/worthknowing',
-            index: 3
         },
         {
             label: 'blogs',
             link: '/list/blogs',
-            index: 4
         });
   }
 
 //   Just Prototyping
   initAccountRouts() {
-    this.accountRouts = [{
+    if (this.token.sub) {
+        this.accountRouts = [
+        {
+            label: 'Hi, ' + this.token.sub,
+            link: '/home',
+        },
+        {
             label: 'personalData',
             link: '/admin/',
         },
@@ -83,12 +101,13 @@ export class NavBarComponent {
         {
             label: 'Abmelden',
             link: '/admin/',
-        },
-        {
+        }];
+    } else {
+        this.accountRouts = [{
             label: 'Anmelden',
             link: '/admin/login',
         }];
-    }
+    }}
 
     openLanguageChooser(): void {
         const dialogRef = this.dialog.open(LangaugeChooserDialogComponent, {
