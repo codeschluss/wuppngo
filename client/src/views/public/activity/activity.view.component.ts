@@ -8,6 +8,8 @@ import { TargetGroupModel } from '../../../realm/target-group/target-group.model
 import { BottomSheetMapComponent } from '../mapping/map.bottomsheet.component';
 import { BottomSheetScheduleComponent } from './schedules.bottom.sheet.component';
 import { BlogModel } from 'src/core/models/blog.model';
+import { ActivityModel } from 'src/realm/activity/activity.model';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -18,7 +20,7 @@ import { BlogModel } from 'src/core/models/blog.model';
 export class ActivityViewComponent {
 
   public static readonly imports = [];
-  public activity: any;
+  public activity: Observable<ActivityModel>;
   public viewSchedules: boolean;
   public organisation: OrganisationModel;
   public targetGroups: TargetGroupModel[];
@@ -30,9 +32,6 @@ export class ActivityViewComponent {
     route: ActivatedRoute,
   ) {
     this.activity = route.snapshot.data.activity;
-    for (let i = 0; i < 3; i++) {
-      this.blogs.push(this.buildTestBlog());
-    }
   }
 
   getNextdate(date: string): string {
