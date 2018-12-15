@@ -15,10 +15,7 @@ export class FooterComponent {
 
     constructor(
         public dialog: MatDialog,
-        ) {
-            // TODO: get from DB
-            this.instagramUrl = 'www.instagram.com/wuppngo/';
-        }
+        ) {}
 
     openImprintDialog(): void {
         const dialogRef = this.dialog.open(ImprintDialogComponent, {

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-
 @Component({
   styleUrls: ['about.component.css'],
   templateUrl: 'about.component.html'
@@ -19,7 +18,7 @@ export class AboutComponent {
   autoplay = false;
 
   constructor(
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
   ) {
     this.activities = this.route.snapshot.data.activities;
   }

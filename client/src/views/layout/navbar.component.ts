@@ -38,15 +38,12 @@ export class NavBarComponent implements OnChanges {
     public constructor(
         public dialog: MatDialog,
         private router: Router,
-        private route: ActivatedRoute,
         private session: SessionProvider
-
         ) {
         this.initGlobalTabs();
         this.session.subscribe((next) => {
             this.token = next.accessToken;
           });
-        console.log(this.token);
         this.initAccountRouts();
     }
 
@@ -54,7 +51,6 @@ export class NavBarComponent implements OnChanges {
         this.session.subscribe((next) => {
             this.token = next.accessToken;
           });
-        console.log(this.token);
         this.initAccountRouts();
     }
 
@@ -92,16 +88,19 @@ export class NavBarComponent implements OnChanges {
         },
         {
             label: 'personalData',
-            link: '/admin/',
-        },
-        {
-            label: 'adminArea',
-            link: '/admin/',
+            link: '/admin',
         },
         {
             label: 'Abmelden',
-            link: '/admin/',
+            link: '/admin/login/logout',
         }];
+        if (this.token.superuser) {
+            this.accountRouts.push(
+            {
+                label: 'adminArea',
+                link: '/admin/application',
+            });
+        }
     } else {
         this.accountRouts = [{
             label: 'Anmelden',

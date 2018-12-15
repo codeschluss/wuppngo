@@ -1,10 +1,15 @@
-<div class="orga-list">
-    <h2><i18n i18n="@@organisations">organisations</i18n></h2>
+<div class="orga-list" *ngIf="organisations && organisations.length">
     <ng-container>
-        <div id="organisationContainer" fxLayout="row wrap">
+    <h2><i18n i18n="@@organisations">organisations</i18n></h2>
+        <div id="organisationContainer" fxLayout="row wrap" fxLayout.xs="column">
             <div class="organisationCard" fxFlex.xs="100" *ngFor="let organisation of organisations">
                 <organisation-card [organisation]="organisation"></organisation-card>
             </div> 
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-around center">
+            <button mat-stroked-button [disabled]="pageNumber == 0" color="primary" (click)="previousPage()">&lt;</button>
+            {{pageNumber + 1 + ' / ' + (totalSize%pageSize)}}
+            <button mat-stroked-button [disabled]="!moreEntriesExist()" color="primary" (click)="nextPage()">&gt;</button>
         </div>
     </ng-container>
 </div>

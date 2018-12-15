@@ -55,11 +55,13 @@ organisation-card.orgaCard {
 .organisationCard {
     margin: 20px;
     min-width: 500px;
+    max-width: 600px;
 }
 
 
 mat-card {
     height: 350px;
+    max-width: 600px;
     h2{
         word-wrap: break-word; 
     }

@@ -1,16 +1,16 @@
 <mat-card (click)="openOrganisationView()" class="background-color-secondary" fxLayout="column">
-    <h2>{{organisation?.name}}</h2>
-    <div 
-    organisation-cardfxLayout="row" 
-    fxFlex="100" 
-    fxLayoutAlign="space-between" 
-    fxLayoutGap="20px grid">
-        <div fxFlex="40">
-            <img [style.width]="'100%'" [src]="getOrgaImg()">
+    <h2 [style.height]="'100px'">{{organisation?.name}}</h2>
+    <div
+        organisation-cardfxLayout="row" 
+        fxFlex="100" 
+        fxLayoutAlign="space-between"
+        fxLayoutGap="20px grid">
+        <div fxFlex>
+            <img fxFlex [style.max-width]="'100%'" [src]="getOrgaImg()">
         </div>
 
         <div class="organisation-contact-card" 
-            fxFlex="60" 
+            fxFlex="50" 
             fxLayout="column" 
             fxLayoutGap="10px grid">
             <div fxLayout="column" *ngIf="organisation.address">
