@@ -14,10 +14,9 @@ import de.codeschluss.portal.core.service.ResourceDataService;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.Resources;
 import org.springframework.stereotype.Service;
 
@@ -117,19 +116,25 @@ public class BlogService extends ResourceDataService<BlogEntity, BlogQueryBuilde
       return Collections.emptyList();
     }
 
-    return result;
+    return transformList(result);
+  }
+  
+  @Override
+  public <P extends FilterSortPaginate> List<BlogEntity> getSortedList(P params) {
+    List<BlogEntity> nonEmptyResult = super.getSortedList(params);
+    return transformList(nonEmptyResult);
   }
   
   /**
-   * Gets the sorted list.
+   * Transform.
    *
-   * @param <P> the generic type
-   * @param params the params
-   * @return the sorted list
+   * @param stream the stream
+   * @return the list
    */
-  public <P extends FilterSortPaginate> List<BlogEntity> getSortedList(P params) {
-    List<BlogEntity> nonEmptyResult = super.getSortedList(params);
-    nonEmptyResult.parallelStream().map(mapper)
+  private List<BlogEntity> transformList(List<BlogEntity> list) {
+    return list.parallelStream().map(blog -> {
+      return transformSingle(blog);
+    }).collect(Collectors.toList());
   }
 
   /**
@@ -139,19 +144,9 @@ public class BlogService extends ResourceDataService<BlogEntity, BlogQueryBuilde
    * @param params the params
    * @return the paged
    */
-  public <P extends FilterSortPaginate> Page<E> getPaged(P params) {
-    PageRequest page = PageRequest.of(
-        params.getPage(), params.getSize(), entities.createSort(params));
-    
-    Page<E> paged = params.isEmptyQuery() && !entities.localized()
-        ? repo.findAll(page)
-        : repo.findAll(entities.search(params), page);
-    
-    if (paged == null || paged.isEmpty()) {
-      throw new NotFoundException(params.toString());
-    }
-    
-    return paged;
+  public <P extends FilterSortPaginate> Page<BlogEntity> getPaged(P params) {
+    Page<BlogEntity> nonEmptyPage = super.getPaged(params);
+    return nonEmptyPage.map(blog -> transformSingle(blog));
   }
   
   /**
