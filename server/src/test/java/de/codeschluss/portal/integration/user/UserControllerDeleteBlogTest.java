@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.blog.BlogEntity;
 import de.codeschluss.portal.components.user.UserController;
+import de.codeschluss.portal.core.exception.BadParamsException;
 
 import org.assertj.core.api.Condition;
 import org.junit.Test;
@@ -23,16 +24,16 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootTest
 @Transactional
 @Rollback
-public class UserControllerDeleteBlog {
+public class UserControllerDeleteBlogTest {
   
   @Autowired
   private UserController controller;
   
   @Test
   @WithUserDetails("super@user")
-  public void deleteForOtherUserSuperUserOk() {
-    String userId = "00000000-0000-0000-0004-900000000000";
-    String blogId = "00000000-0000-0000-0008-800000000000";
+  public void deleteSuperUserOk() {
+    String userId = "00000004-0000-0000-0004-000000000000";
+    String blogId = "00000000-0000-0000-0016-400000000000";
 
     assertContaining(userId, blogId);
 
@@ -42,10 +43,10 @@ public class UserControllerDeleteBlog {
   }
 
   @Test
-  @WithUserDetails("provider3@user")
-  public void deleteBlogForOwnUserOk() {
-    String userId = "00000000-0000-0000-0004-800000000000";
-    String blogId = "00000000-0000-0000-0008-200000000000";
+  @WithUserDetails("blog1@user")
+  public void deleteOwnOk() {
+    String userId = "00000004-0000-0000-0004-000000000000";
+    String blogId = "00000000-0000-0000-0016-500000000000";
 
     assertContaining(userId, blogId);
 
@@ -55,20 +56,29 @@ public class UserControllerDeleteBlog {
   }
 
   @Test(expected = AccessDeniedException.class)
-  @WithUserDetails("provider1@user")
-  public void deleteBlogForOtherUserDenied() {
-    String userId = "00000000-0000-0000-0004-800000000000";
-    String providerId = "00000000-0000-0000-0008-300000000000";
+  @WithUserDetails("blog1@user")
+  public void deleteNotOwnDenied() {
+    String userId = "00000005-0000-0000-0004-000000000000";
+    String blogId = "00000000-0000-0000-0016-500000000000";
 
-    controller.deleteBlog(userId, providerId);
+    controller.deleteBlog(userId, blogId);
+  }
+  
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("blog1@user")
+  public void deleteNotOwnInvalidUserIdDenied() {
+    String userId = "00000004-0000-0000-0004-000000000000";
+    String blogId = "00000000-0000-0000-0016-300000000000";
+
+    controller.deleteBlog(userId, blogId);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
-  public void deleteBlogForOtherUserNotRegisteredDenied() {
-    String userId = "00000000-0000-0000-0004-800000000000";
-    String providerId = "00000000-0000-0000-0008-300000000000";
+  public void deleteBlogNotRegisteredDenied() {
+    String userId = "00000005-0000-0000-0004-000000000000";
+    String blogId = "00000000-0000-0000-0016-500000000000";
 
-    controller.deleteBlog(userId, providerId);
+    controller.deleteBlog(userId, blogId);
   }
   
   @SuppressWarnings("unchecked")
@@ -76,7 +86,7 @@ public class UserControllerDeleteBlog {
     Resources<Resource<BlogEntity>> result = (Resources<Resource<BlogEntity>>) 
         controller.readBlogs(userId, null).getBody();
     assertThat(result.getContent()).haveAtLeastOne(
-        new Condition<>(p -> p.getContent().getId().equals(blogId), "blognisation exists"));
+        new Condition<>(p -> p.getContent().getId().equals(blogId), "blog exists"));
   }
 
   @SuppressWarnings("unchecked")

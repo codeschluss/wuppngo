@@ -107,7 +107,7 @@ public class BlogQueryBuilder extends QueryBuilder<QBlogEntity> {
    * @return the predicate
    */
   public Predicate withBlogIdAndUserId(String id, String userId) {
-    return withUserId(userId).and(withId(userId));
+    return withUserId(userId).and(withId(id));
   }
 
   /**

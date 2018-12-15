@@ -267,6 +267,20 @@ public class UserController extends CrudController<UserEntity, UserService> {
   }
   
   /**
+   * Read bloggers.
+   *
+   * @param params the params
+   * @return the response entity
+   */
+  @GetMapping("/users/bloggers")
+  public ResponseEntity<?> readAllBlogger(FilterSortPaginate params) {
+    validateRead(params);
+    return params.getPage() == null && params.getSize() == null
+        ? ok(bloggerService.getSortedListResources(params))
+        : ok(bloggerService.getPagedResources(params));
+  }
+  
+  /**
    * Read activities.
    *
    * @param userId the user id
@@ -311,8 +325,7 @@ public class UserController extends CrudController<UserEntity, UserService> {
   @PostMapping("/users/blogapply")
   @Authenticated
   public ResponseEntity<?> applyAsBlogger() {
-    bloggerService.createApplication(authService.getCurrentUser());
-    return noContent().build();
+    return ok(bloggerService.createApplication(authService.getCurrentUser()));
   }
   
   /**
