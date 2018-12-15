@@ -10,7 +10,7 @@ import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
-import de.codeschluss.portal.core.security.permissions.BloggerOrSuperuserPermission;
+import de.codeschluss.portal.core.security.permissions.BloggerPermission;
 import de.codeschluss.portal.core.security.permissions.OwnBlogOrSuperuserPermission;
 import de.codeschluss.portal.core.security.services.AuthorizationService;
 
@@ -76,7 +76,7 @@ public class BlogController extends CrudController<BlogEntity, BlogService> {
 
   @Override
   @PostMapping("/blogs")
-  @BloggerOrSuperuserPermission
+  @BloggerPermission
   public ResponseEntity<?> create(@RequestBody BlogEntity newBlog) throws URISyntaxException {
     newBlog.setBlogger(getBlogger());
     return super.create(newBlog);

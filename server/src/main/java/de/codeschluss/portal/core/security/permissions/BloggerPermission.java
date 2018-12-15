@@ -6,14 +6,13 @@ import java.lang.annotation.RetentionPolicy;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 /**
- * The Annotation BloggerOrSuperuserPermission.
+ * The Annotation BloggerPermission.
  * 
  * @author Valmir Etemi
  *
  */
 @Retention(RetentionPolicy.RUNTIME)
-@PreAuthorize("@authorizationService.isBlogger(authentication) "
-    + "or @authorizationService.isSuperUser(authentication)")
-public @interface BloggerOrSuperuserPermission {
+@PreAuthorize("@authorizationService.isBlogger(authentication)")
+public @interface BloggerPermission {
 
 }
