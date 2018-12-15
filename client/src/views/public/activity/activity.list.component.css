@@ -38,16 +38,3 @@ html, body{
 ::ng-deep mat-card {
   margin: 10px;
 }
-
-#largeMap {
-  position: absolute;
-  height: 90vh;
-  width: 100vw;
-  bottom: 0px;
-  left: 0px;
-}
-
-#carousel {
-  width: 90%;
-  margin: auto;
-}

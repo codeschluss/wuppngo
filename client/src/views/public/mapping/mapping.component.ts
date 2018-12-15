@@ -5,11 +5,13 @@ import { Subject } from 'rxjs';
 import { AddressModel } from '../../../realm/address/address.model';
 import { MatBottomSheet } from '@angular/material';
 import { EventEmitter } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
   selector: 'mapping-component',
   templateUrl: 'mapping.component.html',
+  styleUrls: ['mapping.component.scss']
 })
 
 export class MappingComponent implements AfterViewInit, OnInit
@@ -35,6 +37,7 @@ export class MappingComponent implements AfterViewInit, OnInit
   public zoomfactor: number;
   public highlightedMarkerId: string;
   public selectedActivities: any[];
+  public fullScreen: boolean = false;
 
   @ViewChild(LayerVectorComponent)
   private aolLayer: LayerVectorComponent;
@@ -49,7 +52,14 @@ export class MappingComponent implements AfterViewInit, OnInit
 
   public constructor(
     private bottomSheet: MatBottomSheet,
-  ) { }
+    private route: ActivatedRoute,
+    private router: Router
+    ) {
+      if (router.url.endsWith('/map')) {
+        this.activities = route.snapshot.data.activities;
+        this.fullScreen = true;
+      }
+    }
 
   public ngOnInit(): void {
       this.latitude = this.activities[0].address.latitude;
@@ -222,6 +232,10 @@ export class MappingComponent implements AfterViewInit, OnInit
       }
     }
     return false;
+  }
+
+  public toListView(): void {
+    this.router.navigate(['/list/activities']);
   }
 
 }

@@ -1,4 +1,5 @@
-<aol-map *ngIf="activities && activities.length && projection && longitude && latitude">
+<aol-map [attr.id]="fullScreen ? 'fullScreen' : ''" 
+	*ngIf="activities && activities.length && projection && longitude && latitude">
 	<aol-interaction-default>
 	</aol-interaction-default>
 
@@ -31,9 +32,18 @@
 			</aol-source-cluster>
 		</ng-container>
 	</aol-layer-vector>
+	<mat-chip id="listIcon" 
+	  color="primary" 
+	  *ngIf="fullScreen" 
+      selected>
+		<fa-icon icon="list" 
+			(click)="toListView()">
+		</fa-icon>
+    </mat-chip>
 </aol-map>
-<div [style.position]="'relative'" 
-	[style.top]="'-240px'" 
+<div [style.position]="'absolute'" 
+	[style.top]="fullScreen ? '10vh' : '0px'" 
+	[style.width]="'100%'" 
 	*ngIf="selectedActivities && selectedActivities.length">
 	<activity-carousel-component [activities]=selectedActivities>
 	</activity-carousel-component>

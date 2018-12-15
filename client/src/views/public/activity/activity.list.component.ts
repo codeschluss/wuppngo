@@ -4,7 +4,7 @@ import { CategoryModel } from '../../../realm/category/category.model';
 import { SuburbModel } from '../../../realm/suburb/suburb.model';
 import { TargetGroupModel } from '../../../realm/target-group/target-group.model';
 import { MappingComponent } from '../mapping/mapping.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -21,21 +21,23 @@ export class ActivityListComponent {
   public categories: CategoryModel[];
   public target_groups: TargetGroupModel[];
   public hoveredActivities: ActivityModel[];
-  public showMap: boolean;
   // public route: ActivatedRoute;
 
   @ViewChild(MappingComponent)
   private mapping: MappingComponent;
 
-  constructor(route: ActivatedRoute) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router
+    ) {
     this.activities = route.snapshot.data.activities;
     this.suburbs = route.snapshot.data.suburbs;
     this.target_groups = route.snapshot.data.targetGroups;
     this.categories = route.snapshot.data.categories;
   }
 
-  toggleMap(): void {
-    this.showMap = !this.showMap;
+  navigateToMap(): void {
+    this.router.navigate(['/list/activities/map']);
   }
 
   showOnMap(activity: any): void {
