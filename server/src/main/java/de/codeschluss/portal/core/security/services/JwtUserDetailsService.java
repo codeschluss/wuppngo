@@ -116,7 +116,7 @@ public class JwtUserDetailsService implements UserDetailsService {
    */
   private boolean isBlogger(UserEntity user) {
     try {
-      return bloggerService.getByUser(user).isApproved();
+      return bloggerService.getByUser(user.getId()).isApproved();
     } catch (NotFoundException e) {
       return false;
     }
@@ -129,7 +129,7 @@ public class JwtUserDetailsService implements UserDetailsService {
    * @return the blogs
    */
   private String[] getBlogs(UserEntity user) {
-    List<BlogEntity> blogs = blogService.getByUser(user);
+    List<BlogEntity> blogs = blogService.getByUser(user.getId(), null);
     return blogs == null || blogs.isEmpty() ? new String[0]
         : (String[]) blogs.stream().map(blog -> blog.getId())
             .toArray(String[]::new);

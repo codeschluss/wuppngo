@@ -67,8 +67,7 @@ databaseChangeLog:
             name: modified
             type: datetime
         - column:
-            constraints:
-              nullable: false
+            defaultValueBoolean: false
             name: approved
             type: BIT(1)
         - column:

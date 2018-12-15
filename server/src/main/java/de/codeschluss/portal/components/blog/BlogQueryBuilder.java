@@ -98,6 +98,17 @@ public class BlogQueryBuilder extends QueryBuilder<QBlogEntity> {
   private BooleanExpression likeContent(String filter) {
     return query.translatables.any().content.likeIgnoreCase(filter);
   }
+  
+  /**
+   * With blog id and user id.
+   *
+   * @param id the blog id
+   * @param userId the user id
+   * @return the predicate
+   */
+  public Predicate withBlogIdAndUserId(String id, String userId) {
+    return withUserId(userId).and(withId(userId));
+  }
 
   /**
    * With user id.

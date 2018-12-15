@@ -1,7 +1,9 @@
 package de.codeschluss.portal.components.blog;
 
-import de.codeschluss.portal.components.user.UserEntity;
+import com.querydsl.core.types.Predicate;
+
 import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
+import de.codeschluss.portal.core.api.dto.BaseParams;
 import de.codeschluss.portal.core.repository.DataRepository;
 import de.codeschluss.portal.core.service.ResourceDataService;
 
@@ -36,6 +38,17 @@ public class BlogService extends ResourceDataService<BlogEntity, BlogQueryBuilde
   public BlogEntity getExisting(BlogEntity blog) {
     return repo.findById(blog.getId()).orElse(null);
   }
+  
+  /**
+   * Checks if is blog user.
+   *
+   * @param blogId the blog id
+   * @param userId the user id
+   * @return true, if is blog user
+   */
+  public boolean isBlogUser(String blogId, String userId) {
+    return repo.exists(entities.withBlogIdAndUserId(blogId, userId));
+  }
 
   @Override
   public boolean validFieldConstraints(BlogEntity newBlog) {
@@ -58,11 +71,14 @@ public class BlogService extends ResourceDataService<BlogEntity, BlogQueryBuilde
   /**
    * Gets the by user.
    *
-   * @param user the user
+   * @param userId the user id
    * @return the by user
    */
-  public List<BlogEntity> getByUser(UserEntity user) {
-    List<BlogEntity> result = repo.findAll(entities.withUserId(user.getId()));
+  public List<BlogEntity> getByUser(String userId, BaseParams params) {
+    Predicate query = entities.withUserId(userId);
+    List<BlogEntity> result = params == null
+        ? repo.findAll(query)
+        : repo.findAll(query, entities.createSort(params));
     
     if (result == null || result.isEmpty()) {
       return Collections.emptyList();

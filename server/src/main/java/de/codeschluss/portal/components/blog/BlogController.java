@@ -83,7 +83,7 @@ public class BlogController extends CrudController<BlogEntity, BlogService> {
   }
   
   private BloggerEntity getBlogger() {
-    return bloggerService.getByUser(authService.getCurrentUser());
+    return bloggerService.getByUser(authService.getCurrentUser().getId());
   }
 
   @Override
