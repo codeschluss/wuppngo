@@ -117,6 +117,10 @@ public class UserController extends CrudController<UserEntity, UserService> {
         providerService.createApplication(createdUser, newUser.getOrganisations());
       }
       
+      if (newUser.isApplyBlogger()) {
+        bloggerService.createApplication(createdUser);
+      }
+      
       return created(new URI(createdUser.toResource().getId().expand().getHref()))
           .body(createdUser.toResource());
     } catch (NotFoundException | NullPointerException e) {

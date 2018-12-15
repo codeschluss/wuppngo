@@ -2,6 +2,7 @@ package de.codeschluss.portal.integration.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.codeschluss.portal.components.blogger.BloggerService;
 import de.codeschluss.portal.components.organisation.OrganisationEntity;
 import de.codeschluss.portal.components.user.UserController;
 import de.codeschluss.portal.components.user.UserEntity;
@@ -38,6 +39,9 @@ public class UserControllerCreateTest {
   @Autowired
   private UserService service;
   
+  @Autowired
+  private BloggerService bloggerService;
+  
   @Rule
   public SmtpServerRule smtpServerRule = new SmtpServerRule(2525);
 
@@ -70,6 +74,20 @@ public class UserControllerCreateTest {
     assertThat(service.userExists(user.getUsername())).isTrue();
     assertThat(smtpServerRule.getMessages()).isNotEmpty();
     assertContaining(savedUser.getId(), orgaId1, orgaId2);
+  }
+  
+  @Test
+  @SuppressWarnings("unchecked")
+  public void createWithBloggerOk() throws URISyntaxException {
+    UserEntity user = newUser("createWithoutSecurityOk", "test", "12345678", true,
+        "createWithoutSecurityOk");
+    user.setApplyBlogger(true);
+
+    UserEntity savedUser = ((Resource<UserEntity>) controller.create(user).getBody()).getContent();
+
+    assertThat(service.userExists(user.getUsername())).isTrue();
+    assertThat(bloggerService.getByUser(savedUser.getId()).isApproved()).isFalse();
+    
   }
 
   @Test(expected = BadParamsException.class)

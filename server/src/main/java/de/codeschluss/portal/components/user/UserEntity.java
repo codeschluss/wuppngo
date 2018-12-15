@@ -58,6 +58,10 @@ public class UserEntity extends BaseResource {
   @ToString.Exclude
   @JoinColumn(nullable = true)
   private BloggerEntity blogger;
+  
+  @Transient
+  @JsonDeserialize
+  private boolean applyBlogger;
 
   private String name;
 
