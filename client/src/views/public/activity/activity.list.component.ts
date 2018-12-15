@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ActivityModel } from '../../../realm/activity/activity.model';
 import { CategoryModel } from '../../../realm/category/category.model';
 import { SuburbModel } from '../../../realm/suburb/suburb.model';
@@ -16,10 +17,10 @@ export class ActivityListComponent {
 
   public static readonly imports = [];
 
-  public activities: ActivityModel[];
-  public suburbs: SuburbModel[];
-  public categories: CategoryModel[];
-  public target_groups: TargetGroupModel[];
+  public activities: Observable<ActivityModel[]>;
+  public suburbs: Observable<SuburbModel[]>;
+  public categories: Observable<CategoryModel[]>;
+  public target_groups: Observable<TargetGroupModel[]>;
   public hoveredActivities: ActivityModel[];
   // public route: ActivatedRoute;
 
