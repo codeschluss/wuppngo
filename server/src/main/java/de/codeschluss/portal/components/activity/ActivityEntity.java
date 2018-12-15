@@ -49,7 +49,7 @@ import org.springframework.hateoas.core.Relation;
 
 /**
  * The persistent class for the activities database table.
- * 
+ *
  * @author Valmir Etemi
  *
  */
@@ -68,7 +68,7 @@ import org.springframework.hateoas.core.Relation;
 public class ActivityEntity extends BaseResource {
 
   private static final long serialVersionUID = 1L;
-  
+
   @Transient
   @JsonDeserialize
   private String addressId;
@@ -87,19 +87,19 @@ public class ActivityEntity extends BaseResource {
   @JsonIgnore
   @JoinColumn(nullable = false)
   private CategoryEntity category;
-  
+
   @Column(name = "contact_name")
   private String contactName;
-  
+
   @JsonSerialize
   @JsonDeserialize
   @Transient
   private String description;
-  
+
   private int likes;
-  
+
   private String mail;
-  
+
   @JsonSerialize
   @JsonDeserialize
   @Transient
@@ -108,7 +108,7 @@ public class ActivityEntity extends BaseResource {
   @Transient
   @JsonDeserialize
   private String organisationId;
-  
+
   private String phone;
 
   @ManyToOne
@@ -126,14 +126,14 @@ public class ActivityEntity extends BaseResource {
   @ToString.Exclude
   @JsonIgnore
   @JoinTable(
-      name = "activities_tags", 
+      name = "activities_tags",
       joinColumns = @JoinColumn(name = "activity_id"),
       inverseJoinColumns = @JoinColumn(name = "tag_id"),
       uniqueConstraints = {
           @UniqueConstraint(columnNames = { "activity_id", "tag_id" })
       })
   @CollectionId(
-      columns = @Column(name = "id"), 
+      columns = @Column(name = "id"),
       type = @Type(type = "uuid-char"),
       generator = "UUID"
   )
@@ -143,43 +143,23 @@ public class ActivityEntity extends BaseResource {
   @ToString.Exclude
   @JsonIgnore
   @JoinTable(
-      name = "activities_target_groups", 
+      name = "activities_target_groups",
       joinColumns = @JoinColumn(name = "activity_id"),
       inverseJoinColumns = @JoinColumn(name = "target_group_id"),
       uniqueConstraints = {
           @UniqueConstraint(columnNames = { "activity_id", "target_group_id" })
       })
   @CollectionId(
-      columns = @Column(name = "id"), 
+      columns = @Column(name = "id"),
       type = @Type(type = "uuid-char"),
       generator = "UUID"
   )
   private List<TargetGroupEntity> targetGroups;
-  
+
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = CascadeType.REMOVE)
   @ToString.Exclude
   @JsonIgnore
   protected Set<ActivityTranslatablesEntity> translatables;
-
-  @JsonIgnore
-  public String getAddressId() {
-    return this.addressId;
-  }
-
-  @JsonIgnore
-  public String getCategoryId() {
-    return this.categoryId;
-  }
-  
-  @JsonIgnore
-  public void setLikes(int likes) {
-    this.likes = likes;
-  }
-
-  @JsonIgnore
-  public String getOrganisationId() {
-    return this.organisationId;
-  }
 
   @Override
   public List<Link> createResourceLinks() {
