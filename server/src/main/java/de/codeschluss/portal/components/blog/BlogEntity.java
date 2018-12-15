@@ -4,6 +4,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -74,6 +76,7 @@ public class BlogEntity extends BaseResource {
   @Transient
   private String content;
   
+  @JsonProperty(access = Access.READ_ONLY)
   private int likes;
   
   @JsonSerialize
@@ -85,11 +88,6 @@ public class BlogEntity extends BaseResource {
   @ToString.Exclude
   @JsonIgnore
   protected Set<BlogTranslatablesEntity> translatables;
-  
-  @JsonIgnore
-  public void setLikes(int likes) {
-    this.likes = likes;
-  }
   
   public String getAuthor() {
     return this.getBlogger().getUser().getName();

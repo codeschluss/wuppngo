@@ -1,6 +1,8 @@
 package de.codeschluss.portal.components.blogger;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import de.codeschluss.portal.components.blog.BlogEntity;
 import de.codeschluss.portal.components.user.UserEntity;
@@ -46,6 +48,7 @@ public class BloggerEntity extends BaseResource {
   private static final long serialVersionUID = 1L;
   
   @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
+  @JsonProperty(access = Access.READ_ONLY)
   private boolean approved;
   
   @OneToOne
