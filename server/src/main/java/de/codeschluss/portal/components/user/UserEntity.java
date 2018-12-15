@@ -6,7 +6,9 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import de.codeschluss.portal.components.blogger.BloggerEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.core.entity.BaseResource;
 import de.codeschluss.portal.core.security.Sensible;
@@ -17,8 +19,11 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -47,6 +52,16 @@ import org.springframework.hateoas.core.Relation;
 public class UserEntity extends BaseResource {
 
   private static final long serialVersionUID = 1L;
+  
+  @OneToOne
+  @JsonIgnore
+  @ToString.Exclude
+  @JoinColumn(nullable = true)
+  private BloggerEntity blogger;
+  
+  @Transient
+  @JsonDeserialize
+  private boolean applyBlogger;
 
   private String name;
 
@@ -55,6 +70,10 @@ public class UserEntity extends BaseResource {
   private String password;
 
   private String phone;
+  
+  @Transient
+  @JsonDeserialize
+  private List<String> organisationRegistrations;
   
   @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
   @JsonIgnore
@@ -78,6 +97,8 @@ public class UserEntity extends BaseResource {
         .readOrganisations(id, null)).withRel("organisations"));
     links.add(linkTo(methodOn(UserController.class)
         .readActivities(id, null)).withRel("activities"));
+    links.add(linkTo(methodOn(UserController.class)
+        .readBlogs(id, null)).withRel("blogs"));
 
     return links;
   }

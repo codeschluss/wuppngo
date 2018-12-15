@@ -1,9 +1,12 @@
 package de.codeschluss.portal.components.user;
 
+import static org.springframework.http.ResponseEntity.created;
 import static org.springframework.http.ResponseEntity.noContent;
 import static org.springframework.http.ResponseEntity.ok;
 
 import de.codeschluss.portal.components.activity.ActivityService;
+import de.codeschluss.portal.components.blog.BlogService;
+import de.codeschluss.portal.components.blogger.BloggerService;
 import de.codeschluss.portal.components.organisation.OrganisationService;
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.components.provider.ProviderService;
@@ -11,17 +14,18 @@ import de.codeschluss.portal.core.api.CrudController;
 import de.codeschluss.portal.core.api.dto.BaseParams;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.exception.BadParamsException;
-import de.codeschluss.portal.core.exception.DuplicateEntryException;
 import de.codeschluss.portal.core.exception.NotFoundException;
+import de.codeschluss.portal.core.security.permissions.Authenticated;
 import de.codeschluss.portal.core.security.permissions.OwnUserOrSuperUserPermission;
 import de.codeschluss.portal.core.security.permissions.OwnUserPermission;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
+import de.codeschluss.portal.core.security.services.AuthorizationService;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.mail.MessagingException;
 
@@ -53,6 +57,15 @@ public class UserController extends CrudController<UserEntity, UserService> {
   
   /** The organisation service. */
   private final OrganisationService organisationService;
+  
+  /** The blog service. */
+  private final BlogService blogService;
+  
+  /** The blogger service. */
+  private final BloggerService bloggerService;
+  
+  /** The auth service. */
+  private final AuthorizationService authService;
 
   /**
    * Instantiates a new user controller.
@@ -66,11 +79,17 @@ public class UserController extends CrudController<UserEntity, UserService> {
       UserService userService, 
       ProviderService providerService,
       ActivityService activityService, 
-      OrganisationService organisationService) {
+      OrganisationService organisationService,
+      BlogService blogService,
+      BloggerService bloggerService,
+      AuthorizationService authService) {
     super(userService);
     this.providerService = providerService;
     this.activityService = activityService;
     this.organisationService = organisationService;
+    this.blogService = blogService;
+    this.bloggerService = bloggerService;
+    this.authService = authService;
   }
 
   @Override
@@ -90,7 +109,24 @@ public class UserController extends CrudController<UserEntity, UserService> {
   @Override
   @PostMapping("/users")
   public ResponseEntity<?> create(@RequestBody UserEntity newUser) throws URISyntaxException {
-    return super.create(newUser);
+    validateCreate(newUser);
+    try {
+      UserEntity createdUser = service.add(newUser);
+      
+      if (newUser.getOrganisationRegistrations() != null 
+          && !newUser.getOrganisationRegistrations().isEmpty()) {
+        providerService.createApplication(createdUser, newUser.getOrganisationRegistrations());
+      }
+      
+      if (newUser.isApplyBlogger()) {
+        bloggerService.createApplication(createdUser);
+      }
+      
+      return created(new URI(createdUser.toResource().getId().expand().getHref()))
+          .body(createdUser.toResource());
+    } catch (NotFoundException | NullPointerException e) {
+      throw new BadParamsException("User or Organisation are null or do not exist!");
+    }
   }
 
   @Override
@@ -157,17 +193,9 @@ public class UserController extends CrudController<UserEntity, UserService> {
   @OwnUserOrSuperUserPermission
   public ResponseEntity<?> addOrganisation(@PathVariable String userId,
       @RequestBody String... organisationParam) {
-    List<String> distinctOrgas = Arrays.asList(organisationParam).stream().distinct()
-        .collect(Collectors.toList());
-
-    if (providerService.isDuplicate(userId, distinctOrgas)) {
-      throw new DuplicateEntryException("User with one or more Organisations already exists");
-    }
-
     try {
-      List<ProviderEntity> providers = providerService.addAllResourcesWithMail(
-          providerService.createProviders(service.getById(userId), distinctOrgas));
-      return ok(providers);
+      return ok(providerService.createApplication(
+          service.getById(userId), Arrays.asList(organisationParam)));
     } catch (NotFoundException | NullPointerException e) {
       throw new BadParamsException("User or Organisation are null or do not exist!");
     }
@@ -199,7 +227,6 @@ public class UserController extends CrudController<UserEntity, UserService> {
    * @return the response entity
    */
   @GetMapping("/users/{userId}/activities")
-  // TODO: Visible for all?
   public ResponseEntity<?> readActivities(
       @PathVariable String userId,
       BaseParams params) {
@@ -245,6 +272,88 @@ public class UserController extends CrudController<UserEntity, UserService> {
     } else {
       throw new BadParamsException(
           "Password is not reset. User does not exist or Mail is mistyped");
+    }
+  }
+  
+  /**
+   * Read bloggers.
+   *
+   * @param params the params
+   * @return the response entity
+   */
+  @GetMapping("/users/bloggers")
+  @SuperUserPermission
+  public ResponseEntity<?> readAllBloggers(FilterSortPaginate params) {
+    validateRead(params);
+    return params.getPage() == null && params.getSize() == null
+        ? ok(bloggerService.getSortedListResources(params))
+        : ok(bloggerService.getPagedResources(params));
+  }
+  
+  /**
+   * Read activities.
+   *
+   * @param userId the user id
+   * @param params the params
+   * @return the response entity
+   */
+  @GetMapping("/users/{userId}/blogs")
+  public ResponseEntity<?> readBlogs(
+      @PathVariable String userId,
+      BaseParams params) {
+    try {
+      return ok(blogService.getResourceByUser(userId, params));
+    } catch (IOException e) {
+      throw new BadParamsException("Invalid params: " + params.toString());
+    }
+  }
+  
+  /**
+   * Delete blog.
+   *
+   * @param userId the user id
+   * @param blogId the blog id
+   * @return the response entity
+   */
+  @DeleteMapping("/users/{userId}/blogs/{blogId}")
+  @OwnUserOrSuperUserPermission
+  public ResponseEntity<?> deleteBlog(@PathVariable String userId,
+      @PathVariable String blogId) {
+    if (blogService.isBlogUser(blogId, userId)) {
+      blogService.delete(blogId);
+      return noContent().build();
+    } else {
+      throw new BadParamsException("Blog does not match given user!");
+    }
+  }
+  
+  /**
+   * Apply as blogger.
+   *
+   * @return the response entity
+   */
+  @PostMapping("/users/blogapply")
+  @Authenticated
+  public ResponseEntity<?> applyAsBlogger() {
+    return ok(bloggerService.createApplication(authService.getCurrentUser()));
+  }
+  
+  /**
+   * Grant blogger right.
+   *
+   * @param userId the user id
+   * @param isBlogger the is blogger
+   * @return the response entity
+   */
+  @PutMapping("/users/{userId}/grantblogger")
+  @SuperUserPermission
+  public ResponseEntity<?> grantBloggerRight(@PathVariable String userId,
+      @RequestBody Boolean isBlogger) {
+    try {
+      bloggerService.setBloggerApprovalByUserId(userId, isBlogger);
+      return noContent().build();
+    } catch (NotFoundException e) {
+      throw new BadParamsException("User with given ID does not exist!");
     }
   }
 }

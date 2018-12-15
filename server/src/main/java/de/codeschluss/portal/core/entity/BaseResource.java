@@ -9,12 +9,14 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
 
@@ -26,6 +28,7 @@ import org.springframework.hateoas.Resource;
  */
 @MappedSuperclass
 @EqualsAndHashCode(callSuper = true)
+@EntityListeners(AuditingEntityListener.class)
 @Data
 public abstract class BaseResource extends BaseEntity {
   
