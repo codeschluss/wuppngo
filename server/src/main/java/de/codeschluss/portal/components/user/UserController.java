@@ -277,7 +277,11 @@ public class UserController extends CrudController<UserEntity, UserService> {
   public ResponseEntity<?> readBlogs(
       @PathVariable String userId,
       BaseParams params) {
-    return ok(blogService.getByUser(userId, params));
+    try {
+      return ok(blogService.getResourceByUser(userId, params));
+    } catch (IOException e) {
+      throw new BadParamsException("Invalid params: " + params.toString());
+    }
   }
   
   /**

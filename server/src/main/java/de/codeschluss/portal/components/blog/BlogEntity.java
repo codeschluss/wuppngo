@@ -52,13 +52,13 @@ import org.springframework.hateoas.core.Relation;
 @Entity
 @Table(name = "blogs")
 @Relation(collectionRelation = "data")
-public class BlogEntity extends BaseResource {
   
+public class BlogEntity extends BaseResource {
   private static final long serialVersionUID = 1L;
   
   @ManyToOne
   @JsonIgnore
-  @JoinColumn(nullable = false)
+  @JoinColumn(nullable = true)
   private ActivityEntity activity;
   
   @JsonSerialize

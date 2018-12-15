@@ -106,8 +106,6 @@ databaseChangeLog:
             name: likes
             type: integer
         - column:
-            constraints:
-              nullable: false
             name: activity_id
             type: CHAR(36)
         - column:
