@@ -31,6 +31,7 @@ public class BloggerQueryBuilder extends QueryBuilder<QBloggerEntity> {
   public <P extends FilterSortPaginate> Predicate search(P params) {
     String filter = prepareFilter(params.getFilter());
     return query.user.name.likeIgnoreCase(filter)
+        .or(query.user.username.likeIgnoreCase(filter))
         .or(query.blogs.any().translatables.any().title.likeIgnoreCase(filter))
         .or(query.blogs.any().translatables.any().content.likeIgnoreCase(filter));
   }
