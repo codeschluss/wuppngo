@@ -38,7 +38,6 @@ public class NewsController {
    * @param newSubscription the new subscription
    * @return the response entity
    */
-  @CrossOrigin
   @PostMapping("/news/subscribe")
   public ResponseEntity<?> subscribe(@RequestBody SubscriptionEntity newSubscription) {
     SubscriptionEntity savedSubscription = pushService.subscribe(newSubscription);
@@ -48,14 +47,12 @@ public class NewsController {
     return ok(savedSubscription);
   }
   
-  @CrossOrigin
   @DeleteMapping("/news/unsubscribe/{subscriptionId}")
   public ResponseEntity<?> unsubscribe(@PathVariable String subscriptionId) {
     pushService.unsubscribe(subscriptionId);
     return noContent().build();
   }
   
-  @CrossOrigin
   @PostMapping("/news/push")
   @SuperUserPermission
   public ResponseEntity<?> pushNews(@RequestBody News news) {
