@@ -3,24 +3,19 @@ import { CrudResolver, CrudGraph, CrudJoiner } from '@portal/core';
 import { OrganisationModel } from 'src/realm/organisation/organisation.model';
 import { tap, map, mergeMap } from 'rxjs/operators';
 import { StrictHttpResponse } from 'src/api/strict-http-response';
-import { PageEvent } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
 import { OrganisationProvider } from 'src/realm/organisation/organisation.provider';
+import { ListComponent } from 'src/views/list.component';
 
 @Component({
   styleUrls: ['organisation.component.scss'],
   templateUrl: 'organisation.list.component.html'
 })
 
-export class OrganisationListComponent implements OnInit {
+export class OrganisationListComponent extends ListComponent implements OnInit {
 
   public static readonly imports = [];
   public organisations: OrganisationModel[];
-  public pageNumber: number = 0;
-  public totalSize: number = 100;
-  public pageSize: number = 10;
-  public sort: string;
-  public pageSizeOptions: number[] = [5, 10, 25, 100];
 
   private graph: CrudGraph = CrudJoiner.of(OrganisationModel)
     .with('address').yield('suburb').graph;
@@ -28,7 +23,9 @@ export class OrganisationListComponent implements OnInit {
   constructor(
     private organisationProvider: OrganisationProvider,
     private crudResolver: CrudResolver
-    ) {}
+    ) {
+      super();
+    }
 
       ngOnInit(): void {
         this.basic();
@@ -59,53 +56,10 @@ export class OrganisationListComponent implements OnInit {
       }
 
       private intercept(response: StrictHttpResponse<any>) {
-        this.totalSize = response.body.page.totalElements;
+        this.totalPages = response.body.page.totalPages;
         this.pageNumber = response.body.page.number;
         this.pageSize = response.body.page.size;
       }
-
-      // public loadList(): void {
-      //   this.organisations = [];
-      //   this.organisationProvider.system.call(
-      //     this.organisationProvider.system.methods.readAll,
-      //     {
-      //       size: this.pageSize,
-      //       page: this.pageNumber,
-      //       sort: 'name'
-      //     }
-      //   ).pipe(
-      //     tap((response) => this.scroll(response as any)),
-      //     map((response) => this.organisationProvider.system.cast(response)))
-      //     .subscribe((response: any) => response.map((orga) =>
-      //     this.crudResolver.run(orga,
-      //       CrudJoiner.of(OrganisationModel)
-      //       .with('address')
-      //       .yield('suburb').graph.nodes).then(
-      //         resolvedOrganisation => {
-      //           this.organisations.push(resolvedOrganisation);
-      //         }
-      //       )
-      //     ));
-      // }
-
-      // public resolveData(orga: any): any {
-      //   let organisation: any;
-      //   this.crudResolver.run(orga,
-      //     CrudJoiner.of(OrganisationModel)
-      //     .with('address')
-      //     .yield('suburb').graph.nodes).then(
-      //       resolvedOrganisation => {
-      //         organisation = resolvedOrganisation;
-      //       }
-      //     );
-      //     return organisation;
-      // }
-
-      // private scroll(response: StrictHttpResponse<any>) {
-      //   this.totalSize = response.body.page.totalElements;
-      //   this.pageNumber = response.body.page.number;
-      //   this.pageSize = response.body.page.size;
-      // }
 
       nextPage(): void {
         this.organisations = null;
@@ -121,14 +75,4 @@ export class OrganisationListComponent implements OnInit {
         this.complex();
       }
 
-      moreEntriesExist(): boolean {
-        return (this.pageNumber + 1) * this.pageSize <= this.totalSize;
-      }
-
-      public onPageChange(event: any): void {
-        this.organisations = null;
-        this.pageNumber = event.pageIndex;
-        this.basic();
-        this.complex();
-      }
 }

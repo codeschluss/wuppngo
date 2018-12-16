@@ -7,9 +7,19 @@
             </div> 
         </div>
         <div fxLayout="row" fxLayoutAlign="space-around center">
-            <button mat-stroked-button [disabled]="pageNumber == 0" color="primary" (click)="previousPage()">&lt;</button>
-            {{pageNumber + 1 + ' / ' + (totalSize%pageSize)}}
-            <button mat-stroked-button [disabled]="!moreEntriesExist()" color="primary" (click)="nextPage()">&gt;</button>
+            <button mat-stroked-button 
+                [disabled]="pageNumber == 0" 
+                color="primary" 
+                (click)="previousPage()">
+                &lt;
+            </button>
+            {{pageNumber + 1 + ' / ' + totalPages}}
+            <button mat-stroked-button 
+                [disabled]="!moreEntriesExist()" 
+                color="primary" 
+                (click)="nextPage()">
+                &gt;
+            </button>
         </div>
     </ng-container>
 </div>
