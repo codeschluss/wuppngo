@@ -5,14 +5,14 @@
     <div class="color-primary blogTitle">
         {{blog.title}}
     </div>
-    <div>{{blog.creationDate}}</div>
+    <div>{{blog.created}}</div>
     <div id="authorContainer">{{'Autor: ' + blog.author}}</div>
     <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between center">
         <div class="blogTextContainer background-color-secondary">
-            {{blog.postText}}
+            {{blog.content}}
         </div>
-        <div class="blogActivityContainer" *ngIf="(blog.activity | async) as activity">
+        <!-- <div class="blogActivityContainer" *ngIf="(blog.activity | async) as activity">
             <activity-card [activity]="activity"></activity-card>
-        </div>
+        </div> -->
     </div>
 </div> 
