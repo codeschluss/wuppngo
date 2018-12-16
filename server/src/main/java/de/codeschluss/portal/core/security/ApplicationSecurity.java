@@ -7,6 +7,7 @@ import de.codeschluss.portal.core.security.services.JwtUserDetailsService;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -85,9 +86,17 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
   }
   
   @Bean
+  @Profile("dev")
   CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration config = new CorsConfiguration();
+
+    config.setAllowCredentials(true);
+    config.addAllowedOrigin("*");
+    config.addAllowedHeader("*");
+    config.addAllowedMethod("*");
+
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+    source.registerCorsConfiguration("/**", config);
     return source;
   }
   
