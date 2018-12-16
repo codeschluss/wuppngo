@@ -13,7 +13,6 @@ import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
 import de.codeschluss.portal.core.security.permissions.BloggerPermission;
 import de.codeschluss.portal.core.security.permissions.OwnBlogOrSuperuserPermission;
-import de.codeschluss.portal.core.security.permissions.OwnOrOrgaActivityOrSuperUserPermission;
 import de.codeschluss.portal.core.security.services.AuthorizationService;
 
 import java.io.IOException;
