@@ -21,6 +21,7 @@
 		<oauth.version>3.4.0</oauth.version>
 		<greenmail.version>1.5.5</greenmail.version>
 		<tika.version>1.19.1</tika.version>
+		<webpush.version>4.0.0</webpush.version>
 	</properties>
 
 	<parent>
@@ -123,6 +124,11 @@
 			<groupId>org.apache.tika</groupId>
 			<artifactId>tika-core</artifactId>
 			<version>${tika.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>nl.martijndwars</groupId>
+		    <artifactId>web-push</artifactId>
+		    <version>${webpush.version}</version>
 		</dependency>
 
 		<dependency>

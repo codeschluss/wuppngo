@@ -35,3 +35,5 @@ databaseChangeLog:
         file: classpath:db/changelogs/0015.add_topic_tables.yaml
     - include:
         file: classpath:db/changelogs/0016.add_page_tables.yaml
+    - include:
+        file: classpath:db/changelogs/0017.add_subscription_table.yaml
