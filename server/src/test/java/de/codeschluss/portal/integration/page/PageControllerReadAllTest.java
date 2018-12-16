@@ -1,8 +1,8 @@
-package de.codeschluss.portal.integration.topic;
+package de.codeschluss.portal.integration.page;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import de.codeschluss.portal.components.topic.TopicController;
+import de.codeschluss.portal.components.page.PageController;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 
 import org.junit.Test;
@@ -16,16 +16,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TopicControllerReadAllTest {
+public class PageControllerReadAllTest {
 
   @Autowired
-  private TopicController controller;
+  private PageController controller;
 
-  private FilterSortPaginate params = new FilterSortPaginate("topic", 0, 5, "name", "asc", null);
+  private FilterSortPaginate params = new FilterSortPaginate("page", 0, 5, "title", "asc", null);
 
   @Test
   public void findAllWithoutPaginationOk() {
-    FilterSortPaginate params = new FilterSortPaginate(null, null, null, "name", "asc", null);
+    FilterSortPaginate params = new FilterSortPaginate(null, null, null, "title", "asc", null);
 
     Resources<?> result = (Resources<?>) controller.readAll(params).getBody();
 
@@ -49,7 +49,7 @@ public class TopicControllerReadAllTest {
 
   @Test(expected = PropertyReferenceException.class)
   public void findAllWrongParams() {
-    FilterSortPaginate params = new FilterSortPaginate("topic", 1, 5, "blablabla123", "wrong",
+    FilterSortPaginate params = new FilterSortPaginate("page", 1, 5, "blablabla123", "wrong",
         null);
     controller.readAll(params);
   }

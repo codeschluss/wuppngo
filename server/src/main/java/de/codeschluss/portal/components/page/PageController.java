@@ -2,8 +2,12 @@ package de.codeschluss.portal.components.page;
 
 import static org.springframework.http.ResponseEntity.ok;
 
+import de.codeschluss.portal.components.topic.TopicEntity;
+import de.codeschluss.portal.components.topic.TopicService;
 import de.codeschluss.portal.core.api.CrudController;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
+import de.codeschluss.portal.core.exception.BadParamsException;
+import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
 
@@ -30,13 +34,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PageController extends CrudController<PageEntity, PageService> {
   
+  /** The topic service. */
+  private final TopicService topicService;
+  
   /** The translation service. */
   private final TranslationService translationService;
 
+  /**
+   * Instantiates a new page controller.
+   *
+   * @param service the service
+   * @param topicService the topic service
+   * @param translationService the translation service
+   */
   public PageController(
       PageService service,
+      TopicService topicService,
       TranslationService translationService) {
     super(service);
+    this.topicService = topicService;
     this.translationService = translationService;
   }
 
@@ -57,7 +73,13 @@ public class PageController extends CrudController<PageEntity, PageService> {
   @SuperUserPermission
   public ResponseEntity<?> create(@RequestBody PageEntity newPage) 
       throws URISyntaxException {
-    return super.create(newPage);
+    try {
+      TopicEntity topic = topicService.getById(newPage.getTopicId());
+      newPage.setTopic(topic);
+      return super.create(newPage);
+    } catch (NotFoundException e) {
+      throw new BadParamsException("Given topic does not exist");
+    }
   }
 
   @Override
@@ -65,7 +87,13 @@ public class PageController extends CrudController<PageEntity, PageService> {
   @SuperUserPermission
   public ResponseEntity<?> update(@RequestBody PageEntity newPage,
       @PathVariable String pageId) throws URISyntaxException {
-    return super.update(newPage, pageId);
+    try {
+      TopicEntity topic = topicService.getById(newPage.getTopicId());
+      newPage.setTopic(topic);
+      return super.update(newPage, pageId);
+    } catch (NotFoundException e) {
+      throw new BadParamsException("Given topic does not exist");
+    }
   }
 
   @Override

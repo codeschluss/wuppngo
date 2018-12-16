@@ -33,8 +33,7 @@ public class TopicControllerCreateTest {
   @WithUserDetails("super@user")
   @SuppressWarnings("unchecked")
   public void createSuperUserOk() throws URISyntaxException {
-    TopicEntity topic = newTopic("createSuperUserOk", "createSuperUserOk",
-        "createSuperUserOk");
+    TopicEntity topic = newTopic("createSuperUserOk");
 
     controller.create(topic);
 
@@ -47,17 +46,7 @@ public class TopicControllerCreateTest {
   @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
   public void createNotValidNameDenied() throws URISyntaxException {
-    TopicEntity topic = newTopic("createNotValidNameDenied", "createNotValidNameDenied",
-        null);
-
-    controller.create(topic);
-  }
-
-  @Test(expected = BadParamsException.class)
-  @WithUserDetails("super@user")
-  public void createNotValidColorDenied() throws URISyntaxException {
-    TopicEntity topic = newTopic(null, "createNotValidColorDenied",
-        "createNotValidColorDenied");
+    TopicEntity topic = newTopic(null);
 
     controller.create(topic);
   }
@@ -65,8 +54,7 @@ public class TopicControllerCreateTest {
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void createSuperUserDuplicated() throws URISyntaxException {
-    TopicEntity topic = newTopic("createSuperUserDuplicatedName",
-        "createSuperUserDuplicatedName", "topic1");
+    TopicEntity topic = newTopic("topic1");
 
     controller.create(topic);
   }
@@ -74,21 +62,19 @@ public class TopicControllerCreateTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void createProviderDenied() throws URISyntaxException {
-    TopicEntity topic = newTopic("createProviderDenied", "createProviderDenied",
-        "createProviderDenied");
+    TopicEntity topic = newTopic("createProviderDenied");
 
     controller.create(topic);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void createNoUserDenied() throws URISyntaxException {
-    TopicEntity topic = newTopic("createNoUserDenied", "createNoUserDenied",
-        "createNoUserDenied");
+    TopicEntity topic = newTopic("createNoUserDenied");
 
     controller.create(topic);
   }
 
-  private TopicEntity newTopic(String color, String description, String name) {
+  private TopicEntity newTopic(String name) {
     TopicEntity topic = new TopicEntity();
     topic.setName(name);
     return topic;

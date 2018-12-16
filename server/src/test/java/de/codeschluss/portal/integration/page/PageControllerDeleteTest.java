@@ -1,8 +1,8 @@
-package de.codeschluss.portal.integration.topic;
+package de.codeschluss.portal.integration.page;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import de.codeschluss.portal.components.category.CategoryController;
+import de.codeschluss.portal.components.page.PageController;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
 import java.net.URISyntaxException;
@@ -20,35 +20,35 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Rollback
-public class TopicControllerDeleteTest {
+public class PageControllerDeleteTest {
 
   @Autowired
-  private CategoryController controller;
+  private PageController controller;
 
   @Test(expected = NotFoundException.class)
   @WithUserDetails("super@user")
   public void deleteSuperUserOk() throws URISyntaxException {
-    String categoryId = "00000000-0000-0000-0014-300000000000";
-    assertThat(controller.readOne(categoryId)).isNotNull();
+    String pageId = "00000000-0000-0000-0017-300000000000";
+    assertThat(controller.readOne(pageId)).isNotNull();
 
-    controller.delete(categoryId);
+    controller.delete(pageId);
 
-    controller.readOne(categoryId);
+    controller.readOne(pageId);
   }
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void deleteProviderUserDenied() throws URISyntaxException {
-    String categoryId = "00000000-0000-0000-0014-100000000000";
+    String pageId = "00000000-0000-0000-0017-100000000000";
 
-    controller.delete(categoryId);
+    controller.delete(pageId);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void deleteOtherNotRegisteredDenied() {
-    String categoryId = "00000000-0000-0000-0014-100000000000";
+    String pageId = "00000000-0000-0000-0017-100000000000";
 
-    controller.delete(categoryId);
+    controller.delete(pageId);
   }
 
 }

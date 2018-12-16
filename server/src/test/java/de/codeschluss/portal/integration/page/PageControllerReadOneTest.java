@@ -1,9 +1,9 @@
-package de.codeschluss.portal.integration.topic;
+package de.codeschluss.portal.integration.page;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import de.codeschluss.portal.components.topic.TopicController;
-import de.codeschluss.portal.components.topic.TopicEntity;
+import de.codeschluss.portal.components.page.PageController;
+import de.codeschluss.portal.components.page.PageEntity;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
 import org.junit.Test;
@@ -15,24 +15,24 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TopicControllerReadOneTest {
+public class PageControllerReadOneTest {
 
   @Autowired
-  private TopicController controller;
+  private PageController controller;
 
   @Test
   public void findOneOk() {
-    String topicId = "00000000-0000-0000-0014-100000000000";
+    String pageId = "00000000-0000-0000-0016-100000000000";
 
-    Resource<TopicEntity> result = (Resource<TopicEntity>) controller.readOne(topicId);
+    Resource<PageEntity> result = (Resource<PageEntity>) controller.readOne(pageId);
 
     assertThat(result.getContent()).isNotNull();
   }
 
   @Test(expected = NotFoundException.class)
-  public void findTopicNotFound() {
-    String topicId = "00000000-0000-0000-0014-XX0000000000";
+  public void findPageNotFound() {
+    String pageId = "00000000-0000-0000-0016-XX0000000000";
 
-    controller.readOne(topicId);
+    controller.readOne(pageId);
   }
 }

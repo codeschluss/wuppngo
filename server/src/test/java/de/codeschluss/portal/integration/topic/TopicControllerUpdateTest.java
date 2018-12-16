@@ -2,8 +2,8 @@ package de.codeschluss.portal.integration.topic;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import de.codeschluss.portal.components.category.CategoryController;
-import de.codeschluss.portal.components.category.CategoryEntity;
+import de.codeschluss.portal.components.topic.TopicController;
+import de.codeschluss.portal.components.topic.TopicEntity;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 
@@ -26,75 +26,59 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class TopicControllerUpdateTest {
 
   @Autowired
-  private CategoryController controller;
+  private TopicController controller;
 
   @Test
   @WithUserDetails("super@user")
   public void updateSuperUserOk() throws URISyntaxException {
-    CategoryEntity category = newCategory("green", "updateSuperUserOk", "category2");
-    String categoryId = "00000000-0000-0000-0007-200000000000";
+    TopicEntity topic = newTopic("updateSuperUserOk");
+    String topicId = "00000000-0000-0000-0015-200000000000";
 
-    controller.update(category, categoryId);
+    controller.update(topic, topicId);
 
-    Resource<CategoryEntity> result = (Resource<CategoryEntity>) controller.readOne(categoryId);
-    assertThat(result.getContent().getName()).isEqualTo(category.getName());
+    Resource<TopicEntity> result = (Resource<TopicEntity>) controller.readOne(topicId);
+    assertThat(result.getContent().getName()).isEqualTo(topic.getName());
   }
   
   @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
   public void updateNotValidNameDenied() throws URISyntaxException {
-    CategoryEntity category = newCategory("updateNotValidNameDenied", "updateNotValidNameDenied",
-        null);
-    String categoryId = "00000000-0000-0000-0007-200000000000";
+    TopicEntity topic = newTopic(null);
+    String topicId = "00000000-0000-0000-0015-100000000000";
 
-    controller.update(category, categoryId);
-  }
-
-  @Test(expected = BadParamsException.class)
-  @WithUserDetails("super@user")
-  public void updateNotValidColorDenied() throws URISyntaxException {
-    CategoryEntity category = newCategory(null, "updateNotValidColorDenied",
-        "updateNotValidColorDenied");
-    String categoryId = "00000000-0000-0000-0007-200000000000";
-
-    controller.update(category, categoryId);
+    controller.update(topic, topicId);
   }
 
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void updateSuperUserDuplicatedName() throws URISyntaxException {
-    CategoryEntity category = newCategory("updateSuperUserDuplicatedName",
-        "updateSuperUserDuplicatedName", "category1");
-    String categoryId = "00000000-0000-0000-0007-200000000000";
+    TopicEntity topic = newTopic("topic1");
+    String topicId = "00000000-0000-0000-0015-100000000000";
 
-    controller.update(category, categoryId);
+    controller.update(topic, topicId);
   }
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void updateProviderUserDenied() throws URISyntaxException {
-    CategoryEntity category = newCategory("updateProviderUserDenied", "updateProviderUserDenied",
-        "updateProviderUserDenied");
-    String categoryId = "00000000-0000-0000-0007-100000000000";
+    TopicEntity topic = newTopic("updateProviderUserDenied");
+    String topicId = "00000000-0000-0000-0015-100000000000";
 
-    controller.update(category, categoryId);
+    controller.update(topic, topicId);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void updateNoUserDenied() throws URISyntaxException {
-    CategoryEntity category = newCategory("updateNoUserDenied", "updateNoUserDenied",
-        "updateNoUserDenied");
-    String categoryId = "00000000-0000-0000-0007-100000000000";
+    TopicEntity topic = newTopic("updateNoUserDenied");
+    String topicId = "00000000-0000-0000-0015-100000000000";
 
-    controller.update(category, categoryId);
+    controller.update(topic, topicId);
   }
 
-  private CategoryEntity newCategory(String color, String description, String name) {
-    CategoryEntity category = new CategoryEntity();
-    category.setName(name);
-    category.setColor(color);
-    category.setDescription(description);
-    return category;
+  private TopicEntity newTopic(String name) {
+    TopicEntity topic = new TopicEntity();
+    topic.setName(name);
+    return topic;
   }
 
 }

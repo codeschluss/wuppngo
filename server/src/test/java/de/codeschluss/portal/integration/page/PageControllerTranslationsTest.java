@@ -1,9 +1,9 @@
-package de.codeschluss.portal.integration.topic;
+package de.codeschluss.portal.integration.page;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import de.codeschluss.portal.components.topic.TopicController;
-import de.codeschluss.portal.components.topic.translations.TopicTranslatablesEntity;
+import de.codeschluss.portal.components.page.PageController;
+import de.codeschluss.portal.components.page.translations.PageTranslatablesEntity;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
 import org.junit.Test;
@@ -16,27 +16,27 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TopicControllerTranslationsTest {
+public class PageControllerTranslationsTest {
 
   @Autowired
-  private TopicController controller;
+  private PageController controller;
 
   @Test
   @SuppressWarnings("unchecked")
   public void findTranslationsOk() {
-    String topicId = "00000000-0000-0000-0014-100000000000";
+    String pageId = "00000000-0000-0000-0016-100000000000";
 
-    Resources<Resource<TopicTranslatablesEntity>> result = 
-        (Resources<Resource<TopicTranslatablesEntity>>) controller
-        .readTranslations(topicId).getBody();
+    Resources<Resource<PageTranslatablesEntity>> result = 
+        (Resources<Resource<PageTranslatablesEntity>>) controller
+        .readTranslations(pageId).getBody();
 
     assertThat(result.getContent()).isNotNull();
   }
 
   @Test(expected = NotFoundException.class)
   public void findTranslationsNotFound() {
-    String topicId = "00000000-0000-0000-0014-XX0000000000";
+    String pageId = "00000000-0000-0000-0016-XX0000000000";
 
-    controller.readTranslations(topicId);
+    controller.readTranslations(pageId);
   }
 }
