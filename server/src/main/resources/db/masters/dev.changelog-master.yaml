@@ -36,7 +36,9 @@ databaseChangeLog:
     - include:
         file: classpath:db/changelogs/0016.add_page_tables.yaml
     - include:
-        file: classpath:db/changelogs/0017.add_blogging_domain.yaml
+        file: classpath:db/changelogs/0017.add_subscription_table.yaml
+    - include:
+        file: classpath:db/changelogs/0018.add_blogging_domain.yaml
 
     - include:
         file: classpath:db/changelogs/dev.aftermigdata.yaml
