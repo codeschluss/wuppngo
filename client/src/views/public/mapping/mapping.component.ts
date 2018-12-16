@@ -1,11 +1,12 @@
-import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild, Output } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild, Output, AfterViewChecked, SimpleChanges, OnChanges } from '@angular/core';
 import { AngularOpenlayersModule, LayerVectorComponent, MapComponent, ViewComponent } from 'ngx-openlayers';
 import { Feature, MapBrowserEvent, proj, style } from 'openlayers';
 import { Subject } from 'rxjs';
 import { AddressModel } from '../../../realm/address/address.model';
-import { MatBottomSheet } from '@angular/material';
 import { EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ConfigurationProvider } from 'src/realm/configuration/configuration.provider';
+import { ConfigurationModel } from 'src/realm/configuration/configuration.model';
 
 
 @Component({
@@ -14,8 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['mapping.component.scss']
 })
 
-export class MappingComponent implements AfterViewInit, OnInit
-, OnDestroy {
+export class MappingComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   public static readonly imports = [
     AngularOpenlayersModule
@@ -50,28 +50,62 @@ export class MappingComponent implements AfterViewInit, OnInit
 
   private readonly ngUnsubscribe: Subject<null> = new Subject<null>();
 
-  public constructor(
-    private bottomSheet: MatBottomSheet,
+  constructor(
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private configProvider: ConfigurationProvider
     ) {
-      if (router.url.endsWith('/map')) {
-        this.activities = route.snapshot.data.activities;
+      if (
+        // router.url.endsWith('list/activities/map')
+      this.route.snapshot.data.activities) {
+        this.activities = this.route.snapshot.data.activities;
         this.fullScreen = true;
       }
     }
 
-  public ngOnInit(): void {
-      this.latitude = this.activities[0].address.latitude;
-      this.longitude = this.activities[0].address.longitude;
-      // TODO: get from DB
-      this.zoomfactor = 14;
-      this.projection = 'EPSG:4326';
-      // TODO: move to db
-      this.clusterspan = 5;
+    public ngOnInit(): void {
+      this.clusterspan = 10;
+      let configurations = this.route.snapshot.data.configurations;
+      if (!configurations) {
+        console.log('no config from router');
+        this.configProvider.readAll().subscribe(
+          configs => {
+            console.log(configs);
+          configurations = configs;
+          this.initConfigs(configs); });
+      } else {
+        this.initConfigs(configurations);
+      }
   }
 
-  public ngAfterViewInit(): void {
+  public initConfigs(configurations: ConfigurationModel[]) {
+    for (const item of configurations) {
+      switch (item.item) {
+        case 'mapcenterLatitude':
+          this.latitude = parseFloat(item.value);
+          break;
+        case 'mapcenterLongitude':
+          this.longitude = parseFloat(item.value);
+          break;
+        case 'mapProjection':
+          this.projection = item.value;
+          break;
+        case 'zoomfactor':
+          this.zoomfactor = parseFloat(item.value);
+          break;
+      }
+    }
+  }
+
+
+  public ngAfterViewChecked(): void {
+    this.initInstance();
+    if (this.activities.length === 1) {
+      this.centerAddress(this.activities[0].address);
+    }
+  }
+
+  public initInstance(): void {
     (<ol.layer.Vector>this.aolLayer.instance)
       .setStyle((feature: Feature) => this.clusterStyle(feature));
 
@@ -88,11 +122,20 @@ export class MappingComponent implements AfterViewInit, OnInit
         }
       );
     }
+  }
 
+  public addNewFeatures(activities: any[]): void {
+    activities.forEach(
+      item => {this.activities.push(item);
+        console.log('just pushed ' + item.id); }
+    );
+    (<ol.layer.Vector>this.aolLayer.instance).changed();
   }
 
   public ngOnDestroy(): void {
-    this.bottomSheet.dismiss();
+    console.log('ngOnDestroy()');
+    this.ngUnsubscribe.next(null);
+    this.ngUnsubscribe.complete();
   }
 
   public centerAddress(address: AddressModel): void {
@@ -143,11 +186,11 @@ export class MappingComponent implements AfterViewInit, OnInit
         opacity: this.isHighlighted(acts) ? 1 : 0.9,
       };
 
-      const categoryIcon = {
-        anchor: [.5, 2],
-        src: `/imgs/categories/holiday.svg`,
-        scale: 0.1
-      };
+      // const categoryIcon = {
+      //   anchor: [.5, 2],
+      //   src: `/imgs/categories/holiday.svg`,
+      //   scale: 0.1
+      // };
 
       if (window.navigator.userAgent.match(/(MSIE|Trident)/)) {
         Object.assign(icon, {
@@ -158,7 +201,7 @@ export class MappingComponent implements AfterViewInit, OnInit
       });
       }
 
-      let text;
+      let text: any;
 
       if (acts.length > 1) {
         text = {
@@ -191,9 +234,10 @@ export class MappingComponent implements AfterViewInit, OnInit
       [new style.Style({
         image: new style.Icon(icon),
       }),
-      new style.Style({
-        image: new style.Icon(categoryIcon),
-      })];
+      // new style.Style({
+      //   image: new style.Icon(categoryIcon),
+      // })
+    ];
 
     }
   }

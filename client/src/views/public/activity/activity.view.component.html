@@ -35,13 +35,10 @@
                   {{ activity.address.place }}
                 </p>
               </div>
-                <mapping-component *ngIf="activity" 
-                fxFlex="50" 
-                fxFlexAlign="start" 
-                (click)="openBottomSheetMap()" 
-                [disabledPointerAction]="true" 
-                [activities]="[activity]">
-                </mapping-component>
+              <img src="imgs/map.png"
+                  fxFlex="50"
+                  fxFlexAlign="start" 
+                  (click)="openMap()">
             </div>
             <div *ngIf="activity.schedules && activity.schedules.length" 
             fxLayout="row" 

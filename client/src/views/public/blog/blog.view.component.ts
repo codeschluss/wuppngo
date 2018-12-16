@@ -15,9 +15,9 @@ export class BlogViewComponent {
   public blog: Observable<BlogModel>;
 
   constructor(
-    route: ActivatedRoute
+    private route: ActivatedRoute
   ) {
-    this.blog = route.snapshot.data.blog;
+    this.blog = this.route.snapshot.data.blog;
   }
 
 }

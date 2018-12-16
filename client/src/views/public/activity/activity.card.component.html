@@ -5,14 +5,14 @@
   <mat-card-content>
     <div fxLayout="row" fxLayoutAlign="space-between end" fxLayoutGap="5px">
       <div class="smallText">
-          <div *ngIf="activity.schedules && activity.schedules.length">
+          <div *ngIf="activity.schedules && activity.schedules[0]">
             {{ getNextdate(activity.schedules[0].startDate) }}
           </div>
           <div *ngIf="activity.address && activity.address.suburb" id="suburbField">
             {{ activity.address.suburb.name }} 
           </div>
       </div>
-      <img src={{getCategoryImageURI(activity.category.name)}} class="categoryIcon">
+      <img src={{getCategoryImageURI(activity.category.id)}} class="categoryIcon">
     </div>
     <div class="activityCardName">
       {{ activity.name }}

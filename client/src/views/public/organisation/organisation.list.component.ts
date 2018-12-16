@@ -33,11 +33,14 @@ export class OrganisationListComponent extends ListComponent implements OnInit {
       }
 
       private basic(): void {
-          this.organisationProvider.readAll({
+          this.organisationProvider.readAll(
+            {
+            embeddings: CrudJoiner.to(this.graph),
             page: this.pageNumber,
             size: this.pageSize,
             sort: 'name'
-          }).pipe(mergeMap(
+          }
+          ).pipe(mergeMap(
             (orgas: any) => this.crudResolver.refine(orgas, this.graph))
         ).subscribe((orgas: any) => console.log('basic', orgas));
       }
@@ -45,10 +48,11 @@ export class OrganisationListComponent extends ListComponent implements OnInit {
       private complex(): void {
         const provider = this.organisationProvider.system;
         provider.call(provider.methods.readAll, {
+          embeddings: CrudJoiner.to(this.graph),
           page: this.pageNumber,
           size: this.pageSize,
-          sort: 'name'
-        }).pipe(
+          sort: 'name'}
+        ).pipe(
           tap((response) => this.intercept(response as any)),
           map((response) => provider.cast(response)),
           mergeMap((orgas: any) => this.crudResolver.refine(orgas, this.graph))
