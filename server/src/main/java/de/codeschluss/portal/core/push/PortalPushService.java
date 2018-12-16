@@ -1,31 +1,27 @@
 package de.codeschluss.portal.core.push;
 
-import com.sun.mail.iap.Response;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import de.codeschluss.portal.core.exception.ThirdPartyServiceException;
 import de.codeschluss.portal.core.push.subscription.SubscriptionEntity;
 import de.codeschluss.portal.core.push.subscription.SubscriptionService;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.security.PublicKey;
 import java.security.Security;
 import java.security.spec.InvalidKeySpecException;
-import java.util.Base64;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import nl.martijndwars.webpush.Notification;
 import nl.martijndwars.webpush.PushService;
 import nl.martijndwars.webpush.Utils;
 
-import org.apache.http.HttpResponse;
-import org.bouncycastle.jce.ECNamedCurveTable;
+import org.apache.http.client.HttpResponseException;
+import org.apache.http.impl.client.BasicResponseHandler;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.jce.spec.ECNamedCurveParameterSpec;
-import org.bouncycastle.jce.spec.ECPublicKeySpec;
-import org.bouncycastle.math.ec.ECPoint;
 import org.jose4j.lang.JoseException;
 import org.springframework.stereotype.Service;
 
@@ -41,26 +37,45 @@ public class PortalPushService {
   /** The subscription entity. */
   private final SubscriptionService subscriptionService;
 
-  private final PushService pushService;
+  /** The push service. */
+  private PushService pushService;
+
+  /** The response handler. */
+  private BasicResponseHandler responseHandler;
 
   /**
    * Instantiates a new portal push service.
    *
    * @param subscriptionService the subscription service
+   * @param config the config
+   * @throws NoSuchProviderException the no such provider exception
+   * @throws NoSuchAlgorithmException the no such algorithm exception
+   * @throws InvalidKeySpecException the invalid key spec exception
    */
-  public PortalPushService(SubscriptionService subscriptionService) {
+  public PortalPushService(
+      SubscriptionService subscriptionService,
+      PortalPushConfig config) throws 
+        NoSuchProviderException, NoSuchAlgorithmException, InvalidKeySpecException {
     this.subscriptionService = subscriptionService;
+    this.responseHandler = new BasicResponseHandler();
+    initializePushService(config);
+  }
+
+  /**
+   * Initialize push service.
+   *
+   * @param config the config
+   * @throws NoSuchProviderException the no such provider exception
+   * @throws NoSuchAlgorithmException the no such algorithm exception
+   * @throws InvalidKeySpecException the invalid key spec exception
+   */
+  private void initializePushService(PortalPushConfig config) 
+      throws NoSuchProviderException, NoSuchAlgorithmException, InvalidKeySpecException {
     this.pushService = new PushService();
     Security.addProvider(new BouncyCastleProvider());
-//    try {
-//
-//      pushService.setSubject("mailto:info@codeschluss.de");
-//      pushService.setPublicKey(Utils.loadPublicKey("BPr9WM2fXS2XYKPoS9SuS-NSbo8_tncYcMdD3zyPuZt7RbzwpXCID_tx55FSyPNRnreyzPdTgtReKGcO1Y2_Zjc"));
-//      pushService.setPrivateKey(Utils.loadPrivateKey("jRg6BjI0_pgbZRhPmr1FYZ0Vo8ehzw9OMWteuxtazFU"));
-//    } catch (NoSuchProviderException | NoSuchAlgorithmException | InvalidKeySpecException e) {
-//      // TODO Auto-generated catch block
-//      e.printStackTrace();
-//    }
+    pushService.setSubject(config.getSubject());
+    pushService.setPublicKey(Utils.loadPublicKey(config.getPublicKey()));
+    pushService.setPrivateKey(Utils.loadPrivateKey(config.getPrivateKey()));
   }
 
   /**
@@ -69,72 +84,66 @@ public class PortalPushService {
    * @param newSubscription
    *          the new subscription
    */
-  public void subscribe(SubscriptionEntity newSubscription) {
+  public SubscriptionEntity subscribe(SubscriptionEntity newSubscription) {
     if (subscriptionService.validFieldConstraints(newSubscription)) {
-      subscriptionService.add(newSubscription);
+      return subscriptionService.add(newSubscription);
     }
+    return null;
   }
 
   /**
    * Unsubscribe.
    *
-   * @param subscription
+   * @param subscriptionId
    *          the subscription
    */
-  public void unsubscribe(SubscriptionEntity subscription) {
+  public void unsubscribe(String subscriptionId) {
+    subscriptionService.delete(subscriptionId);
   }
 
   /**
    * Push.
    *
-   * @param message
-   *          the message
+   * @param object the object
    */
-  public void push(String message) {
-    subscriptionService.getAll().stream().forEach(subscription -> sendPush(subscription, message));
+  public void push(Object object) {
+    List<SubscriptionEntity> subscriptions = subscriptionService.getAll();
+    if (subscriptions != null && !subscriptions.isEmpty()) {
+      for (SubscriptionEntity subscription : subscriptions) {
+        try {
+          sendPush(subscription, object);
+        } catch (HttpResponseException e) {
+          subscriptionService.delete(subscription.getId());
+        } catch (GeneralSecurityException | IOException | JoseException | ExecutionException
+            | InterruptedException e) {
+          throw new ThirdPartyServiceException(e.getMessage());
+        }
+      }
+    }
   }
 
   /**
    * Send push.
    *
-   * @param subscription
-   *          the subscription
-   * @param pushObject
-   *          the push object
-   * @return the object
+   * @param subscription the subscription
+   * @param object the object
+   * @throws GeneralSecurityException the general security exception
+   * @throws IOException Signals that an I/O exception has occurred.
+   * @throws JoseException the jose exception
+   * @throws ExecutionException the execution exception
+   * @throws InterruptedException the interrupted exception
    */
-  private void sendPush(SubscriptionEntity subscription, String message) {
-    try {
-      byte[] publicKey = Base64.getDecoder().decode(subscription.getPublicKey());
-      byte[] authSecret = Base64.getDecoder().decode(subscription.getAuthSecret());
-      byte[] payload = Base64.getEncoder().encode(message.getBytes());
-      Notification notification = new Notification(subscription.getEndpoint(), 
-          getUserPublicKey(publicKey), authSecret, payload);
+  private void sendPush(SubscriptionEntity subscription, Object object) 
+      throws GeneralSecurityException, IOException, JoseException, ExecutionException,
+      InterruptedException {
+    ObjectMapper mapper = new ObjectMapper();
+    
+    Notification notification = new Notification(
+        subscription.getEndpoint(), 
+        subscription.getPublicKey(), 
+        subscription.getAuthSecret(), 
+        mapper.writeValueAsString(object));
 
-      HttpResponse response = pushService.send(notification);
-    } catch (GeneralSecurityException | IOException | JoseException | ExecutionException
-        | InterruptedException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-  }
-  
-  /**
-   * Gets the user public key.
-   *
-   * @param publicKey the public key
-   * @return the user public key
-   * @throws NoSuchAlgorithmException the no such algorithm exception
-   * @throws InvalidKeySpecException the invalid key spec exception
-   * @throws NoSuchProviderException the no such provider exception
-   */
-  public PublicKey getUserPublicKey(byte[] publicKey) 
-      throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchProviderException {
-    KeyFactory kf = KeyFactory.getInstance("ECDH", BouncyCastleProvider.PROVIDER_NAME);
-    ECNamedCurveParameterSpec ecSpec = ECNamedCurveTable.getParameterSpec("secp256r1");
-    ECPoint point = ecSpec.getCurve().decodePoint(publicKey);
-    ECPublicKeySpec pubSpec = new ECPublicKeySpec(point, ecSpec);
-
-    return kf.generatePublic(pubSpec);
+    responseHandler.handleResponse(pushService.send(notification));
   }
 }
