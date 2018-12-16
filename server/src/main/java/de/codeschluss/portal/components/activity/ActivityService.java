@@ -19,6 +19,7 @@ import de.codeschluss.portal.core.service.ResourceDataService;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.stereotype.Service;
 
@@ -103,6 +104,19 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
   
   public List<ActivityEntity> getByUser(UserEntity user) {
     return repo.findAll(entities.forUser(user.getId()));
+  }
+  
+  /**
+   * Gets the resource by blog id.
+   *
+   * @param blogId the blog id
+   * @return the resource by blog id
+   */
+  public Resource<ActivityEntity> getResourceByBlogId(String blogId) {
+    return assembler.toResource(
+        repo
+        .findOne(entities.withBlogId(blogId))
+        .orElseThrow(() -> new NotFoundException(blogId)));
   }
 
   /**

@@ -229,6 +229,16 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
   }
   
   /**
+   * With blog id.
+   *
+   * @param blogId the blog id
+   * @return the predicate
+   */
+  public BooleanExpression withBlogId(String blogId) {
+    return query.blogs.any().id.eq(blogId);
+  }
+  
+  /**
    * With any of providers.
    *
    * @param providers the providers

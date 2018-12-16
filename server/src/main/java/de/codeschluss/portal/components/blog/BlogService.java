@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.querydsl.core.types.Predicate;
 
+import de.codeschluss.portal.components.activity.ActivityEntity;
 import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 import de.codeschluss.portal.core.api.dto.BaseParams;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
@@ -170,5 +171,18 @@ public class BlogService extends ResourceDataService<BlogEntity, BlogQueryBuilde
     BlogEntity blog = getById(blogId);
     blog.setLikes(blog.getLikes() + 1);
     repo.save(blog);
+  }
+
+
+  /**
+   * Update activity.
+   *
+   * @param blogId the blog id
+   * @param activity the activity
+   */
+  public BlogEntity updateActivity(String blogId, ActivityEntity activity) {
+    BlogEntity blog = getById(blogId);
+    blog.setActivity(activity);
+    return repo.save(blog);
   }
 }

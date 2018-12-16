@@ -3,6 +3,7 @@ package de.codeschluss.portal.components.blog;
 import static org.springframework.http.ResponseEntity.noContent;
 import static org.springframework.http.ResponseEntity.ok;
 
+import de.codeschluss.portal.components.activity.ActivityService;
 import de.codeschluss.portal.components.blogger.BloggerEntity;
 import de.codeschluss.portal.components.blogger.BloggerService;
 import de.codeschluss.portal.core.api.CrudController;
@@ -12,6 +13,7 @@ import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
 import de.codeschluss.portal.core.security.permissions.BloggerPermission;
 import de.codeschluss.portal.core.security.permissions.OwnBlogOrSuperuserPermission;
+import de.codeschluss.portal.core.security.permissions.OwnOrOrgaActivityOrSuperUserPermission;
 import de.codeschluss.portal.core.security.services.AuthorizationService;
 
 import java.io.IOException;
@@ -40,6 +42,9 @@ public class BlogController extends CrudController<BlogEntity, BlogService> {
   /** The blogger service. */
   private final BloggerService bloggerService;
   
+  /** The activity service. */
+  private final ActivityService activityService;
+  
   /** The translation service. */
   private final TranslationService translationService;
   
@@ -54,10 +59,12 @@ public class BlogController extends CrudController<BlogEntity, BlogService> {
   public BlogController(
       BlogService service,
       BloggerService bloggerService,
+      ActivityService activityService,
       TranslationService translationService,
       AuthorizationService authService) {
     super(service);
     this.bloggerService = bloggerService;
+    this.activityService = activityService;
     this.translationService = translationService;
     this.authService = authService;
   }
@@ -99,6 +106,35 @@ public class BlogController extends CrudController<BlogEntity, BlogService> {
   @OwnBlogOrSuperuserPermission
   public ResponseEntity<?> delete(@PathVariable String blogId) {
     return super.delete(blogId);
+  }
+  
+  /**
+   * Read activity.
+   *
+   * @param blogId the blog id
+   * @return the response entity
+   */
+  @GetMapping("/blogs/{blogId}/activity")
+  public ResponseEntity<?> readActivity(@PathVariable String blogId) {
+    return ok(activityService.getResourceByBlogId(blogId)); 
+  }
+
+  /**
+   * Update activity.
+   *
+   * @param blogId the blog id
+   * @param activityId the activity id
+   * @return the response entity
+   */
+  @PutMapping("/blogs/{activityId}/activity")
+  @OwnBlogOrSuperuserPermission
+  public ResponseEntity<?> updateActivity(@PathVariable String blogId,
+      @RequestBody String activityId) {
+    if (activityService.existsById(activityId) && service.existsById(blogId)) {
+      return ok(service.updateActivity(blogId, activityService.getById(activityId)));
+    } else {
+      throw new BadParamsException("Blog or Activity with given ID do not exist!");
+    }
   }
   
   /**
