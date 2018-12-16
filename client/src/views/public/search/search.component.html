@@ -1,0 +1,6 @@
+<div id="searchResultContainer" fxLayout="column">
+    <h2 *ngIf="query">
+        <i18n i18n="@@resultsFor">resultsFor</i18n> '{{query}}'
+    </h2>
+    <search-list [query]="query"></search-list>
+</div>

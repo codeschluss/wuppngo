@@ -1,15 +1,14 @@
-import { Component, Input } from '@angular/core';
-import { BlogModel } from 'src/core/models/blog.model';
+import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { MatTabsModule } from '@angular/material';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, mergeMap, tap, map } from 'rxjs/operators';
 import { OrganisationModel } from 'src/realm/organisation/organisation.model';
 import { ActivityModel } from 'src/realm/activity/activity.model';
-import { AddressModel } from 'src/realm/address/address.model';
-import { SuburbModel } from 'src/realm/suburb/suburb.model';
-import { CategoryModel } from 'src/realm/category/category.model';
-import { TargetGroupModel } from 'src/realm/target-group/target-group.model';
-import { ScheduleModel } from 'src/realm/schedule/schedule.model';
+import { ActivityProvider } from 'src/realm/activity/activity.provider';
+import { OrganisationProvider } from 'src/realm/organisation/organisation.provider';
+import { BlogModel } from 'src/realm/blog/blog.model';
+import { BlogProvider } from 'src/realm/blog/blog.provider';
+import { CrudJoiner, CrudGraph, CrudResolver, CrudProvider, CrudModel } from '@portal/core';
 
 @Component({
     selector: 'search-list',
@@ -17,168 +16,151 @@ import { ScheduleModel } from 'src/realm/schedule/schedule.model';
     templateUrl: 'searchresult.list.component.html'
 })
 
-export class SearchResultListComponent {
+export class SearchResultListComponent implements OnInit, OnChanges {
 
   public static readonly imports = [ MatTabsModule ];
 
   public activities: ActivityModel[] = [];
   public organisations: OrganisationModel[] = [];
   public blogs: BlogModel[] = [];
+
+  @Input()
   public query: string;
 
   constructor(
-    route: ActivatedRoute
-  ) {
+    private organisationProvider: OrganisationProvider,
+    private activityProvider: ActivityProvider,
+    private blogProvider: BlogProvider,
+    private crudResolver: CrudResolver
+    ) {}
 
-    route.paramMap.pipe(
-      switchMap((params: ParamMap) => this.query = params.get('query'))
-    ).subscribe();
-    // query will be used to retrieve activities,
-    // organisations and blogs in 3 seperated API calls
-
-    // Just for testing
-    // for (let i = 0; i < 20; i++) {
-    //   this.activities.push(this.buildTestActivity());
-    // }
-
-    // for (let i = 0; i < 20; i++) {
-    //   this.organisations.push(this.buildTestOrgaData());
-    // }
-
-    // for (let i = 0; i < 20; i++) {
-    //   this.blogs.push(this.buildTestBlog());
-    // }
+  public ngOnInit() {
+    this.getResults();
   }
 
-  // buildTestActivity(): ActivityModel {
-  //   const actOne = new ActivityModel;
-  //   actOne.id = 'testActivity';
-  //   actOne.name = 'FakeActivity';
-  //   actOne.description = 'This is just a FakeActivity to show'
-  //     + 'how this could look like.';
-  //   const testAddress = new AddressModel();
-  //   testAddress.street = 'samplestreet';
-  //   testAddress.houseNumber = '42a';
-  //   testAddress.latitude = 51.00;
-  //   testAddress.longitude = 7.00;
-  //   testAddress.postalCode = '63628';
+  public ngOnChanges(changes: SimpleChanges) {
+    if (changes['query']) {
+      this.getResults();
+    }
+  }
 
-  //   const testSubUrb = new SuburbModel();
-  //   testSubUrb.name = 'Elberfeld';
-  //   testSubUrb.id = '1';
+  public getResults() {
+    if (this.query) {
+      this.getActivityResults();
+      this.getOrganisationResults();
+      this.getBlogResults();
+    }
+  }
 
-  //   testAddress.suburb = new Promise<SuburbModel>((resolve, reject) => {
-  //     resolve(testSubUrb);
-  //   });
+  public getActivityResults(): void {
+    const graph = CrudJoiner.of(ActivityModel)
+    .with('category')
+    .with('address').yield('suburb')
+    .with('schedules').graph;
 
-  //   testAddress.place = 'SampleCity';
-  //   actOne.address = new Promise<AddressModel>((resolve, reject) => {
-  //     resolve(testAddress);
-  //   });
+    const params = {
+      filter: this.query,
+      embeddings: this.embed(graph)
+    };
 
-  //   const category = new CategoryModel;
-  //   category.name = 'party';
-  //   category.color = 'blue';
+    this.basicAct(graph, params);
+    this.complexAct(graph, params);
+  }
 
-  //   actOne.category = new Promise<CategoryModel>((resolve, reject) => {
-  //     resolve(category);
-  //   });
+  private basicAct(graph: CrudGraph, params: any): void {
+    this.activityProvider.readAll(params).pipe(mergeMap(
+      (acts: any) => this.crudResolver.refine(acts, graph))
+  ).subscribe(
+    () => {},
+    () => {});
+  }
 
-  //   const target_group = new TargetGroupModel;
-  //   target_group.name = 'youth';
-  //   const targetGroups = [target_group];
+  private complexAct(graph: CrudGraph, params: any) {
+    const provider = this.activityProvider.system;
+    provider.call(provider.methods.readAll, params)
+    .pipe(
+      map((response) => provider.cast(response)),
+      mergeMap((acts: any) => this.crudResolver.refine(acts, graph))
+    ).subscribe((acts: any) => this.activities = acts,
+      () => this.activities = []);
+  }
 
-  //   actOne.targetGroups =
-  //     new Promise<TargetGroupModel[]>((resolve, reject) => {
-  //     resolve(targetGroups);
-  //   });
+  public getOrganisationResults(): void {
+    const graph = CrudJoiner.of(OrganisationModel)
+      .with('address').yield('suburb')
+      .with('images').graph;
 
-  //   const schedule = new ScheduleModel;
-  //   schedule.startDate = new Date().toUTCString();
-  //   schedule.endDate = new Date().toUTCString();
-  //   const schedules = [schedule];
+    const params = {
+      filter: this.query,
+      embeddings: this.embed(graph)
+    };
 
-  //   const firstDate = new ScheduleModel;
-  //   firstDate.startDate = new Date().toISOString();
-  //   firstDate.endDate =
-  //     new Date(new Date(firstDate.startDate).getDate() + 1).toISOString();
+    this.basicOrga(graph, params);
+    this.complexOrga(graph, params);
+  }
 
-  //     const secondDate = new ScheduleModel;
-  //   secondDate.startDate = new Date(new Date().getDate() + 7).toISOString();
-  //   secondDate.endDate =
-  //     new Date(new Date(secondDate.startDate).getDate() + 1).toISOString();
+  private basicOrga(graph: CrudGraph, params: any): void {
+    this.organisationProvider.readAll(params).pipe(mergeMap(
+      (orgas: any) => this.crudResolver.refine(orgas, graph))
+  ).subscribe(
+    () => {},
+    () => {});
+  }
 
-  //     schedules.push(firstDate);
-  //   schedules.push(secondDate);
+  private complexOrga(graph: CrudGraph, params: any) {
+    const provider = this.organisationProvider.system;
+    provider.call(provider.methods.readAll, params)
+    .pipe(
+      map((response) => provider.cast(response)),
+      mergeMap((orgas: any) => this.crudResolver.refine(orgas, graph))
+    ).subscribe((orgas: any) => this.organisations = orgas,
+    () => this.organisations = []);
+  }
 
-  //   actOne.schedules = new Promise<ScheduleModel[]>((resolve, reject) => {
-  //     resolve(schedules);
-  //   });
+  public getBlogResults(): void {
+    // TODO: include transient field
+    const graph = CrudJoiner.of(BlogModel)
+    // .with('activitiy')
+    .graph;
 
-  //   const organisation = new OrganisationModel;
-  //   organisation.name = 'testOrganisation';
-  //   actOne.organisation =
-  //     new Promise<OrganisationModel>((resolve, reject) => {
-  //     resolve(organisation);
-  //   });
+    const params = {
+      filter: this.query,
+      embeddings: this.embed(graph)
+    };
 
-  //   return actOne;
-  // }
+    this.basicBlog(graph, params);
+    this.complexBlog(graph, params);
+  }
 
-  // buildTestOrgaData(): OrganisationModel {
-  //   const organisation = new OrganisationModel();
 
-  //   organisation.id = 'testActivity';
-  //   organisation.name = 'FakeActivity';
-  //   organisation.mail = 'FakeActivity@internet.de';
+  private basicBlog(graph: CrudGraph, params: any) {
+    this.blogProvider.readAll(params).pipe(mergeMap(
+      (orgas: any) => this.crudResolver.refine(orgas, graph))
+  ).subscribe(
+    () => {},
+    () => {});
+  }
 
-  //   organisation.description = 'This is just a FakeActivity to show'
-  //     + 'how this could look like.';
-  //   const testAddress = new AddressModel();
-  //   testAddress.street = 'samplestreet';
-  //   testAddress.houseNumber = '42a';
-  //   testAddress.latitude = 51.00;
-  //   testAddress.longitude = 7.00;
-  //   testAddress.postalCode = '63628';
-
-  //   const testSubUrb = new SuburbModel();
-  //   testSubUrb.name = 'Elberfeld';
-  //   testSubUrb.id = '1';
-
-  //   testAddress.suburb = new Promise<SuburbModel>((resolve, reject) => {
-  //     resolve(testSubUrb);
-  //   });
-
-  //   testAddress.place = 'SampleCity';
-  //   organisation.address = new Promise<AddressModel>((resolve, reject) => {
-  //     resolve(testAddress);
-  //   });
-
-  //   return organisation;
-  // }
-
-  // buildTestBlog(): BlogModel {
-  //   const blog = new BlogModel;
-  //   blog.author = 'Franz test';
-  //   blog.creationDate = new Date().toDateString();
-  //   blog.postText = 'Lorem ipsum ' +
-  //   'dolor sit amet, consetetur sadipscing elitr, sed ' +
-  //   'diam nonumy eirmod tempor invidunt ut labore et ' +
-  //   'dolore magna aliquyam erat, sed diam voluptua. At ' +
-  //   'vero eos et accusam et justo duo dolores et ea rebum. ' +
-  //   'Stet clita kasd gubergren, no sea takimata sanctus est ' +
-  //   'Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, ' +
-  //   'consetetur sadipscing elitr, sed diam nonumy eirmod tempor ' +
-  //   'invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ' +
-  //   'At vero eos et accusam et justo duo dolores et ea rebum. Stet clita ' +
-  //   'kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.';
-  //   blog.title = 'Great Test Blogpost';
-  //   blog.activity =  new Promise<ActivityModel>((resolve, reject) => {
-  //     resolve(this.buildTestActivity());
-  //   });
-  //   return blog;
-  // }
+  private complexBlog(graph: CrudGraph, params: any) {
+    const provider = this.blogProvider.system;
+    provider.call(provider.methods.readAll, params)
+    .pipe(
+      map((response) => provider.cast(response)),
+      mergeMap((blogs: any) => this.crudResolver.refine(blogs, graph))
+    ).subscribe(
+      (blogs: any) => this.blogs = blogs,
+      () => {console.log('no blogs found'); this.blogs = []; });
+  }
 
 
 
+
+  private embed(tree: CrudGraph): string {
+    const embedder = (nodes) => nodes.map((node) => ({
+      name: node.name,
+      nodes: embedder(node.nodes)
+    }));
+
+    return btoa(JSON.stringify(embedder(tree.nodes)));
+  }
 }
