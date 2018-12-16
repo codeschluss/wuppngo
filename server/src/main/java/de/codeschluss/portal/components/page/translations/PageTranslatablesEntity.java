@@ -4,7 +4,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import de.codeschluss.portal.components.category.CategoryController;
-import de.codeschluss.portal.components.category.CategoryEntity;
+import de.codeschluss.portal.components.page.PageEntity;
 import de.codeschluss.portal.core.i18n.entities.TranslatableEntity;
 
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ import org.springframework.hateoas.core.Relation;
 @Entity
 @Table(name = "page_translatables")
 @Relation(collectionRelation = "data")
-public class PageTranslatablesEntity extends TranslatableEntity<CategoryEntity> {
+public class PageTranslatablesEntity extends TranslatableEntity<PageEntity> {
 
   private static final long serialVersionUID = 1L;
 
