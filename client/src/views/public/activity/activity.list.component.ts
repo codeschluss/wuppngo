@@ -20,8 +20,7 @@ import { MatSelectModule, MatFormFieldModule } from '@angular/material';
   templateUrl: 'activity.list.component.html'
 })
 
-export class ActivityListComponent extends ListComponent
-  implements OnInit, AfterViewChecked {
+export class ActivityListComponent extends ListComponent implements OnInit {
 
   public static readonly imports = [
     MatSelectModule,
@@ -60,10 +59,10 @@ export class ActivityListComponent extends ListComponent
   }
 
   ngOnInit(): void {
+    this.retrieveData();
     this.suburbs = this.route.snapshot.data.suburbs;
     this.target_groups = this.route.snapshot.data.targetGroups;
     this.categories = this.route.snapshot.data.categories;
-    this.retrieveData();
     this.suburbCtrl.valueChanges.subscribe(() => this.updateFilterResults());
     this.targetGroupCtrl.valueChanges.subscribe(() =>
       this.updateFilterResults());
@@ -79,9 +78,6 @@ export class ActivityListComponent extends ListComponent
   public retrieveData() {
     this.basic();
     this.complex();
-  }
-
-  ngAfterViewChecked(): void {
   }
 
   private isActiveCategory(id: string): boolean {

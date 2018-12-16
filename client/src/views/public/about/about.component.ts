@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: 'about.component.html'
 })
 
-export class AboutComponent {
+export class AboutComponent implements OnInit {
 
   public activities: any[] = [];
 
@@ -19,7 +19,9 @@ export class AboutComponent {
 
   constructor(
     public route: ActivatedRoute,
-  ) {
+  ) {}
+
+  public ngOnInit() {
     this.activities = this.route.snapshot.data.activities;
   }
 
