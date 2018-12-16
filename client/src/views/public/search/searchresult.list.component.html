@@ -5,7 +5,7 @@
             <mat-tab label="Aktivitäten ({{activities.length}})"> 
                 <ng-container *ngIf="activities && activities.length"> 
                     <div fxLayout="row wrap" fxFlex="100">
-                        <div fxFlex.xs="100" class="results-container" *ngFor="let activity of activities">
+                        <div fxFlex="30" fxFlex.xs="100" class="results-container" *ngFor="let activity of activities">
                             <activity-card *ngIf="activity && activity.category" [activity]="activity"></activity-card>
                         </div> 
                     </div>
@@ -14,7 +14,7 @@
             <mat-tab label="Organisationen ({{organisations.length}})">
                 <ng-container *ngIf="organisations && organisations.length">
                     <div fxLayout="row wrap" fxFlex="100" >
-                        <div fxFlex.xs="100" class="results-container" *ngFor="let organisation of organisations">
+                        <div fxFlex="30" fxFlex.xs="100" class="results-container" *ngFor="let organisation of organisations">
                             <organisation-card [organisation]="organisation"></organisation-card>
                         </div> 
                     </div>

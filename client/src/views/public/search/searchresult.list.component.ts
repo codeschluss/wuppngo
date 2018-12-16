@@ -120,7 +120,7 @@ export class SearchResultListComponent implements OnInit, OnChanges {
   public getBlogResults(): void {
     // TODO: include transient field
     const graph = CrudJoiner.of(BlogModel)
-    // .with('activitiy')
+    // .with('activity')
     .graph;
 
     const params = {
