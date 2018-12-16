@@ -6,6 +6,7 @@ import static org.springframework.http.ResponseEntity.ok;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.push.PortalPushService;
 import de.codeschluss.portal.core.push.subscription.SubscriptionEntity;
+import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,6 +52,7 @@ public class NewsController {
   }
   
   @PostMapping("/news/push")
+  @SuperUserPermission
   public ResponseEntity<?> pushNews(@RequestBody News news) {
     pushService.push(news);
     return noContent().build();
