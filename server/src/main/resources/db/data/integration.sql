@@ -283,8 +283,6 @@ INSERT INTO `schedules` (`id`, `start_date`, `end_date`, `activity_id`) VALUES
 ('00000000-0000-0000-0011-220000000000', '2099-04-21 14:00:00', '2099-04-22 16:00:00', '00000000-0000-0000-0010-220000000000'),
 ('00000000-0000-0000-0011-230000000000', '2099-04-21 14:00:00', '2099-04-22 16:00:00', '00000000-0000-0000-0010-230000000000');
 
-
-
 INSERT INTO `bloggers`(`id`, `approved`, `user_id`) VALUES
 ('00000000-0000-0000-0015-100000000000', 1, '00000000-0000-0000-0004-500000000000'),
 ('00000000-0000-0000-0015-200000000000', 1, '00000000-0000-0000-0004-600000000000');
@@ -317,9 +315,9 @@ INSERT INTO `pages` (`id`, `topic_id`) VALUES
 ('00000000-0000-0000-0016-700000000000', '00000000-0000-0000-0014-100000000000');
 
 INSERT INTO `page_translatables` (`id`, `title`, `content`, `language_id`, `parent_id`) VALUES
-('00000000-0000-0000-0017-100000000000', 'Wie spare ich Geld?', 'Das wird irgendwann mal ein Text bei dem es ums Geld sparen geht.', '00000000-0000-0000-0013-400000000000', '00000000-0000-0000-0016-100000000000'),
+('00000000-0000-0000-0017-100000000000', 'Wie spare ich Geld', 'Das wird irgendwann mal ein Text bei dem es ums Geld sparen geht.', '00000000-0000-0000-0013-400000000000', '00000000-0000-0000-0016-100000000000'),
 ('00000000-0000-0000-0017-200000000000', 'Wissenswertes über Familie', 'Das wird irgendwann mal ein Text bei dem es um Familie geht.', '00000000-0000-0000-0013-400000000000', '00000000-0000-0000-0016-200000000000'),
-('00000000-0000-0000-0017-300000000000', 'Ein Beitrag zu Partnerschaft ', 'Das wird irgendwann mal ein Text bei dem es um Partnerschaft geht.', '00000000-0000-0000-0013-400000000000', '00000000-0000-0000-0016-300000000000')
+('00000000-0000-0000-0017-300000000000', 'Ein Beitrag zu Partnerschaft ', 'Das wird irgendwann mal ein Text bei dem es um Partnerschaft geht.', '00000000-0000-0000-0013-400000000000', '00000000-0000-0000-0016-300000000000'),
 ('00000000-0000-0000-0017-400000000000', 'Ein Beitrag zu Arbeit', 'Das wird irgendwann mal ein Text bei dem es um Arbeit geht.', '00000000-0000-0000-0013-400000000000', '00000000-0000-0000-0016-100000000000'),
 ('00000000-0000-0000-0017-500000000000', 'Ein Beitrag zu Bildung', 'Das wird irgendwann mal ein Text bei dem es um Bildung geht.', '00000000-0000-0000-0013-400000000000', '00000000-0000-0000-0016-200000000000'),
 ('00000000-0000-0000-0017-600000000000', 'Ein Beitrag zu Gesundheit', 'Das wird irgendwann mal ein Text bei dem es um Gesundheit geht.', '00000000-0000-0000-0013-400000000000', '00000000-0000-0000-0016-300000000000'),

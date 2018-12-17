@@ -10,7 +10,7 @@ databaseChangeLog:
               primaryKey: true
               primaryKeyName: page_translatablesPK
             name: id
-            type: CHAR
+            type: CHAR(36)
         - column:
             constraints:
               nullable: false
@@ -33,12 +33,12 @@ databaseChangeLog:
             type: VARCHAR(255)
         - column:
             name: language_id
-            type: CHAR
+            type: CHAR(36)
         - column:
             constraints:
               nullable: false
             name: parent_id
-            type: CHAR
+            type: CHAR(36)
         tableName: page_translatables
 - changeSet:
     id: 1544916065772-12
@@ -51,7 +51,7 @@ databaseChangeLog:
               primaryKey: true
               primaryKeyName: pagesPK
             name: id
-            type: CHAR
+            type: CHAR(36)
         - column:
             constraints:
               nullable: false
@@ -68,7 +68,7 @@ databaseChangeLog:
             constraints:
               nullable: false
             name: topic_id
-            type: CHAR
+            type: CHAR(36)
         tableName: pages
 - changeSet:
     id: 1544916065772-19
