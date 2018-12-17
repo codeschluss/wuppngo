@@ -80,7 +80,7 @@ export class NavBarComponent implements OnChanges {
 
 //   Just Prototyping
   initAccountRouts() {
-    if (this.token.sub) {
+    if (this.token) {
         this.accountRouts = [
         {
             label: 'Hi, ' + this.token.sub,

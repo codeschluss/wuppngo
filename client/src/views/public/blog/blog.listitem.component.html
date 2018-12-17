@@ -2,7 +2,7 @@
     <div fxLayout="row" fxLayoutAlign="space-between"><div>{{getDate(blog.created)}}</div><div>{{blog.author}}</div></div>
     <div class="color-primary blogTitle">{{blog.title}}</div>
     <div *ngIf="blog.activity" class="activityTitle" (click)="openActivityView()">
-        <i18n i18n="@@activity">activity</i18n>{{': ' + blog.activity?.name}}
+        <i18n i18n="@@activity">activity</i18n>{{': ' + blog?.activity?.name}}
     </div>
     <div>{{blog.content.substring(0, 200) + '...'}}</div>
     <span (click)="openBlogView()">

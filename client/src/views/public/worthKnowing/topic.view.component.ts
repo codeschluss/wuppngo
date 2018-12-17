@@ -19,7 +19,6 @@ export class TopicViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.topic = this.route.snapshot.data.topic;
-    console.log(this.topic.pages);
   }
 
   public toPage(pageID: string) {
