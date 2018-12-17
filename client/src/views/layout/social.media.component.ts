@@ -1,10 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ActivityProvider } from 'src/realm/activity/activity.provider';
-import { Location } from '@angular/common';
+import { Component, Input } from '@angular/core';
+import { ActivityControllerService } from 'src/api/services/activity-controller.service';
+import { BlogControllerService } from 'src/api/services/blog-controller.service';
 
 @Component({
-    selector: 'socail-media-component',
+    selector: 'social-media-component',
     templateUrl: 'social.media.component.html',
     styleUrls: ['social.media.component.scss']
 })
@@ -14,26 +13,62 @@ export class SocialMediaComponent {
     @Input()
     public entity: any;
 
+    constructor(
+      private blogService: BlogControllerService,
+      private activityService: ActivityControllerService) {}
     getWhatsAppText(): string {
         return 'Kennst du das schon? '
             + window.location.href;
     }
 
     like(): void {
-        const likedActivitiesIds
-          = window.localStorage.getItem('likedActivitiesIds')
-          ? JSON.parse(window.localStorage.getItem('likedActivitiesIds')) : [];
+      const modelName = this.entity.constructor.name;
+      console.log('liked a ' + this.entity.constructor.name);
 
-          if (likedActivitiesIds.find(
-          actId => this.entity.id === actId)) {
-            console.log('allready liked');
-          } else {
-            likedActivitiesIds.push(this.entity.id);
-            window.localStorage.setItem(
-              'likedActivitiesIds', JSON.stringify(likedActivitiesIds));
-
-            // pending till server component is ready
-            // this.activityProvider.increaseLikes();
+      switch (modelName) {
+        case 'BlogModel':
+          if (!this.isLiked(this.entity.id)) {
+            this.entity.likes++;
+            this.storeInStorage(this.entity.id);
+            this.blogService
+            .blogControllerIncreaseLike(this.entity.id).subscribe();
           }
+          break;
+        case 'ActivityModel':
+          if (!this.isLiked(this.entity.id)) {
+            this.entity.likes++;
+            this.storeInStorage(this.entity.id);
+            this.activityService
+            .activityControllerIncreaseLike(this.entity.id).subscribe();
+          }
+          break;
       }
+    }
+
+    public isLiked(modelName: string): boolean {
+      const storageName = 'liked' + modelName + 'Ids';
+      const likedEntitiesIds
+        = window.localStorage.getItem(storageName)
+        ? JSON.parse(window.localStorage.getItem(storageName)) : [];
+
+        if (likedEntitiesIds.find(
+        entitiyId => this.entity.id === entitiyId)) {
+          console.log('already liked');
+          return true;
+        } else {
+          console.log('thats new for you!');
+          return false;
+        }
+      }
+
+    public storeInStorage(modelName: string): void {
+    const storageName = 'liked' + modelName + 'Ids';
+    const likedEntitiesIds
+      = window.localStorage.getItem(storageName)
+      ? JSON.parse(window.localStorage.getItem(storageName)) : [];
+
+      likedEntitiesIds.push(this.entity.id);
+      window.localStorage.setItem(
+        storageName, JSON.stringify(likedEntitiesIds));
+    }
 }

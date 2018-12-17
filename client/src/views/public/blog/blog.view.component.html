@@ -6,6 +6,8 @@
         {{blog.title}}
     </div>
     <div>{{getDate(blog.created)}}</div>
+    <social-media-component [style.margin-top]="'20px'" [style.margin-bottom]="'20px'" [entity]="blog"></social-media-component>
+
     <div id="authorContainer">{{'Autor: ' + blog.author}}</div>
     <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between center">
         <div class="blogTextContainer background-color-secondary">
