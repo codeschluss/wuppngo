@@ -9,7 +9,13 @@ INSERT INTO `configurations` (`id`, `item`, `value`) VALUES
 ('10000000-0000-0000-0001-600000000000', 'portalSubtitle', 'Jugendportal'),
 ('10000000-0000-0000-0001-700000000000', 'portalMail', 'milli@codeschluss.de');
 
-INSERT INTO `tags` (`id`, `name`, `description`) VALUES
+INSERT INTO `languages` (`id`, `locale`, `name`) VALUES
+('00000000-0000-0000-0013-100000000000', 'es', 'Español'),
+('00000000-0000-0000-0013-200000000000', 'fr', 'Français'),
+('00000000-0000-0000-0013-300000000000', 'en', 'English'),
+('00000000-0000-0000-0013-400000000000', 'de', 'Deutsch');
+
+INSERT INTO `tags` (`id`, `description`) VALUES
 ('10000000-0000-0000-0002-100000000000', 'sport'),
 ('10000000-0000-0000-0002-200000000000', 'freizeit'),
 ('10000000-0000-0000-0002-300000000000', 'religion'),
@@ -33,7 +39,7 @@ INSERT INTO `tag_translatables` (`id`, `name`, `language_id`, `parent_id`) VALUE
 ('10000000-0000-0000-0002-900000000000', 'freitags', '00000000-0000-0000-0013-400000000000', '10000000-0000-0000-0002-900000000000'),
 ('10000000-0000-0000-0002-110000000000', 'beratung', '00000000-0000-0000-0013-400000000000', '10000000-0000-0000-0002-110000000000');
 
-INSERT INTO `target_groups` (`id`, `name`, `description`) VALUES
+INSERT INTO `target_groups` (`id`, `description`) VALUES
 ('10000000-0000-0000-0003-100000000000', 'Junge Erwachsene'),
 ('10000000-0000-0000-0003-200000000000', 'Jungen'),
 ('10000000-0000-0000-0003-300000000000', 'Mädchen'),
@@ -100,7 +106,7 @@ INSERT INTO `addresses` (`id`, `latitude`, `longitude`, `street`, `house_number`
 ('8d932c0c-c5e0-4fc4-9235-63bde4b8f063',51.2308731079,7.1311569214,'Spessartweg','25','42349','Wuppertal','9254f173-e645-4e38-a17a-b8b17ce4dfe9','2018-06-18 08:42:25','2018-06-18 08:42:25'),
 ('90ac3a97-dd86-4482-9b64-4dacf5696ec0',51.2625122070,7.1420779228,'Ludwigstraße','56','42105','Wuppertal','18e97a95-877e-418f-a136-03edda67e3ae','2018-02-14 12:23:06','2018-02-14 12:23:06'),
 ('96b4809d-93a7-4455-9c20-5dc0072d541a',51.2774238586,7.2040734291,'Eintrachtstraße','45','42275','Wuppertal','8c9c7379-e6f8-4949-afb2-d8ca1e76e03a','2018-02-27 09:00:07','2018-02-27 09:00:07'),
-('a0b85371-db5b-46a1-a921-4f0d3c4e010b',51.2481155396,7.1268663406,'Fröbelstraße','1a','42117','Wuppertal',NULL,'2018-04-09 09:31:44','2018-04-09 09:31:44'),
+('a0b85371-db5b-46a1-a921-4f0d3c4e010b',51.2481155396,7.1268663406,'Fröbelstraße','1a','42117','Wuppertal','8c9c7379-e6f8-4949-afb2-d8ca1e76e03a','2018-04-09 09:31:44','2018-04-09 09:31:44'),
 ('a59f8140-6e8a-4f60-8db4-3b197591321f',51.2565040588,7.1641497612,'Bendahler Straße','29','42285','Wuppertal','8c9c7379-e6f8-4949-afb2-d8ca1e76e03a','2018-08-21 08:01:28','2018-08-21 08:01:28'),
 ('a66ad6d8-29c7-4b15-a7ae-fee1b3d8239f',51.2755241394,7.2214918137,'Berliner Straße','173','42277','Wuppertal','2afef02e-211c-4885-a975-419135697066','2018-02-14 12:48:45','2018-05-11 14:04:56'),
 ('b94df03a-9999-4183-a9f7-8ed8ca3a3a99',51.2641448975,7.1467270851,'Gathe','6','42107','Wuppertal','18e97a95-877e-418f-a136-03edda67e3ae','2018-02-26 16:18:57','2018-02-26 16:18:57'),
@@ -143,16 +149,16 @@ INSERT INTO `category_translatables` (`id`, `name`, `language_id`, `parent_id`) 
 ('00000000-0000-0000-0007-120000000000', 'Ferien', '00000000-0000-0000-0013-400000000000', '00000000-0000-0000-0007-120000000000'),
 ('00000000-0000-0000-0007-130000000000', 'Religion', '00000000-0000-0000-0013-400000000000', '00000000-0000-0000-0007-130000000000');
 
-INSERT INTO `organisations` (`id`, `name`, `website`, `mail`, `phone`, `image`, `address_id`) VALUES
-('00000000-0000-0000-0008-100000000000', 'Sport zum Mitmachen e.V.', 'www.szmeV.de', 'szmeV@1.de', '01234567890', 'edbd167f-2cd3-4fdd-9e8e-71328a628841'),
-('00000000-0000-0000-0008-200000000000', 'Chillclub', 'www.chillclub.com', 'chillclub@2.com', '09876543210', null, 'db2527da-f0df-4da7-8ef2-ec10d56aa613'),
-('00000000-0000-0000-0008-300000000000', 'Die Wuppertaler Musiker', 'www.wuppertal-musik.com', 'wuppertal-musik@3.com', '09876543210', null, 'd8912840-958e-4265-a64d-c71202c56fc9'),
-('00000000-0000-0000-0008-400000000000', 'Wupps Gaming', 'www.wuppsgaming.com', 'wuppsgaming@Delete.com', '09876543210', null, '96b4809d-93a7-4455-9c20-5dc0072d541a'),
-('00000000-0000-0000-0008-500000000000', 'Religion in Wuppertal', 'www.rel-wuppertal.com', 'rel-wuppertal@Delete.com', '09876543210', null, 'a59f8140-6e8a-4f60-8db4-3b197591321f'),
-('00000000-0000-0000-0008-600000000000', 'Hilfe zur Selbsthilfe', 'www.h-z-s.com', 'h-z-s@translate.com', '09876543210', null, '4095f470-a72a-4f66-acc9-51b9ac1e95a4'),
-('00000000-0000-0000-0008-700000000000', 'Freizeit Hunters', 'www.freizeithunters.com', 'freizeithunters@noadmin.com', '09876543210', null, '4095f470-a72a-4f66-acc9-51b9ac1e95a4'),
-('00000000-0000-0000-0008-800000000000', 'Wuppertal Politics', 'www.wuppertalpolitics.com', 'wuppertalpolitics@orgaMail.com', '09876543210', null, '59c0c0c2-591c-479b-8445-0d4c60d36c89'),
-('00000000-0000-0000-0008-900000000000', 'Wuppgngoes Online', 'www.wuppngoesonline.com', 'wuppngoesonline@orgaMap.com', '09876543210', null, '4049df9b-6907-449a-be16-d6a38989367');
+INSERT INTO `organisations` (`id`, `name`, `website`, `mail`, `phone`, `address_id`, `approved`) VALUES
+('00000000-0000-0000-0008-100000000000', 'Sport zum Mitmachen e.V.', 'www.szmeV.de', 'szmeV@1.de', '01234567890', 'edbd167f-2cd3-4fdd-9e8e-71328a628841', 1),
+('00000000-0000-0000-0008-200000000000', 'Chillclub', 'www.chillclub.com', 'chillclub@2.com', '09876543210', 'db2527da-f0df-4da7-8ef2-ec10d56aa613', 1),
+('00000000-0000-0000-0008-300000000000', 'Die Wuppertaler Musiker', 'www.wuppertal-musik.com', 'wuppertal-musik@3.com', '09876543210', 'd8912840-958e-4265-a64d-c71202c56fc9', 1),
+('00000000-0000-0000-0008-400000000000', 'Wupps Gaming', 'www.wuppsgaming.com', 'wuppsgaming@Delete.com', '09876543210', '96b4809d-93a7-4455-9c20-5dc0072d541a', 1),
+('00000000-0000-0000-0008-500000000000', 'Religion in Wuppertal', 'www.rel-wuppertal.com', 'rel-wuppertal@Delete.com', '09876543210', 'a59f8140-6e8a-4f60-8db4-3b197591321f', 1),
+('00000000-0000-0000-0008-600000000000', 'Hilfe zur Selbsthilfe', 'www.h-z-s.com', 'h-z-s@translate.com', '09876543210', '4146a199-9b08-4d58-ab91-ae2ed69abcf2', 1),
+('00000000-0000-0000-0008-700000000000', 'Freizeit Hunters', 'www.freizeithunters.com', 'freizeithunters@noadmin.com', '09876543210', '4095f470-a72a-4f66-acc9-51b9ac1e95a4', 1),
+('00000000-0000-0000-0008-800000000000', 'Wuppertal Politics', 'www.wuppertalpolitics.com', 'wuppertalpolitics@orgaMail.com', '09876543210', '59c0c0c2-591c-479b-8445-0d4c60d36c89', 1),
+('00000000-0000-0000-0008-900000000000', 'Wuppgngoes Online', 'www.wuppngoesonline.com', 'wuppngoesonline@orgaMap.com', '09876543210', '4049df9b-6907-449a-be16-d6a389893674', 1);
 
 INSERT INTO `organisation_translatables` (`id`, `parent_id`, `language_id`, `description`) VALUES
 ('00000000-0000-0000-0008-100000000000','00000000-0000-0000-0008-100000000000', '00000000-0000-0000-0013-400000000000', 'Wir sind eine Organisation, die sich zum Ziel gesetzt hat Jugendlichen die Freude an der Bewegung näher zu bringen'),
@@ -186,27 +192,27 @@ INSERT INTO `providers` (`id`, `organisation_id`, `user_id`, `admin`, `approved`
 ('00000000-0000-0000-0009-190000000000', '00000000-0000-0000-0008-900000000000', '00000000-0000-0000-0004-300000000000', 0, 1);
 
 INSERT INTO `activities` (`id`, `address_id`, `provider_id`, `category_id`, `contact_name`, `mail`, `phone`, `likes`) VALUES
-('00000000-0000-0000-0010-100000000000', '72a75937-1724-4631-af60-6c726f72997a', '00000000-0000-0000-0009-100000000000', '00000000-0000-0000-0007-100000000000', 'Kontaktname', '123456789', 12),
-('00000000-0000-0000-0010-200000000000', '72f235ab-191b-4421-a6fe-c516a8a54683', '00000000-0000-0000-0009-200000000000', '00000000-0000-0000-0007-200000000000', 'Kontaktname', '123456789', 20),
-('00000000-0000-0000-0010-300000000000', '7abdd488-ce07-4893-9012-799a00ccfa28', '00000000-0000-0000-0009-300000000000', '00000000-0000-0000-0007-300000000000', 'Kontaktname', '123456789', 5),
-('00000000-0000-0000-0010-400000000000', '7d0ab2cb-9fb8-4c82-933a-343db499ede5', '00000000-0000-0000-0009-400000000000', '00000000-0000-0000-0007-400000000000', 'Kontaktname', '123456789', 27),
-('00000000-0000-0000-0010-500000000000', '8291a3d4-e84c-438b-83f2-78636f26014d', '00000000-0000-0000-0009-500000000000', '00000000-0000-0000-0007-500000000000', 'Kontaktname', '123456789', 18),
-('00000000-0000-0000-0010-600000000000', '870fc695-5cf3-4b24-9024-e66c8a921c07', '00000000-0000-0000-0009-600000000000', '00000000-0000-0000-0007-600000000000', 'Kontaktname', '123456789', 9),
-('00000000-0000-0000-0010-700000000000', '8d932c0c-c5e0-4fc4-9235-63bde4b8f063', '00000000-0000-0000-0009-700000000000', '00000000-0000-0000-0007-700000000000', 'Kontaktname', '123456789', 11),
-('00000000-0000-0000-0010-800000000000', '90ac3a97-dd86-4482-9b64-4dacf5696ec0', '00000000-0000-0000-0009-800000000000', '00000000-0000-0000-0007-800000000000', 'Kontaktname', '123456789', 2),
-('00000000-0000-0000-0010-900000000000', '96b4809d-93a7-4455-9c20-5dc0072d541a', '00000000-0000-0000-0009-900000000000', '00000000-0000-0000-0007-900000000000', 'Kontaktname', '123456789', 0),
-('00000000-0000-0000-0010-110000000000', 'a0b85371-db5b-46a1-a921-4f0d3c4e010b', '00000000-0000-0000-0009-110000000000', '00000000-0000-0000-0007-110000000000', 'Kontaktname', '123456789', 57),
-('00000000-0000-0000-0010-120000000000', 'a59f8140-6e8a-4f60-8db4-3b197591321f', '00000000-0000-0000-0009-120000000000', '00000000-0000-0000-0007-120000000000', 'Kontaktname', '123456789', 4),
-('00000000-0000-0000-0010-130000000000', 'a66ad6d8-29c7-4b15-a7ae-fee1b3d8239f', '00000000-0000-0000-0009-130000000000', '00000000-0000-0000-0007-130000000000', 'Kontaktname', '123456789', 135),
-('00000000-0000-0000-0010-140000000000', 'b94df03a-9999-4183-a9f7-8ed8ca3a3a99', '00000000-0000-0000-0009-140000000000', '00000000-0000-0000-0007-100000000000', 'Kontaktname', '123456789', 87),
-('00000000-0000-0000-0010-150000000000', 'bd590d22-c82e-425f-9ebe-7b0f44433ef5', '00000000-0000-0000-0009-150000000000', '00000000-0000-0000-0007-200000000000', 'Kontaktname', '123456789', 2),
-('00000000-0000-0000-0010-160000000000', 'c461e0e9-ad0a-47e0-bfcb-b686fdcadfeb', '00000000-0000-0000-0009-160000000000', '00000000-0000-0000-0007-300000000000', 'Kontaktname', '123456789', 4),
-('00000000-0000-0000-0010-170000000000', 'd2063650-3314-4102-9de6-64726781fa16', '00000000-0000-0000-0009-170000000000', '00000000-0000-0000-0007-400000000000', 'Kontaktname', '123456789', 49),
-('00000000-0000-0000-0010-180000000000', 'd6212acd-72db-4da2-9d1f-b32eb426cdb5', '00000000-0000-0000-0009-180000000000', '00000000-0000-0000-0007-500000000000', 'Kontaktname', '123456789', 4),
-('00000000-0000-0000-0010-190000000000', 'd8912840-958e-4265-a64d-c71202c56fc9', '00000000-0000-0000-0009-190000000000', '00000000-0000-0000-0007-600000000000', 'Kontaktname', '123456789', 97),
-('00000000-0000-0000-0010-210000000000', 'da30a7a4-3995-4bb3-b5ed-6319b2e266c5', '00000000-0000-0000-0009-100000000000', '00000000-0000-0000-0007-700000000000', 'Kontaktname', '123456789', 0),
-('00000000-0000-0000-0010-220000000000', 'e558777d-192a-4f25-b05b-2d1c82b5c445', '00000000-0000-0000-0009-200000000000', '00000000-0000-0000-0007-800000000000', 'Kontaktname', '123456789', 1),
-('00000000-0000-0000-0010-230000000000', 'db2527da-f0df-4da7-8ef2-ec10d56aa613', '00000000-0000-0000-0009-300000000000', '00000000-0000-0000-0007-900000000000', 'Kontaktname', '123456789', 7);
+('00000000-0000-0000-0010-100000000000', '72a75937-1724-4631-af60-6c726f72997a', '00000000-0000-0000-0009-100000000000', '00000000-0000-0000-0007-100000000000', 'mail@kontakt.de', 'Kontaktname', '123456789', 12),
+('00000000-0000-0000-0010-200000000000', '72f235ab-191b-4421-a6fe-c516a8a54683', '00000000-0000-0000-0009-200000000000', '00000000-0000-0000-0007-200000000000', 'mail@kontakt.de', 'Kontaktname', '123456789', 20),
+('00000000-0000-0000-0010-300000000000', '7abdd488-ce07-4893-9012-799a00ccfa28', '00000000-0000-0000-0009-300000000000', '00000000-0000-0000-0007-300000000000', 'mail@kontakt.de', 'Kontaktname', '123456789', 5),
+('00000000-0000-0000-0010-400000000000', '7d0ab2cb-9fb8-4c82-933a-343db499ede5', '00000000-0000-0000-0009-400000000000', '00000000-0000-0000-0007-400000000000', 'mail@kontakt.de', 'Kontaktname', '123456789', 27),
+('00000000-0000-0000-0010-500000000000', '8291a3d4-e84c-438b-83f2-78636f26014d', '00000000-0000-0000-0009-500000000000', '00000000-0000-0000-0007-500000000000', 'mail@kontakt.de', 'Kontaktname', '123456789', 18),
+('00000000-0000-0000-0010-600000000000', '870fc695-5cf3-4b24-9024-e66c8a921c07', '00000000-0000-0000-0009-600000000000', '00000000-0000-0000-0007-600000000000', 'mail@kontakt.de', 'Kontaktname', '123456789', 9),
+('00000000-0000-0000-0010-700000000000', '8d932c0c-c5e0-4fc4-9235-63bde4b8f063', '00000000-0000-0000-0009-700000000000', '00000000-0000-0000-0007-700000000000', 'mail@kontakt.de', 'Kontaktname', '123456789', 11),
+('00000000-0000-0000-0010-800000000000', '90ac3a97-dd86-4482-9b64-4dacf5696ec0', '00000000-0000-0000-0009-800000000000', '00000000-0000-0000-0007-800000000000', 'mail@kontakt.de', 'Kontaktname', '123456789', 2),
+('00000000-0000-0000-0010-900000000000', '96b4809d-93a7-4455-9c20-5dc0072d541a', '00000000-0000-0000-0009-900000000000', '00000000-0000-0000-0007-900000000000', 'mail@kontakt.de', 'Kontaktname', '123456789', 0),
+('00000000-0000-0000-0010-110000000000', 'a0b85371-db5b-46a1-a921-4f0d3c4e010b', '00000000-0000-0000-0009-110000000000', '00000000-0000-0000-0007-110000000000', 'mail@kontakt.de', 'Kontaktname', '123456789', 57),
+('00000000-0000-0000-0010-120000000000', 'a59f8140-6e8a-4f60-8db4-3b197591321f', '00000000-0000-0000-0009-120000000000', '00000000-0000-0000-0007-120000000000', 'mail@kontakt.de', 'Kontaktname', '123456789', 4),
+('00000000-0000-0000-0010-130000000000', 'a66ad6d8-29c7-4b15-a7ae-fee1b3d8239f', '00000000-0000-0000-0009-130000000000', '00000000-0000-0000-0007-130000000000', 'mail@kontakt.de', 'Kontaktname', '123456789', 135),
+('00000000-0000-0000-0010-140000000000', 'b94df03a-9999-4183-a9f7-8ed8ca3a3a99', '00000000-0000-0000-0009-140000000000', '00000000-0000-0000-0007-100000000000', 'mail@kontakt.de', 'Kontaktname', '123456789', 87),
+('00000000-0000-0000-0010-150000000000', 'bd590d22-c82e-425f-9ebe-7b0f44433ef5', '00000000-0000-0000-0009-150000000000', '00000000-0000-0000-0007-200000000000', 'mail@kontakt.de', 'Kontaktname', '123456789', 2),
+('00000000-0000-0000-0010-160000000000', 'c461e0e9-ad0a-47e0-bfcb-b686fdcadfeb', '00000000-0000-0000-0009-160000000000', '00000000-0000-0000-0007-300000000000', 'mail@kontakt.de', 'Kontaktname', '123456789', 4),
+('00000000-0000-0000-0010-170000000000', 'd2063650-3314-4102-9de6-64726781fa16', '00000000-0000-0000-0009-170000000000', '00000000-0000-0000-0007-400000000000', 'mail@kontakt.de', 'Kontaktname', '123456789', 49),
+('00000000-0000-0000-0010-180000000000', 'd6212acd-72db-4da2-9d1f-b32eb426cdb5', '00000000-0000-0000-0009-180000000000', '00000000-0000-0000-0007-500000000000', 'mail@kontakt.de', 'Kontaktname', '123456789', 4),
+('00000000-0000-0000-0010-190000000000', 'd8912840-958e-4265-a64d-c71202c56fc9', '00000000-0000-0000-0009-190000000000', '00000000-0000-0000-0007-600000000000', 'mail@kontakt.de', 'Kontaktname', '123456789', 97),
+('00000000-0000-0000-0010-210000000000', 'da30a7a4-3995-4bb3-b5ed-6319b2e266c5', '00000000-0000-0000-0009-100000000000', '00000000-0000-0000-0007-700000000000', 'mail@kontakt.de', 'Kontaktname', '123456789', 0),
+('00000000-0000-0000-0010-220000000000', 'e558777d-192a-4f25-b05b-2d1c82b5c445', '00000000-0000-0000-0009-200000000000', '00000000-0000-0000-0007-800000000000', 'mail@kontakt.de', 'Kontaktname', '123456789', 1),
+('00000000-0000-0000-0010-230000000000', 'db2527da-f0df-4da7-8ef2-ec10d56aa613', '00000000-0000-0000-0009-300000000000', '00000000-0000-0000-0007-900000000000', 'mail@kontakt.de', 'Kontaktname', '123456789', 7);
 
 INSERT INTO `activity_translatables` (`id`, `parent_id`, `language_id`, `name`, `description`) VALUES
 ('00000000-0000-0000-0010-100000000000', '00000000-0000-0000-0010-100000000000', '00000000-0000-0000-0013-400000000000', 'Sportaktivität', 'Eine Sportaktivität bei der alle mitmachen können'),
@@ -275,11 +281,64 @@ INSERT INTO `schedules` (`id`, `start_date`, `end_date`, `activity_id`) VALUES
 ('00000000-0000-0000-0011-190000000000', '2099-04-21 14:00:00', '2099-04-22 16:00:00', '00000000-0000-0000-0010-190000000000'),
 ('00000000-0000-0000-0011-210000000000', '2099-04-21 14:00:00', '2099-04-22 16:00:00', '00000000-0000-0000-0010-210000000000'),
 ('00000000-0000-0000-0011-220000000000', '2099-04-21 14:00:00', '2099-04-22 16:00:00', '00000000-0000-0000-0010-220000000000'),
-('00000000-0000-0000-0011-220000000000', '2099-04-21 14:00:00', '2099-04-22 16:00:00', '00000000-0000-0000-0010-230000000000');
+('00000000-0000-0000-0011-230000000000', '2099-04-21 14:00:00', '2099-04-22 16:00:00', '00000000-0000-0000-0010-230000000000');
 
 
-INSERT INTO `translations` (`id`, `locale`, `name`) VALUES
-('00000000-0000-0000-0013-100000000000', 'es', 'Español'),
-('00000000-0000-0000-0013-200000000000', 'fr', 'Français'),
-('00000000-0000-0000-0013-300000000000', 'en', 'English'),
-('00000000-0000-0000-0013-400000000000', 'de', 'Deutsch');
+
+INSERT INTO `bloggers`(`id`, `approved`, `user_id`) VALUES
+('00000000-0000-0000-0015-100000000000', 1, '00000000-0000-0000-0004-500000000000'),
+('00000000-0000-0000-0015-200000000000', 1, '00000000-0000-0000-0004-600000000000');
+
+INSERT INTO `topics` (`id`) VALUES
+('00000000-0000-0000-0014-100000000000'),
+('00000000-0000-0000-0014-200000000000'),
+('00000000-0000-0000-0014-300000000000'),
+('00000000-0000-0000-0014-400000000000'),
+('00000000-0000-0000-0014-500000000000'),
+('00000000-0000-0000-0014-600000000000'),
+('00000000-0000-0000-0014-700000000000');
+
+INSERT INTO `topic_translatables` (`id`, `name`, `language_id`, `parent_id`) VALUES
+('00000000-0000-0000-0014-100000000000', 'Finanzen', '00000000-0000-0000-0013-400000000000', '00000000-0000-0000-0014-100000000000'),
+('00000000-0000-0000-0014-200000000000', 'Familie', '00000000-0000-0000-0013-400000000000', '00000000-0000-0000-0014-200000000000'),
+('00000000-0000-0000-0014-300000000000', 'Partnerschaft', '00000000-0000-0000-0013-400000000000', '00000000-0000-0000-0014-300000000000'),
+('00000000-0000-0000-0014-400000000000', 'Arbeit', '00000000-0000-0000-0013-400000000000', '00000000-0000-0000-0014-400000000000'),
+('00000000-0000-0000-0014-500000000000', 'Bildung', '00000000-0000-0000-0013-400000000000', '00000000-0000-0000-0014-500000000000'),
+('00000000-0000-0000-0014-600000000000', 'Gesundheit', '00000000-0000-0000-0013-400000000000', '00000000-0000-0000-0014-600000000000'),
+('00000000-0000-0000-0014-700000000000', 'FAQ', '00000000-0000-0000-0013-400000000000', '00000000-0000-0000-0014-700000000000');
+
+INSERT INTO `pages` (`id`, `topic_id`) VALUES
+('00000000-0000-0000-0016-100000000000', '00000000-0000-0000-0014-100000000000'),
+('00000000-0000-0000-0016-200000000000', '00000000-0000-0000-0014-100000000000'),
+('00000000-0000-0000-0016-300000000000', '00000000-0000-0000-0014-100000000000'),
+('00000000-0000-0000-0016-400000000000', '00000000-0000-0000-0014-100000000000'),
+('00000000-0000-0000-0016-500000000000', '00000000-0000-0000-0014-100000000000'),
+('00000000-0000-0000-0016-600000000000', '00000000-0000-0000-0014-100000000000'),
+('00000000-0000-0000-0016-700000000000', '00000000-0000-0000-0014-100000000000');
+
+INSERT INTO `page_translatables` (`id`, `title`, `content`, `language_id`, `parent_id`) VALUES
+('00000000-0000-0000-0017-100000000000', 'Wie spare ich Geld?', 'Das wird irgendwann mal ein Text bei dem es ums Geld sparen geht.', '00000000-0000-0000-0013-400000000000', '00000000-0000-0000-0016-100000000000'),
+('00000000-0000-0000-0017-200000000000', 'Wissenswertes über Familie', 'Das wird irgendwann mal ein Text bei dem es um Familie geht.', '00000000-0000-0000-0013-400000000000', '00000000-0000-0000-0016-200000000000'),
+('00000000-0000-0000-0017-300000000000', 'Ein Beitrag zu Partnerschaft ', 'Das wird irgendwann mal ein Text bei dem es um Partnerschaft geht.', '00000000-0000-0000-0013-400000000000', '00000000-0000-0000-0016-300000000000')
+('00000000-0000-0000-0017-400000000000', 'Ein Beitrag zu Arbeit', 'Das wird irgendwann mal ein Text bei dem es um Arbeit geht.', '00000000-0000-0000-0013-400000000000', '00000000-0000-0000-0016-100000000000'),
+('00000000-0000-0000-0017-500000000000', 'Ein Beitrag zu Bildung', 'Das wird irgendwann mal ein Text bei dem es um Bildung geht.', '00000000-0000-0000-0013-400000000000', '00000000-0000-0000-0016-200000000000'),
+('00000000-0000-0000-0017-600000000000', 'Ein Beitrag zu Gesundheit', 'Das wird irgendwann mal ein Text bei dem es um Gesundheit geht.', '00000000-0000-0000-0013-400000000000', '00000000-0000-0000-0016-300000000000'),
+('00000000-0000-0000-0017-700000000000', 'Ein Beitrag zu FAQ', 'Das wird irgendwann mal ein Text bei dem es um FAQ geht.', '00000000-0000-0000-0013-400000000000', '00000000-0000-0000-0016-300000000000');
+
+INSERT INTO `blogs`(`id`, `activity_id`, `blogger_id`, `likes`) VALUES
+('00000000-0000-0000-0016-100000000000', '00000000-0000-0000-0010-100000000000', '00000000-0000-0000-0015-100000000000', 26),
+('00000000-0000-0000-0016-200000000000', null, '00000000-0000-0000-0015-100000000000', 74),
+('00000000-0000-0000-0016-300000000000', '00000000-0000-0000-0010-200000000000', '00000000-0000-0000-0015-100000000000', 4),
+('00000000-0000-0000-0016-400000000000', '00000000-0000-0000-0010-300000000000', '00000000-0000-0000-0015-100000000000', 136),
+('00000000-0000-0000-0016-500000000000', '00000000-0000-0000-0010-400000000000', '00000000-0000-0000-0015-200000000000', 54),
+('00000000-0000-0000-0016-600000000000', '00000000-0000-0000-0010-500000000000', '00000000-0000-0000-0015-200000000000', 17),
+('00000000-0000-0000-0016-700000000000', '00000000-0000-0000-0010-600000000000', '00000000-0000-0000-0015-200000000000', 9);
+
+INSERT INTO `blog_translatables` (`id`, `parent_id`, `language_id`, `title`, `content`) VALUES
+('00000000-0000-0000-0017-100000000000', '00000000-0000-0000-0016-100000000000', '00000000-0000-0000-0013-400000000000', 'Blogbeitrag über Lorem Ispum', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque magna dolor, hendrerit ut venenatis in, iaculis pharetra tellus. Maecenas sit amet auctor nulla. Proin arcu lacus, congue at felis sed, tincidunt accumsan justo. Maecenas fringilla mattis tempor. Proin a metus nec metus vulputate vehicula eu vel quam. Aliquam nec dolor ac odio placerat eleifend. Suspendisse vel felis et mauris porta lacinia. In turpis risus, cursus et nisi et, gravida interdum purus. Nunc ultricies rutrum felis a interdum. Aliquam erat volutpat. Suspendisse mollis libero vel porttitor laoreet. Fusce ullamcorper, neque dignissim tempor consequat, felis tellus consectetur ligula, ut vestibulum neque orci vitae nisl. Aenean tortor sapien, eleifend at lobortis vitae, convallis non magna'),
+('00000000-0000-0000-0017-200000000000', '00000000-0000-0000-0016-200000000000', '00000000-0000-0000-0013-400000000000', 'Ein anderer Beitrag zu Lorem Ipsum', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque magna dolor, hendrerit ut venenatis in, iaculis pharetra tellus. Maecenas sit amet auctor nulla. Proin arcu lacus, congue at felis sed, tincidunt accumsan justo. Maecenas fringilla mattis tempor. Proin a metus nec metus vulputate vehicula eu vel quam. Aliquam nec dolor ac odio placerat eleifend. Suspendisse vel felis et mauris porta lacinia. In turpis risus, cursus et nisi et, gravida interdum purus. Nunc ultricies rutrum felis a interdum. Aliquam erat volutpat. Suspendisse mollis libero vel porttitor laoreet. Fusce ullamcorper, neque dignissim tempor consequat, felis tellus consectetur ligula, ut vestibulum neque orci vitae nisl. Aenean tortor sapien, eleifend at lobortis vitae, convallis non magna'),
+('00000000-0000-0000-0017-300000000000', '00000000-0000-0000-0016-300000000000', '00000000-0000-0000-0013-400000000000', 'Blogging Blog', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque magna dolor, hendrerit ut venenatis in, iaculis pharetra tellus. Maecenas sit amet auctor nulla. Proin arcu lacus, congue at felis sed, tincidunt accumsan justo. Maecenas fringilla mattis tempor. Proin a metus nec metus vulputate vehicula eu vel quam. Aliquam nec dolor ac odio placerat eleifend. Suspendisse vel felis et mauris porta lacinia. In turpis risus, cursus et nisi et, gravida interdum purus. Nunc ultricies rutrum felis a interdum. Aliquam erat volutpat. Suspendisse mollis libero vel porttitor laoreet. Fusce ullamcorper, neque dignissim tempor consequat, felis tellus consectetur ligula, ut vestibulum neque orci vitae nisl. Aenean tortor sapien, eleifend at lobortis vitae, convallis non magna'),
+('00000000-0000-0000-0017-400000000000', '00000000-0000-0000-0016-400000000000', '00000000-0000-0000-0013-400000000000', 'Ich bin ein Blogtitel', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque magna dolor, hendrerit ut venenatis in, iaculis pharetra tellus. Maecenas sit amet auctor nulla. Proin arcu lacus, congue at felis sed, tincidunt accumsan justo. Maecenas fringilla mattis tempor. Proin a metus nec metus vulputate vehicula eu vel quam. Aliquam nec dolor ac odio placerat eleifend. Suspendisse vel felis et mauris porta lacinia. In turpis risus, cursus et nisi et, gravida interdum purus. Nunc ultricies rutrum felis a interdum. Aliquam erat volutpat. Suspendisse mollis libero vel porttitor laoreet. Fusce ullamcorper, neque dignissim tempor consequat, felis tellus consectetur ligula, ut vestibulum neque orci vitae nisl. Aenean tortor sapien, eleifend at lobortis vitae, convallis non magna'),
+('00000000-0000-0000-0017-500000000000', '00000000-0000-0000-0016-500000000000', '00000000-0000-0000-0013-400000000000', 'Titel eines Blogs', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque magna dolor, hendrerit ut venenatis in, iaculis pharetra tellus. Maecenas sit amet auctor nulla. Proin arcu lacus, congue at felis sed, tincidunt accumsan justo. Maecenas fringilla mattis tempor. Proin a metus nec metus vulputate vehicula eu vel quam. Aliquam nec dolor ac odio placerat eleifend. Suspendisse vel felis et mauris porta lacinia. In turpis risus, cursus et nisi et, gravida interdum purus. Nunc ultricies rutrum felis a interdum. Aliquam erat volutpat. Suspendisse mollis libero vel porttitor laoreet. Fusce ullamcorper, neque dignissim tempor consequat, felis tellus consectetur ligula, ut vestibulum neque orci vitae nisl. Aenean tortor sapien, eleifend at lobortis vitae, convallis non magna'),
+('00000000-0000-0000-0017-600000000000', '00000000-0000-0000-0016-600000000000', '00000000-0000-0000-0013-400000000000', 'Noch ein Blog', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque magna dolor, hendrerit ut venenatis in, iaculis pharetra tellus. Maecenas sit amet auctor nulla. Proin arcu lacus, congue at felis sed, tincidunt accumsan justo. Maecenas fringilla mattis tempor. Proin a metus nec metus vulputate vehicula eu vel quam. Aliquam nec dolor ac odio placerat eleifend. Suspendisse vel felis et mauris porta lacinia. In turpis risus, cursus et nisi et, gravida interdum purus. Nunc ultricies rutrum felis a interdum. Aliquam erat volutpat. Suspendisse mollis libero vel porttitor laoreet. Fusce ullamcorper, neque dignissim tempor consequat, felis tellus consectetur ligula, ut vestibulum neque orci vitae nisl. Aenean tortor sapien, eleifend at lobortis vitae, convallis non magna'),
+('00000000-0000-0000-0017-700000000000', '00000000-0000-0000-0016-700000000000', '00000000-0000-0000-0013-400000000000', 'Der letzte Blog', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque magna dolor, hendrerit ut venenatis in, iaculis pharetra tellus. Maecenas sit amet auctor nulla. Proin arcu lacus, congue at felis sed, tincidunt accumsan justo. Maecenas fringilla mattis tempor. Proin a metus nec metus vulputate vehicula eu vel quam. Aliquam nec dolor ac odio placerat eleifend. Suspendisse vel felis et mauris porta lacinia. In turpis risus, cursus et nisi et, gravida interdum purus. Nunc ultricies rutrum felis a interdum. Aliquam erat volutpat. Suspendisse mollis libero vel porttitor laoreet. Fusce ullamcorper, neque dignissim tempor consequat, felis tellus consectetur ligula, ut vestibulum neque orci vitae nisl. Aenean tortor sapien, eleifend at lobortis vitae, convallis non magna');
