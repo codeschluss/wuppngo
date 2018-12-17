@@ -104,4 +104,14 @@ public class TopicQueryBuilder extends QueryBuilder<QTopicEntity> {
     return query.translatables.any().name.likeIgnoreCase(filter)
         .and(query.translatables.any().language.locale.in(languageService.getCurrentReadLocales()));
   }
+
+  /**
+   * With any page id.
+   *
+   * @param pageId the page id
+   * @return the predicate
+   */
+  public Predicate withAnyPageId(String pageId) {
+    return query.pages.any().id.eq(pageId);
+  }
 }

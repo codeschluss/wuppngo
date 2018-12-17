@@ -51,7 +51,7 @@ public class SecurityController {
    *
    * @param req the req
    * @return the response entity
-   * @throws InvalidTokenException the invalid token exception
+   * @throws Exception the exception
    */
   @GetMapping("/refresh")
   public ResponseEntity<String> refreshToken(HttpServletRequest req) throws Exception {
