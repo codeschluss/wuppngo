@@ -25,6 +25,9 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewChecked {
   public activities: any[];
 
   @Input()
+  public configurations: any[];
+
+  @Input()
   public disabledPointerAction: boolean;
 
   @Output()
@@ -52,8 +55,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
-    private configProvider: ConfigurationProvider
+    private router: Router
     ) {
       if (this.route.snapshot.data.activities) {
         this.activities = this.route.snapshot.data.activities;
@@ -63,14 +65,10 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     public ngOnInit(): void {
       this.clusterspan = 10;
-      let configurations = this.route.snapshot.data.configurations;
+      let configurations = this.configurations;
       if (!configurations) {
-        console.log('no config from router');
-        this.configProvider.readAll().subscribe(
-          configs => {
-            console.log(configs);
-          configurations = configs;
-          this.initConfigs(configs); });
+        configurations = this.route.snapshot.data.configurations;
+        this.initConfigs(configurations);
       } else {
         this.initConfigs(configurations);
       }

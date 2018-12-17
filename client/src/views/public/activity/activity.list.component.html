@@ -47,8 +47,8 @@
           </activity-card>
         </div>
       </div>
-      <div *ngIf="activities && activities.length" fxHide.lt-md="true" id="map-container">
-        <mapping-component [activities]="activities"
+      <div *ngIf="activities && activities.length && mapConfigurations" fxHide.lt-md="true" id="map-container">
+        <mapping-component [activities]="activities" [configurations]="mapConfigurations"
           (hoveredActivities)="handleMapHover($event)">
         </mapping-component>
       </div>

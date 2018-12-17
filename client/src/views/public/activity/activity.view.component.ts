@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AddressModel } from '../../../realm/address/address.model';
@@ -8,8 +8,8 @@ import { TargetGroupModel } from '../../../realm/target-group/target-group.model
 import { BottomSheetMapComponent } from '../mapping/map.bottomsheet.component';
 import { BottomSheetScheduleComponent } from './schedules.bottom.sheet.component';
 import { ActivityModel } from 'src/realm/activity/activity.model';
-import { Observable } from 'rxjs';
 import { BlogModel } from 'src/realm/blog/blog.model';
+import { MappingComponent } from '../mapping/mapping.component';
 
 
 @Component({
@@ -27,6 +27,9 @@ export class ActivityViewComponent implements OnInit, AfterViewInit {
   public address: AddressModel;
   public blogs: BlogModel[] = [];
   public showMap: boolean;
+
+  @ViewChild(MappingComponent)
+  private mapping: MappingComponent;
 
   constructor(
     private bottomSheet: MatBottomSheet,

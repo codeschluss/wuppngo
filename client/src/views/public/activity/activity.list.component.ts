@@ -13,6 +13,7 @@ import { ListComponent } from 'src/views/list.component';
 import { mergeMap, tap, map } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { MatSelectModule, MatFormFieldModule } from '@angular/material';
+import { ConfigurationModel } from 'src/realm/configuration/configuration.model';
 
 
 @Component({
@@ -48,6 +49,7 @@ export class ActivityListComponent extends ListComponent implements OnInit {
 
   public suburbCtrl = new FormControl();
   public targetGroupCtrl = new FormControl();
+  public mapConfigurations: ConfigurationModel[];
 
   constructor(
     private route: ActivatedRoute,
@@ -59,6 +61,7 @@ export class ActivityListComponent extends ListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.mapConfigurations = this.route.snapshot.data.configurations;
     this.retrieveData();
     this.suburbs = this.route.snapshot.data.suburbs;
     this.target_groups = this.route.snapshot.data.targetGroups;
