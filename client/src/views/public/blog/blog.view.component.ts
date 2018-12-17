@@ -20,4 +20,7 @@ export class BlogViewComponent {
     this.blog = this.route.snapshot.data.blog;
   }
 
+  public getDate(dateString: string): string {
+    return new Date(dateString).toLocaleDateString('de-DE');
+  }
 }

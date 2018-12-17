@@ -41,16 +41,16 @@ export class NavBarComponent implements OnChanges {
         private session: SessionProvider
         ) {
         this.initGlobalTabs();
-        this.session.subscribe((next) => {
-            this.token = next.accessToken;
-          });
+        // this.session.subscribe((next) => {
+        //     this.token = next.accessToken;
+        //   });
         this.initAccountRouts();
     }
 
     ngOnChanges(): void {
-        this.session.subscribe((next) => {
-            this.token = next.accessToken;
-          });
+        // this.session.subscribe((next) => {
+        //     this.token = next.accessToken;
+        //   });
         this.initAccountRouts();
     }
 
@@ -70,7 +70,7 @@ export class NavBarComponent implements OnChanges {
         },
         {
             label: 'worthKnowing',
-            link: '/worthknowing',
+            link: '/list/topics',
         },
         {
             label: 'blogs',

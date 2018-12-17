@@ -1,0 +1,13 @@
+<div *ngIf="page" 
+    fxLayout="column" 
+    fxLayoutAlign="space-between">
+    <h2 class="color-primary">
+        {{page.title}}
+    </h2>
+    <div>{{page.created}}</div>
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between center">
+        <div fxFlex="80" [style.min-height]="'20vh'" class="background-color-secondary">
+            {{page.content}}
+        </div>
+    </div>
+</div> 

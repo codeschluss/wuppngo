@@ -15,7 +15,7 @@ export class BlogListComponent extends ListComponent implements OnInit {
 
   public static readonly imports = [];
   public blogs: BlogModel[] = [];
-  private graph: CrudGraph = CrudJoiner.of(BlogModel).graph;
+  private graph: CrudGraph = CrudJoiner.of(BlogModel).with('activity').graph;
 
   constructor(
     private blogProvider: BlogProvider,

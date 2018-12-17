@@ -55,9 +55,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewChecked {
     private router: Router,
     private configProvider: ConfigurationProvider
     ) {
-      if (
-        // router.url.endsWith('list/activities/map')
-      this.route.snapshot.data.activities) {
+      if (this.route.snapshot.data.activities) {
         this.activities = this.route.snapshot.data.activities;
         this.fullScreen = true;
       }

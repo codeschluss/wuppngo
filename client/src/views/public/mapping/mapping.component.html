@@ -1,4 +1,4 @@
-<ng-container *ngIf="activities && activities.length && projection && longitude && latitude">
+<ng-container *ngIf="projection && longitude && latitude">
 	<aol-map [attr.id]="fullScreen ? 'fullScreen' : ''">
 		<aol-interaction-default>
 		</aol-interaction-default>
@@ -14,7 +14,7 @@
 		</aol-layer-tile>
 
 		<aol-layer-vector>
-			<ng-container>
+			<ng-container *ngIf="!!activities.length">
 				<aol-source-cluster [distance]="clusterspan">
 					<aol-source-vector [overlaps]="true">
 						<ng-container>
