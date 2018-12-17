@@ -103,6 +103,11 @@ public class PageController extends CrudController<PageEntity, PageService> {
     return super.delete(pageId);
   }
   
+  @GetMapping("/pages/{pageId}/topic")
+  public ResponseEntity<?> readTopic(@PathVariable String pageId) {
+    return ok(topicService.getResourceByPage(pageId));
+  }
+  
   /**
    * Read translations.
    *

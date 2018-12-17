@@ -1,6 +1,7 @@
 package de.codeschluss.portal.components.topic;
 
 import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
+import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.service.ResourceDataService;
 
 import org.springframework.stereotype.Service;
@@ -49,5 +50,17 @@ public class TopicService extends ResourceDataService<TopicEntity, TopicQueryBui
       newTopic.setId(id);
       return repo.save(newTopic);
     });
+  }
+
+  /**
+   * Gets the resource by page.
+   *
+   * @param pageId the page id
+   * @return the resource by page
+   */
+  public Object getResourceByPage(String pageId) {
+    TopicEntity topic = repo.findOne(entities.withAnyPageId(pageId))
+        .orElseThrow(() -> new NotFoundException(pageId));
+    return assembler.toResource(topic);
   }
 }
