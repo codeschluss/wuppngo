@@ -85,6 +85,8 @@ public class PageEntity extends BaseResource {
     links.add(linkTo(methodOn(PageController.class)
         .readOne(id)).withSelfRel());
     links.add(linkTo(methodOn(PageController.class)
+        .readTopic(id)).withSelfRel());
+    links.add(linkTo(methodOn(PageController.class)
         .readTranslations(id)).withRel("translations"));
 
     return links;

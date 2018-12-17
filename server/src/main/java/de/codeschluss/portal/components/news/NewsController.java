@@ -9,6 +9,7 @@ import de.codeschluss.portal.core.push.subscription.SubscriptionEntity;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,7 +46,7 @@ public class NewsController {
     return ok(savedSubscription);
   }
   
-  @PostMapping("/news/unscubscribe/{subscriptionId}")
+  @DeleteMapping("/news/unsubscribe/{subscriptionId}")
   public ResponseEntity<?> unsubscribe(@PathVariable String subscriptionId) {
     pushService.unsubscribe(subscriptionId);
     return noContent().build();
