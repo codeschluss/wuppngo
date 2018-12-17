@@ -23,11 +23,11 @@ export class ActivityCardComponent {
 
   getCategoryImageURI(categoryName: string): string {
     const uri = '/imgs/categories/' + categoryName + '.svg';
-    if (this.ImageExists(uri)) {
+    // if (this.ImageExists(uri)) {
       return uri;
-    } else {
-      return '/imgs/categories/events.svg';
-    }
+    // } else {
+    //   return '/imgs/categories/events.svg';
+    // }
   }
 
   openActivityView(): void {

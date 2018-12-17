@@ -1,5 +1,5 @@
-import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit, OnChanges, ViewChildren, AfterViewChecked } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Component, ViewChild, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ActivityModel } from '../../../realm/activity/activity.model';
 import { CategoryModel } from '../../../realm/category/category.model';
 import { SuburbModel } from '../../../realm/suburb/suburb.model';
@@ -92,7 +92,8 @@ export class ActivityListComponent extends ListComponent implements OnInit {
       sort: 'name',
       categories: this.categoryFilter,
       targetgroups: this.targetGroupCtrl.value,
-      suburbs: this.suburbCtrl.value
+      suburbs: this.suburbCtrl.value,
+      current: true
       }).pipe(mergeMap(
         (acts: any) => this.crudResolver.refine(acts, this.graph))
     ).subscribe((acts: any) => {}, () => {
@@ -108,7 +109,8 @@ export class ActivityListComponent extends ListComponent implements OnInit {
       sort: 'name',
       categories: this.categoryFilter,
       targetgroups: this.targetGroupCtrl.value,
-      suburbs: this.suburbCtrl.value
+      suburbs: this.suburbCtrl.value,
+      current: true
     }).pipe(
       tap((response) => this.intercept(response as any)),
       map((response) => provider.cast(response)),
@@ -123,15 +125,21 @@ export class ActivityListComponent extends ListComponent implements OnInit {
 
   public toggleCategoryFilter(id: string) {
     if (this.categoryFilter.find(item => item === id)) {
+      console.log('remove Filter');
       this.removeFromCategoryFilter(id);
     } else {
-      this.categoryFilter.push(id);
+      console.log('adde Filter');
+    this.categoryFilter.push(id);
       this.updateFilterResults();
     }
   }
 
   public removeFromCategoryFilter(id: string) {
-    this.categoryFilter = this.categoryFilter.filter(itemID => itemID === id);
+    if (this.categoryFilter.length === 1) {
+      this.categoryFilter = [];
+    } else {
+      this.categoryFilter = this.categoryFilter.filter(itemID => itemID === id);
+    }
     this.updateFilterResults();
   }
 
