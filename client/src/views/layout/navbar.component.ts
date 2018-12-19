@@ -95,7 +95,7 @@ export class NavBarComponent implements OnChanges {
             link: '/admin',
         },
         {
-            label: 'Abmelden',
+            label: 'logOut',
             link: '/admin/login/logout',
         }];
         if (this.token.superuser) {
@@ -107,7 +107,7 @@ export class NavBarComponent implements OnChanges {
         }
     } else {
         this.accountRouts = [{
-            label: 'Anmelden',
+            label: 'login',
             link: '/admin/login',
         }];
     }}
@@ -132,7 +132,6 @@ export class NavBarComponent implements OnChanges {
     }
 
     close(): void {
-        console.log('close');
         this.open = false;
     }
 

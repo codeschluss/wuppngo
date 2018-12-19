@@ -1,15 +1,16 @@
-<h2>
-    <i18n i18n="@@worthKnowing">worthKnowing</i18n>
-</h2>
-<div fxLayout="column" fxLayoutAlign="space-around stretch" *ngIf="topics"> 
-    <h2 class="background-color-secondary"
-        [style.width]="'80%'"
-        [style.margin]="'auto'"
-        [style.padding]="'5px'"
-        [style.border-radius]="'5px'"
-        fxLayoutGap="50px"
-        *ngFor="let topic of topics"
-        (click)="openTopic(topic.id)">
-        {{topic.name}}
-    </h2>
+<div [style.margin]="'auto'" 
+    [style.width]="'90%'"
+    [style.font-weight]="'bold'">
+    <i18n i18n="@@worthKnowing" class="h2">worthKnowing</i18n>
+    <div fxLayout="column" fxLayoutAlign="space-around stretch" *ngIf="topics"> 
+        <h2 class="background-color-secondary"
+            [style.margin-top]="'20px'"
+            [style.padding]="'5px'"
+            [style.border-radius]="'5px'"
+            fxLayoutGap="50px"
+            *ngFor="let topic of topics"
+            (click)="openTopic(topic.id)">
+            {{topic.name}}
+        </h2>
+    </div>
 </div>
