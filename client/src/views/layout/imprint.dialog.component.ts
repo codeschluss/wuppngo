@@ -12,7 +12,7 @@ import { MatDialogRef } from '@angular/material';
       public dialogRef: MatDialogRef<ImprintDialogComponent>) {
     }
 
-    onNoClick(): void {
+    close(): void {
       this.dialogRef.close();
     }
 

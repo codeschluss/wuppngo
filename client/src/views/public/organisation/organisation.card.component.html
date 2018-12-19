@@ -1,27 +1,34 @@
-<mat-card (click)="openOrganisationView()" class="background-color-primary" fxLayout="column">
-    <h2 [style.height]="'100px'">{{organisation?.name}}</h2>
-    <div
-        organisation-cardfxLayout="row" 
-        fxFlex="100" 
-        fxLayoutAlign="space-between"
-        fxLayoutGap="20px grid">
-        <div fxFlex>
-            <img fxFlex [style.max-width]="'100%'" [src]="getOrgaImg()">
-        </div>
-
-        <div class="organisation-contact-card" 
-            fxFlex="50" 
-            fxLayout="column" 
-            fxLayoutGap="10px grid">
-            <div fxLayout="column" *ngIf="organisation.address">
-                <div>{{organisation?.address?.street}}</div>
-                <div>{{organisation?.address?.houseNumber}}</div>
-                <div>{{organisation?.address?.postalCode}}</div>
-                <div>{{organisation?.address?.place}}</div>
+<mat-card (click)="openOrganisationView()" 
+    class="background-color-primary">
+    <div [style.height]="'100%'" fxLayout="column" fxLayoutAlign="space-evenly center">
+        <div *ngIf="organisation.name" 
+            [style.font-weight]="'bold'" 
+            [style.font-size]="getHeadLineFontSize(organisation.name)">
+                {{organisation.name}}
             </div>
-            <div fxLayout="column">
-                <div>{{'T:' + organisation?.phone}}</div>
-                <div>{{'E:' + organisation?.mail}}</div>
+        <div fxLayout="row"
+            fxFlex="100" 
+            fxLayoutAlign="space-between center"
+            fxLayoutGap="20px grid">
+            <div fxFlex>
+                <img [style.width]="'100%'" [src]="getOrgaImg()">
+            </div>
+
+            <div class="organisation-contact-card" 
+                fxFlex="60" 
+                fxLayout="column" 
+                fxLayoutGap="10px grid">
+                <div fxLayout="column" *ngIf="organisation.address">
+                    <div>
+                        {{organisation?.address?.street + ' ' + organisation?.address?.houseNumber}}
+                    </div>
+                    <div>{{organisation?.address?.postalCode}}</div>
+                    <div>{{organisation?.address?.place}}</div>
+                </div>
+                <div fxLayout="column">
+                    <div>{{'T:' + organisation?.phone}}</div>
+                    <div>{{'E:' + organisation?.mail}}</div>
+                </div>
             </div>
         </div>
     </div>

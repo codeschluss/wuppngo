@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { OrganisationProvider } from 'src/realm/organisation/organisation.provider';
-import { ActivityProvider } from 'src/realm/activity/activity.provider';
 
 @Component({
     selector: 'search-input',

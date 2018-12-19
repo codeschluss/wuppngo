@@ -1,5 +1,5 @@
 
-<div [style.max-height]="'80vh'">
+<div [style.max-height]="'80vh'" [style.word-break]="'break-word'">
     <div fxLayout="column" fxlayoutGap="20">
         <h2>Redaktionelle Hinweise</h2>
         Alle redaktionellen Inhalte (Angebote, Textinhalte, etc.) dieser Website
@@ -47,4 +47,10 @@
         oder um sie an Funktionserweiterungen dieser Applikation anzupassen.
         Für Ihren Besuch gilt stets die aktuellste Datenschutzerklärung.
     </div>
+    <button mat-fab 
+        color="primary"
+        [style.position]="'absolute'"
+        [style.top]="'20px'"
+        [style.right]="'20px'"
+        (click)="close()">X</button>
 </div>

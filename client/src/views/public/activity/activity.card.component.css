@@ -1,6 +1,6 @@
 mat-card {
   border-radius: 5px;
-  min-width: 300px;
+  width: 260px;
 }
 
 .activityCardName {

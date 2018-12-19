@@ -76,12 +76,11 @@ $transition_time:.2s;
   }
 
   .click-area {
-    width: 50px;
+    width: 30px;
     text-align: center;
     color: #DD574A;
-
-    i {
-      font-size: 3em;
+    div {
+      font-size: 2em;
     }
   }
 }

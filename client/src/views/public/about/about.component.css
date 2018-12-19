@@ -32,7 +32,7 @@
 }
 
 #activity-carousel {
-  height: 350px;
+  padding-bottom: 40px;
   padding-top: 20px;
 }
 
@@ -43,6 +43,5 @@
 
 #introVideoContainer {
   margin: 0 auto; 
-  width: 500px;
 }
 

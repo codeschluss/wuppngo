@@ -10,7 +10,7 @@ import {
     MatDialog
 } from '@angular/material';
 import { LangaugeChooserDialogComponent } from './languagecooser.component';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { SessionModel, SessionProvider } from '@portal/core';
 
 @Component({
@@ -33,6 +33,7 @@ export class NavBarComponent implements OnChanges {
 
     public routeLinks: any[] = [];
     public accountRouts: any[] = [];
+    public open = false;
     private token;
 
     public constructor(
@@ -40,6 +41,9 @@ export class NavBarComponent implements OnChanges {
         private router: Router,
         private session: SessionProvider
         ) {
+        this.router.events.subscribe(() => {
+            this.close();
+        });
         this.initGlobalTabs();
         // this.session.subscribe((next) => {
         //     this.token = next.accessToken;
@@ -123,6 +127,13 @@ export class NavBarComponent implements OnChanges {
 
     goToHome(): void {
         this.router.navigate(['/home']);
+        this.close();
+
+    }
+
+    close(): void {
+        console.log('close');
+        this.open = false;
     }
 
 

@@ -46,25 +46,28 @@ organisation-card.orgaCard {
 .organisation-contact-card {
     padding: 30px;
     word-wrap: break-word;
+    * {
+        font-size: 15px;
+    }
 }
 
-.organisation-contact-card * {
-    max-height:inherit !important;
-}
+// .organisation-contact-card * {
+//     max-height:inherit !important;
+// }
 
 .organisationCard {
     margin: 20px;
-    min-width: 500px;
-    max-width: 500px;
 }
 
 
 mat-card {
-    height: 350px;
-    max-width: 600px;
-    h2{
-        word-wrap: break-word; 
-    }
+    width: 260px;
+    height: 270px;
+    // h2 {
+    //     word-wrap: break-word; 
+    //     // font-size: 30px;
+    //     // font-size: 3.5vw;
+    // }
 }    
 
 .previewImage {

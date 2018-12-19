@@ -34,4 +34,17 @@ export class OrganisationCardComponent {
     }
   }
 
+  getHeadLineFontSize(name: string): string {
+    if (name.length >= 20) {
+      return '1.5em';
+    }
+    if (name.length > 10 && name.length < 20) {
+      return '2em';
+    }
+    if (name.length <= 10) {
+      return '2.5em';
+    }
+
+  }
+
 }

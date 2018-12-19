@@ -50,12 +50,12 @@
             </div>
             <div fxLayout="column" class="contactCard">
                 <div *ngIf="organisation.phone">
-                    <a [href]="'tel:' + organisation.phone" target='_blank'>
+                    <a [href]="'tel:' + organisation.phone">
                         T: {{organisation.phone}}
                     </a>
                 </div>
                 <div *ngIf="organisation.mail">
-                    <a [href]="'mailto:' + organisation.mail" target='_blank'>
+                    <a [href]="'mailto:' + organisation.mail">
                         E: {{organisation.mail}}
                     </a>
                 </div>

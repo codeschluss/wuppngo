@@ -43,13 +43,19 @@
 
     <!-- responsive version is mat-expansion-panel -->
         <mat-accordion fxHide fxShow.lt-md="true" id="navbra-responsive">
-            <mat-expansion-panel hideToggle>
+            <mat-expansion-panel #navbarMenu [expanded]="open" (opened)="open = true" hideToggle>
             <mat-expansion-panel-header class="background-color-secondary">
                 <mat-panel-title>
-                    <div><img id="logoSmall" src="imgs/Logo_bunt_cmyk.svg"></div>
+                    <div [style.margin-top]="'8px'"><img id="logoSmall" src="imgs/Logo_bunt_cmyk.svg"></div>
                 </mat-panel-title>
-                <mat-panel-description>
-                        <fa-icon class="collapsableIndicator" icon="bars"></fa-icon>
+                <mat-panel-description (keydown.enter)="$event.preventDefault();">
+                    <search-input 
+                        (click)="$event.stopPropagation();"
+                        (keydown.enter)="$event.stopPropagation();">
+                    </search-input>
+                    <div [style.margin]="'25px'" >
+                        <fa-icon icon="bars"></fa-icon>
+                    </div>
                 </mat-panel-description>        
             </mat-expansion-panel-header>
     
@@ -62,10 +68,8 @@
                 (click)="activeLinkIndex = i">
                     <i18n i18n='"@@" + routeLink.label'>{{routeLink.label}}</i18n>
                 </mat-toolbar-row>
-                <mat-toolbar-row>
-                    <search-input></search-input>
-                </mat-toolbar-row>
-                <mat-toolbar-row *ngFor="let route of accountRouts" [routerLink]="route.link">
+                <mat-toolbar-row *ngFor="let route of accountRouts" 
+                    [routerLink]="route.link">
                     <i18n i18n='"@@" + route.label'>{{route.label}}</i18n>
                 </mat-toolbar-row>
                 <mat-toolbar-row (click)="openLanguageChooser()">
