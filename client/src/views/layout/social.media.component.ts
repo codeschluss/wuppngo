@@ -13,6 +13,9 @@ export class SocialMediaComponent {
     @Input()
     public entity: any;
 
+    @Input()
+    public modelName: string;
+
     constructor(
       private blogService: BlogControllerService,
       private activityService: ActivityControllerService) {}
@@ -22,12 +25,10 @@ export class SocialMediaComponent {
     }
 
     like(): void {
-      const modelName = this.entity.constructor.name;
-      console.log('liked a ' + this.entity.constructor.name);
-
-      switch (modelName) {
+      switch (this.modelName) {
         case 'BlogModel':
           if (!this.isLiked(this.entity.id)) {
+            console.log('liked a ' + this.entity.constructor.name);
             this.entity.likes++;
             this.storeInStorage(this.entity.id);
             this.blogService
@@ -36,6 +37,7 @@ export class SocialMediaComponent {
           break;
         case 'ActivityModel':
           if (!this.isLiked(this.entity.id)) {
+            console.log('liked a ' + this.entity.constructor.name);
             this.entity.likes++;
             this.storeInStorage(this.entity.id);
             this.activityService

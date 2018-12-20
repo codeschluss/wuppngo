@@ -10,7 +10,7 @@
             fxLayoutGap="50px"
             *ngFor="let topic of topics"
             (click)="openTopic(topic.id)">
-            {{topic.name}}
+            {{topic.name + ' (' + topic?.pages.length + ')'}}
         </h2>
     </div>
 </div>

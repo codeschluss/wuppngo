@@ -16,7 +16,9 @@
       <div fxFlex="60" fxLayout="column">
         <p>{{ activity.description }}</p>
         <div>
-          <social-media-component *ngIf="activity" [entity]="activity">
+          <social-media-component *ngIf="activity" 
+          [entity]="activity"  
+          [modelName]="'ActivityModel'">
           </social-media-component>
         </div>
       </div>
