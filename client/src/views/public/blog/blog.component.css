@@ -24,7 +24,7 @@
 .blogTextContainer {
     min-height: 23vh;
     min-width: 30%;
-    margin: 10px; 
+    margin-top: 10px;
     /* padding: 20px; */
     border-radius: 5px;
 }

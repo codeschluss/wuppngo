@@ -96,7 +96,7 @@ export class NavBarComponent implements OnChanges {
         },
         {
             label: 'logOut',
-            link: '/admin/login/logout',
+            link: '/logout',
         }];
         if (this.token.superuser) {
             this.accountRouts.push(
@@ -108,7 +108,7 @@ export class NavBarComponent implements OnChanges {
     } else {
         this.accountRouts = [{
             label: 'login',
-            link: '/admin/login',
+            link: '/login',
         }];
     }}
 

@@ -28,7 +28,6 @@ export class SocialMediaComponent {
       switch (this.modelName) {
         case 'BlogModel':
           if (!this.isLiked(this.entity.id)) {
-            console.log('liked a ' + this.entity.constructor.name);
             this.entity.likes++;
             this.storeInStorage(this.entity.id);
             this.blogService
@@ -37,7 +36,6 @@ export class SocialMediaComponent {
           break;
         case 'ActivityModel':
           if (!this.isLiked(this.entity.id)) {
-            console.log('liked a ' + this.entity.constructor.name);
             this.entity.likes++;
             this.storeInStorage(this.entity.id);
             this.activityService
