@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TopicModel } from 'src/realm/topic/topic.model';
 
 @Component({
     selector: 'topics-list-component',
@@ -12,7 +11,7 @@ export class TopicsListComponent implements OnInit {
 
   public static readonly imports = [];
 
-  public topics: TopicModel[];
+  public topics: any[];
 
   constructor(
     private route: ActivatedRoute,

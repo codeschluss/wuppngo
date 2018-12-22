@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TopicModel } from 'src/realm/topic/topic.model';
+import { PageModel } from 'src/realm/page/page.model';
 
 @Component({
     selector: 'topic-view--component',
@@ -11,6 +12,7 @@ export class TopicViewComponent implements OnInit {
 
   public static readonly imports = [];
   public topic: TopicModel;
+  public pages: PageModel[];
 
   constructor(
       private route: ActivatedRoute,

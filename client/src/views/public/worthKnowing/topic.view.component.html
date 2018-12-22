@@ -1,5 +1,6 @@
 <div *ngIf="topic" [style.width]="'90%'" [style.margin]="'auto'">
     <h2>{{topic.name}}</h2>
+    <div>{{topic?.pages}}</div>
     <div fxLayout="column" fxLayoutAlign="space-around stretch"> 
         <div *ngFor="let page of topic.pages" class="background-color-primary" (click)="toPage(page.id)">
             {{page.title}} {{page.created}}
