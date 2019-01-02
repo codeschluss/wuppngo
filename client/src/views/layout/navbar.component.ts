@@ -45,16 +45,16 @@ export class NavBarComponent implements OnChanges {
             this.close();
         });
         this.initGlobalTabs();
-        // this.session.subscribe((next) => {
-        //     this.token = next.accessToken;
-        //   });
+        this.session.value.subscribe((next) => {
+            this.token = next.accessToken;
+          });
         this.initAccountRouts();
     }
 
     ngOnChanges(): void {
-        // this.session.subscribe((next) => {
-        //     this.token = next.accessToken;
-        //   });
+        this.session.value.subscribe((next) => {
+            this.token = next.accessToken;
+          });
         this.initAccountRouts();
     }
 
@@ -84,7 +84,7 @@ export class NavBarComponent implements OnChanges {
 
 //   Just Prototyping
   initAccountRouts() {
-    if (this.token) {
+    if (this.token && this.token.sub) {
         this.accountRouts = [
         {
             label: 'Hi, ' + this.token.sub,

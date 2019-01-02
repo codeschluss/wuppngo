@@ -22,11 +22,15 @@ export class LoginComponent {
 
     constructor(
         private router: Router,
-        private session: SessionProvider) {}
+        private session: SessionProvider) {
+            if (this.router.url.endsWith('logout')) {
+                this.session.logout();
+            }
+        }
 
     login(): void {
         this.session.login(this.userName, this.password).subscribe(
-            value => this.goToHome(),
+            () => this.goToHome(),
             error => {
                 if (error.error && error.error.message) {
                     this.error = error.error.message.toLowerCase();
@@ -37,7 +41,7 @@ export class LoginComponent {
     }
 
     goToHome(): void {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/admin/account/']);
     }
 
     goToRegister(): void {

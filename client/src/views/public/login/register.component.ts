@@ -6,6 +6,7 @@ import { SessionProvider } from '@portal/core';
 import { UserModel } from 'src/realm/user/user.model';
 import { UserProvider } from 'src/realm/user/user.provider';
 import { InfoBottomComponent } from './info.bottomsheet.component';
+import { Location } from '@angular/common';
 
 @Component({
     templateUrl: 'register.component.html'
@@ -33,6 +34,7 @@ export class RegisterComponent {
     constructor(
         private router: Router,
         private session: SessionProvider,
+        private _location: Location,
         private route: ActivatedRoute,
         private userProvider: UserProvider,
         private bottomSheet: MatBottomSheet
@@ -53,13 +55,17 @@ export class RegisterComponent {
         user.organisations = this.organisationsCtrl.value;
         this.userProvider.create(user).subscribe(() => {
             this.openBottomSheet();
-            if (this.organisations.find
-                (entry => entry.value === 'orgaNotThere')) {
-                    console.log('new organisation will be created');
-                    this.goToCreateOrganisation();
-            } else {
-                this.goToLogin();
-            }
+            this.session.login(this.userName, this.password).subscribe(
+                () => {
+                    if (this.organisations.find
+                        (entry => entry.value === 'orgaNotThere')) {
+                            console.log('new organisation will be created');
+                            this.goToCreateOrganisation();
+                    } else {
+                        this.goToLogin();
+                    }
+                }
+            );
         },
         error => {
             this.error = error;
@@ -72,7 +78,7 @@ export class RegisterComponent {
     }
 
     goToCreateOrganisation(): void {
-        this.router.navigate(['/admin/edit/organisation']);
+        this.router.navigate(['/admin/edit/organisation/']);
     }
 
     goToHome(): void {
@@ -82,5 +88,9 @@ export class RegisterComponent {
     openBottomSheet(): void {
         this.bottomSheet.open(InfoBottomComponent,
             { data: { message: 'successfullRegister' } });
-      }
+    }
+
+    back(): void {
+        this._location.back();
+    }
 }
