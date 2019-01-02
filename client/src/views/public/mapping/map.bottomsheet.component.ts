@@ -7,11 +7,12 @@ import { ConfigurationModel } from 'src/realm/configuration/configuration.model'
 @Component({
   selector: 'bottom-sheet',
   template:
-    '<div id="largeMap" *ngIf="configurations">'
+    '<div id="largeMap" *ngIf="configurations; else loading">'
     + '<mapping-component [activities] = activities '
     + '[configurations] = configurations '
     + '[disableCarousel] = "true">'
-    + '</mapping-component></div>',
+    + '</mapping-component></div>'
+    + '<ng-template #loading><i18n>waitingForMap</i18n></ng-template>',
   styleUrls: ['map.bottomsheet.component.css']
 })
 

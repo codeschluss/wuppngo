@@ -33,11 +33,8 @@ export class ActivityListComponent extends ListComponent implements OnInit {
   public suburbs: Observable<SuburbModel[]>;
   public categories: Observable<CategoryModel[]>;
   public target_groups: Observable<TargetGroupModel[]>;
-  // public hoveredActivities: ActivityModel[];
   public showMap: boolean;
   private categoryFilter: string[] = [];
-  // private suburbFilter: string[];
-  // private targetGroupFilter: string[];
 
   @ViewChild(MappingComponent)
   private mapping: MappingComponent;
@@ -118,36 +115,29 @@ export class ActivityListComponent extends ListComponent implements OnInit {
       tap((response) => this.intercept(response as any)),
       map((response) => provider.cast(response)),
       mergeMap((acts: any) => this.crudResolver.refine(acts, this.graph))
-    ).subscribe((acts: any) => {
-      this.activities = acts;
-      console.log(acts);
-    }, () => {
-      this.activities = [];
-      console.log('nothing found'); });
+    ).subscribe((acts: any) =>
+      this.activities = acts,
+      () => this.activities = []);
   }
 
   public toggleCategoryFilter(id: string) {
     if (this.categoryFilter.find(item => item === id)) {
-      console.log('remove Filter');
       this.removeFromCategoryFilter(id);
     } else {
-      console.log('adde Filter');
-    this.categoryFilter.push(id);
-      this.updateFilterResults();
+      this.categoryFilter.push(id);
     }
+    this.updateFilterResults();
   }
 
   public removeFromCategoryFilter(id: string) {
     if (this.categoryFilter.length === 1) {
       this.categoryFilter = [];
     } else {
-      this.categoryFilter = this.categoryFilter.filter(itemID => itemID === id);
+      this.categoryFilter = this.categoryFilter.filter(itemID => itemID !== id);
     }
-    this.updateFilterResults();
   }
 
   private intercept(response: StrictHttpResponse<any>) {
-    console.log(response);
     this.totalPages = response.body.page.totalPages;
     this.pageNumber = response.body.page.number;
     this.pageSize = response.body.page.size;
