@@ -9,7 +9,8 @@ import { ConfigurationModel } from 'src/realm/configuration/configuration.model'
   template:
     '<div id="largeMap" *ngIf="configurations">'
     + '<mapping-component [activities] = activities '
-    + '[configurations] = configurations>'
+    + '[configurations] = configurations '
+    + '[disableCarousel] = "true">'
     + '</mapping-component></div>',
   styleUrls: ['map.bottomsheet.component.css']
 })

@@ -1,5 +1,5 @@
 <ng-container *ngIf="projection && longitude && latitude">
-	<aol-map [attr.id]="fullScreen ? 'fullScreen' : ''">
+	<aol-map [attr.id]="fullScreen ? 'fullScreen' : ''"  (onClick)="onClick($event)">
 		<aol-interaction-default>
 		</aol-interaction-default>
 
@@ -44,7 +44,7 @@
 	<div [style.position]="'absolute'"
 		[style.top]="fullScreen ? '10vh' : '0px'"
 		[style.width]="'100%'"
-		*ngIf="selectedActivities && selectedActivities.length">
+		*ngIf="!disableCarousel && selectedActivities && selectedActivities.length">
 		<activity-carousel-component [activities]=selectedActivities>
 		</activity-carousel-component>
 	</div>

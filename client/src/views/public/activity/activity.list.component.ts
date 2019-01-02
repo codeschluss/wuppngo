@@ -33,7 +33,7 @@ export class ActivityListComponent extends ListComponent implements OnInit {
   public suburbs: Observable<SuburbModel[]>;
   public categories: Observable<CategoryModel[]>;
   public target_groups: Observable<TargetGroupModel[]>;
-  public hoveredActivities: ActivityModel[];
+  // public hoveredActivities: ActivityModel[];
   public showMap: boolean;
   private categoryFilter: string[] = [];
   // private suburbFilter: string[];
@@ -146,27 +146,6 @@ export class ActivityListComponent extends ListComponent implements OnInit {
     this.updateFilterResults();
   }
 
-  // public addToSuburbFilter(id: string) {
-  //   this.suburbFilter.push(id);
-  //   this.retrieveData();
-  // }
-
-  // public removeFromSuburbFilter(id: string) {
-  //   this.suburbFilter = this.suburbFilter.filter(itemID => itemID === id);
-  //   this.retrieveData();
-  // }
-
-  // public addToTargetGroupFilter(id: string) {
-  //   this.targetGroupFilter.push(id);
-  //   this.retrieveData();
-  // }
-
-  // public removeFromTargetGroupFilter(id: string) {
-  //   this.targetGroupFilter =
-  //     this.targetGroupFilter.filter(itemID => itemID === id);
-  //   this.retrieveData();
-  // }
-
   private intercept(response: StrictHttpResponse<any>) {
     console.log(response);
     this.totalPages = response.body.page.totalPages;
@@ -199,21 +178,6 @@ export class ActivityListComponent extends ListComponent implements OnInit {
       this.mapping.highlightPin(activity);
     }
   }
-
-  handleMapHover(event: ActivityModel[]): void {
-    this.hoveredActivities = event;
-  }
-
-  // getOpacity(id: string): number {
-  //   if (this.hoveredActivities) {
-  //     if (this.hoveredActivities.find(act => act.id === id)) {
-  //       return 1;
-  //     }
-  //     return 0.5;
-  //   } else {
-  //     return 1;
-  //   }
-  // }
 
   resetHighlighting(): void {
     if (this.mapping) {

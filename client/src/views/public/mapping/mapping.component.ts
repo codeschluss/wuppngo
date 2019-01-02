@@ -1,11 +1,10 @@
-import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild, Output, AfterViewChecked, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild, Output, AfterViewChecked } from '@angular/core';
 import { AngularOpenlayersModule, LayerVectorComponent, MapComponent, ViewComponent } from 'ngx-openlayers';
 import { Feature, MapBrowserEvent, proj, style } from 'openlayers';
 import { Subject } from 'rxjs';
 import { AddressModel } from '../../../realm/address/address.model';
 import { EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfigurationProvider } from 'src/realm/configuration/configuration.provider';
 import { ConfigurationModel } from 'src/realm/configuration/configuration.model';
 
 
@@ -28,10 +27,10 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewChecked {
   public configurations: any[];
 
   @Input()
-  public disabledPointerAction: boolean;
+  public disableCarousel: boolean;
 
-  @Output()
-  hoveredActivities: EventEmitter<any[]> = new EventEmitter();
+  // @Output()
+  // hoveredActivities: EventEmitter<any[]> = new EventEmitter();
 
   public clusterspan: number;
   public latitude: number;
@@ -107,23 +106,11 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     this.aolMap.loadTilesWhileAnimating = true;
     this.aolMap.loadTilesWhileInteracting = true;
-    if (!this.disabledPointerAction) {
-      this.aolMap.onClick
-      .subscribe((event: MapBrowserEvent) => {
-        this.onClick(event);
-          }
-        );
-      this.aolMap.onPointerMove.subscribe((event: MapBrowserEvent) => {
-        this.onHover(event);
-        }
-      );
-    }
   }
 
   public addNewFeatures(activities: any[]): void {
     activities.forEach(
-      item => {this.activities.push(item);
-        console.log('just pushed ' + item.id); }
+      item => this.activities.push(item)
     );
     (<ol.layer.Vector>this.aolLayer.instance).changed();
   }
@@ -178,8 +165,8 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewChecked {
         anchor: [.5, 1],
         color: '#dd574a',
         src: `/imgs/map${acts.length > 1 ? 'cluster' : 'marker'}.svg`,
-        scale: this.isHighlighted(acts) ? 1.2 : 1,
-        opacity: this.isHighlighted(acts) ? 1 : 0.9,
+        scale: this.isHighlighted(acts) ? 1.4 : 1,
+        opacity: this.isHighlighted(acts) ? 1 : 0.8,
       };
 
       // const categoryIcon = {
@@ -241,6 +228,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewChecked {
   private onClick(event: MapBrowserEvent): void {
     const click = this.aolMap.instance.getFeaturesAtPixel(event.pixel);
     if (click) {
+      this.selectedActivities = [];
       const feats = click && click.length ? click[0].get('features') : [];
       this.selectedActivities = feats.map(i => this.activities.find(
             j => j.id === i.getId()));
@@ -248,18 +236,6 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewChecked {
     } else {
       this.selectedActivities = null;
       this.unHighlightPins();
-    }
-  }
-
-  private onHover(event: MapBrowserEvent): void {
-    const target = this.aolMap.instance.getFeaturesAtPixel(event.pixel);
-    if (target) {
-      const feats = target && target.length ? target[0].get('features') : [];
-      this.hoveredActivities.emit(
-        feats.map(i => this.activities.find(j => j.id === i.getId()))
-        );
-    } else {
-      this.hoveredActivities.emit(null);
     }
   }
 

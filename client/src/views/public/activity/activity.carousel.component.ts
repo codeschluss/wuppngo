@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges } from '@angular/core';
 import { NgxHmCarouselModule } from 'ngx-hm-carousel';
 import { ActivityModel } from 'src/realm/activity/activity.model';
 
@@ -10,14 +10,14 @@ import { ActivityModel } from 'src/realm/activity/activity.model';
   templateUrl: 'activity.carousel.component.html'
 })
 
-export class ActivityCarouselComponent implements AfterViewInit {
+export class ActivityCarouselComponent implements AfterViewInit, OnChanges {
 
   public static readonly imports = [
     NgxHmCarouselModule
   ];
 
   @Input()
-  public activities: ActivityModel[] = [];
+  public activities: ActivityModel[];
 
   public clusteredActivities: ActivityModel[][] = [[]];
 
@@ -46,27 +46,40 @@ export class ActivityCarouselComponent implements AfterViewInit {
   }
 
   fillCluster(innerWidth: number): void {
-    this.clusteredActivities = [];
-    let clusterIndex = 0;
-    let clusterSize = innerWidth / 500;
-    let index = 0;
+    if (this.activities) {
+      this.clusteredActivities = [];
+      let clusterIndex = 0;
+      let clusterSize = innerWidth / 500;
+      let index = 0;
 
-    if (innerWidth < 850) {
-      clusterSize = 1;
+      if (innerWidth < 850) {
+        clusterSize = 1;
+      }
+
+      this.activities.forEach(activity => {
+        if (!this.clusteredActivities[clusterIndex]) {
+          this.clusteredActivities[clusterIndex] = [];
+        }
+        this.clusteredActivities[clusterIndex].push(activity);
+        index++;
+        if (index >= clusterSize) {
+          index = 0;
+          clusterIndex++;
+        }
+      });
+
     }
+  }
 
-    this.activities.forEach(activity => {
-      if (!this.clusteredActivities[clusterIndex]) {
-        this.clusteredActivities[clusterIndex] = [];
-      }
-      this.clusteredActivities[clusterIndex].push(activity);
-      index++;
-      if (index >= clusterSize) {
-        index = 0;
-        clusterIndex++;
-      }
-    });
+  ngOnChanges(): void {
+    if (document.getElementById('carousel')
+      && document.getElementById('carousel').offsetWidth) {
+      this.fillCluster(document.getElementById('carousel').offsetWidth);
+    }
+  }
 
+  public resetActivities(): void {
+    this.clusteredActivities = [[]];
   }
 
 }
