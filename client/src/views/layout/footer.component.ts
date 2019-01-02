@@ -24,7 +24,7 @@ export class FooterComponent {
 
         dialogRef.afterClosed().subscribe(result => {
         });
-      }
+    }
 
     getWhatsAppText(): string {
         return 'Kennst du das schon? ' + window.location.origin;

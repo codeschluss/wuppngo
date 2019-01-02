@@ -1,7 +1,7 @@
 
 <div fxLayout="row wrap" *ngIf="entity">
     <span class="iconContainer" *ngIf="entity.likes" (click)="like()">
-        <fa-icon icon="heart" class="color-primary"></fa-icon> 
+        <fa-icon icon="heart" class="color-primary clickable"></fa-icon> 
         <span class="color-primary">{{entity.likes}}</span>
     </span>
     <fb-like [ngStyle]="{'margin-right': '10px'}" ></fb-like>

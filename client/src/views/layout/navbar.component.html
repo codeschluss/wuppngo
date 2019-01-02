@@ -2,7 +2,7 @@
     <!-- desktop version renders as horizontal navbar -->
         <div fxHide.lt-md="true" fxLayout="column">
             <div fxLayoutAlign="space-around center">
-                <img id="logo" src="imgs/Logo_bunt_cmyk.svg" (click)="goToHome()">
+                <img id="logo" class="clickable" src="imgs/Logo_bunt_cmyk.svg" (click)="goToHome()">
             </div>
             <div id="navbar" fxFlex="100">
                 <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between center">
@@ -24,6 +24,7 @@
                     <div fxLayout="row" fxLayoutAlign="space-around center">
                         <search-input></search-input>
                         <img id="login" 
+                            class="clickable"
                             mat-button 
                             [matMenuTriggerFor]="menu" 
                             src="imgs/account.svg">

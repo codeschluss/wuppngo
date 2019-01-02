@@ -11,7 +11,7 @@
         
         <div fxFlex="20" fxFlex.lt-md="100" [style.margin]="'10px'">
             <div id="imagePreviewSection" *ngIf="images && images.length">
-                <img (click)="openImagesPopUp()" class="previewImage" [src]="images[0].url">
+                <img (click)="openImagesPopUp()" class="previewImage clickable" [src]="images[0].url">
                 <i18n i18n="@@clickForMorePictures" class="smallText">clickForMorePictures</i18n>
             </div>
             <iframe 
@@ -43,8 +43,7 @@
                 *ngIf="organisation.address" 
                 class="contactCard" 
                 [style.margin]="'10px'">
-                <div>{{organisation.address.street}}</div>
-                <div>{{organisation.address.houseNumber}}</div>
+                <div>{{organisation.address.street + ' ' + organisation.address.houseNumber}}</div>
                 <div>{{organisation.address.postalCode}}</div>
                 <div>{{organisation.address.place}}</div>
             </div>
@@ -76,7 +75,7 @@
                 class="activityListItem" 
                 *ngFor="let activity of organisation.activities">
                 <div>{{activity.name}}</div>
-                <span class="color-primary" (click)="openActivityView(activity.id)" >
+                <span class="color-primary clickable" (click)="openActivityView(activity.id)" >
                     <i18n i18n="@@toActivity">toActivity</i18n>
                 </span>
             </div>

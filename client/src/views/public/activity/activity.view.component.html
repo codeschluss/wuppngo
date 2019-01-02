@@ -38,13 +38,15 @@
                 </p>
               </div>
               <img src="imgs/map.png"
+                  class="clickable"
                   fxFlex="50"
                   fxFlexAlign="start" 
                   (click)="openBottomSheetMap()">
             </div>
             <div *ngIf="activity.schedules && activity.schedules.length" 
-            fxLayout="row" 
-            (click)="openBottomSheetSchedules(activity.schedules)">
+              fxLayout="row" 
+              class="clickable"
+              (click)="openBottomSheetSchedules(activity.schedules)">
               <div fxLayout="column" id="addressCard">
                 <div fxLayout="row">
                   <span>{{ getNextdate(activity.schedules[0].startDate) }}</span>
