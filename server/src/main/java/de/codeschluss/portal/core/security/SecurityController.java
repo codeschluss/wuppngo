@@ -4,7 +4,6 @@ import static org.springframework.http.ResponseEntity.ok;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import de.codeschluss.portal.core.exception.InvalidTokenException;
 import de.codeschluss.portal.core.security.services.JwtTokenService;
 import de.codeschluss.portal.core.security.services.JwtUserDetailsService;
 

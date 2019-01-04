@@ -37,7 +37,22 @@ public class TopicService extends ResourceDataService<TopicEntity, TopicQueryBui
   }
   
   @Override
-  public boolean validFieldConstraints(TopicEntity newPage) {
+  public boolean validCreateFieldConstraints(TopicEntity newPage) {
+    return validFields(newPage);
+  }
+  
+  @Override
+  public boolean validUpdateFieldConstraints(TopicEntity newPage) {
+    return validFields(newPage);
+  }
+
+  /**
+   * Valid fields.
+   *
+   * @param newPage the new page
+   * @return true, if successful
+   */
+  private boolean validFields(TopicEntity newPage) {
     return newPage.getName() != null && !newPage.getName().isEmpty();
   }
 

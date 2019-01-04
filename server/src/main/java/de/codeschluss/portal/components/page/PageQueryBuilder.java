@@ -127,4 +127,14 @@ public class PageQueryBuilder extends QueryBuilder<QPageEntity> {
     return query.translatables.any().language.locale.in(languageService.getCurrentReadLocales())
         .and(query.translatables.any().title.eq(title));
   }
+
+  /**
+   * With topic id.
+   *
+   * @param topicId the topic id
+   * @return the boolean expression
+   */
+  public BooleanExpression withTopicId(String topicId) {
+    return query.topic.id.eq(topicId);
+  }
 }

@@ -85,7 +85,7 @@ public class PortalPushService {
    *          the new subscription
    */
   public SubscriptionEntity subscribe(SubscriptionEntity newSubscription) {
-    if (subscriptionService.validFieldConstraints(newSubscription)) {
+    if (subscriptionService.validCreateFieldConstraints(newSubscription)) {
       return subscriptionService.add(newSubscription);
     }
     return null;

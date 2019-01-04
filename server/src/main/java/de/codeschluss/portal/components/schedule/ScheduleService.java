@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.querydsl.core.types.Predicate;
 
+import de.codeschluss.portal.components.activity.ActivityEntity;
 import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 import de.codeschluss.portal.core.api.dto.BaseParams;
 import de.codeschluss.portal.core.exception.NotFoundException;
@@ -48,7 +49,22 @@ public class ScheduleService extends ResourceDataService<ScheduleEntity, Schedul
   }
   
   @Override
-  public boolean validFieldConstraints(ScheduleEntity newSchedule) {
+  public boolean validCreateFieldConstraints(ScheduleEntity newSchedule) {
+    return validFields(newSchedule);
+  }
+  
+  @Override
+  public boolean validUpdateFieldConstraints(ScheduleEntity newSchedule) {
+    return validFields(newSchedule);
+  }
+
+  /**
+   * Valid fields.
+   *
+   * @param newSchedule the new schedule
+   * @return true, if successful
+   */
+  private boolean validFields(ScheduleEntity newSchedule) {
     return newSchedule.getStartDate() != null && newSchedule.getEndDate() != null;
   }
 
@@ -81,6 +97,19 @@ public class ScheduleService extends ResourceDataService<ScheduleEntity, Schedul
     }).orElseGet(() -> {
       newSchedule.setId(id);
       return repo.save(newSchedule);
+    });
+  }
+
+  /**
+   * Adds the all with activity.
+   *
+   * @param schedules the as list
+   * @param activity the activity
+   */
+  public void addAllWithActivity(List<ScheduleEntity> schedules, ActivityEntity activity) {
+    schedules.forEach(schedule -> {
+      schedule.setActivity(activity);
+      repo.save(schedule);
     });
   }
 }

@@ -27,7 +27,16 @@ public class SubscriptionService extends DataService<SubscriptionEntity, Subscri
   }
 
   @Override
-  public boolean validFieldConstraints(SubscriptionEntity newSubscription) {
+  public boolean validCreateFieldConstraints(SubscriptionEntity newSubscription) {
+    return validFields(newSubscription);
+  }
+  
+  @Override
+  public boolean validUpdateFieldConstraints(SubscriptionEntity newSubscription) {
+    return validFields(newSubscription);
+  }
+
+  private boolean validFields(SubscriptionEntity newSubscription) {
     return newSubscription.getAuthSecret() != null && !newSubscription.getAuthSecret().isEmpty()
         && newSubscription.getPublicKey() != null && !newSubscription.getPublicKey().isEmpty()
         && newSubscription.getEndpoint() != null && !newSubscription.getEndpoint().isEmpty();
