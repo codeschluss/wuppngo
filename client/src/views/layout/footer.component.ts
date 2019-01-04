@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ImprintDialogComponent } from './imprint.dialog.component';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'footer-component',
@@ -15,6 +16,7 @@ export class FooterComponent {
 
     constructor(
         public dialog: MatDialog,
+        private sanitizer: DomSanitizer
         ) {}
 
     openImprintDialog(): void {
@@ -26,8 +28,9 @@ export class FooterComponent {
         });
     }
 
-    getWhatsAppText(): string {
-        return 'Kennst du das schon? ' + window.location.origin;
+    getWhatsAppText() {
+        return this.sanitizer.bypassSecurityTrustResourceUrl(
+            'whatsapp://send?text=kennst%20du%20schon%20www.wuppngo.de?');
     }
 
 }

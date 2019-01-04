@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ActivityControllerService } from 'src/api/services/activity-controller.service';
 import { BlogControllerService } from 'src/api/services/blog-controller.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'social-media-component',
@@ -18,10 +19,13 @@ export class SocialMediaComponent {
 
     constructor(
       private blogService: BlogControllerService,
-      private activityService: ActivityControllerService) {}
-    getWhatsAppText(): string {
-        return 'Kennst du das schon? '
-            + window.location.href;
+      private activityService: ActivityControllerService,
+      private sanitizer: DomSanitizer) {}
+
+    getWhatsAppText() {
+        return this.sanitizer.bypassSecurityTrustResourceUrl(
+          'whatsapp://send?text=Kennst%20du%20das%20schon%20'
+          + window.location.href);
     }
 
     like(): void {

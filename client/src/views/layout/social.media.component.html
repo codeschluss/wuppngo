@@ -6,7 +6,7 @@
     </span>
     <fb-like [ngStyle]="{'margin-right': '10px'}" ></fb-like>
     <a class="iconContainer" 
-    href="whatsapp://send?text=\' + {{getWhatsAppText()}} + ">
+    [href]="getWhatsAppText()">
         <img src="imgs/whatsApp.svg">
     </a>
 </div>
