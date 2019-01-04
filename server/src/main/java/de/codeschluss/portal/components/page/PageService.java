@@ -36,7 +36,23 @@ public class PageService extends ResourceDataService<PageEntity, PageQueryBuilde
   }
   
   @Override
-  public boolean validFieldConstraints(PageEntity newPage) {
+  public boolean validCreateFieldConstraints(PageEntity newPage) {
+    return validBaseFields(newPage)
+        && newPage.getTopicId() != null && !newPage.getTopicId().isEmpty();
+  }
+  
+  @Override
+  public boolean validUpdateFieldConstraints(PageEntity newPage) {
+    return validBaseFields(newPage);
+  }
+
+  /**
+   * Valid base fields.
+   *
+   * @param newPage the new page
+   * @return true, if successful
+   */
+  private boolean validBaseFields(PageEntity newPage) {
     return newPage.getTitle() != null && !newPage.getTitle().isEmpty()
         && newPage.getContent() != null && !newPage.getContent().isEmpty();
   }
