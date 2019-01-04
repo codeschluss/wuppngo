@@ -321,7 +321,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    */
   private void validateTags(TagEntity[] tags) {
     for (TagEntity tag : tags) {
-      if (!tagService.validFieldConstraints(tag)) {
+      if (!tagService.validCreateFieldConstraints(tag)) {
         throw new BadParamsException("Tags must have a name");
       }
     }
@@ -441,7 +441,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
       @RequestBody ScheduleEntity... schedules) {
     try {
       validateSchedules(schedules);
-      service.addSchedules(activityId, scheduleService.addAll(Arrays.asList(schedules)));
+      scheduleService.addAllWithActivity(Arrays.asList(schedules), service.getById(activityId));
       return readSchedules(activityId, null);
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Activity does not exist");
@@ -455,7 +455,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    */
   private void validateSchedules(ScheduleEntity[] schedules) {
     for (ScheduleEntity schedule : schedules) {
-      if (!scheduleService.validFieldConstraints(schedule)) {
+      if (!scheduleService.validCreateFieldConstraints(schedule)) {
         throw new BadParamsException("Schedules need Start and End date");
       }
     }
@@ -475,7 +475,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   public ResponseEntity<?> deleteSchedules(@PathVariable String activityId,
       @PathVariable String... scheduleId) {
     try {
-      service.deleteSchedule(activityId, Arrays.asList(scheduleId));
+      scheduleService.deleteAll(Arrays.asList(scheduleId));
       return noContent().build();
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Activity does not exist");
