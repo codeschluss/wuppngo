@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { BlogModel } from 'src/realm/blog/blog.model';
 
 @Component({
     selector: 'blog-list-item',
@@ -13,7 +12,7 @@ export class BlogListItemComponent {
   public static readonly imports = [];
 
   @Input()
-  public blog: BlogModel;
+  public blog: any;
 
   constructor(
     private router: Router
@@ -27,9 +26,7 @@ export class BlogListItemComponent {
     return new Date(date).toLocaleDateString('de-DE');
   }
 
-  // openActivityView(): void {
-  //   this.blog.activity.then(activity => {
-  //       this.router.navigate(['/view/activities/', activity.id]);
-  //   });
-  // }
+  openActivityView(): void {
+        this.router.navigate(['/view/activities/', this.blog.activity.id]);
+  }
 }
