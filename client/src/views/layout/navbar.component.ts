@@ -1,17 +1,9 @@
 import { Component, OnChanges } from '@angular/core';
-import {
-    MatToolbarModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatMenuModule,
-    MatDialogModule,
-    MatExpansionModule,
-    MatButtonModule,
-    MatDialog
-} from '@angular/material';
-import { LangaugeChooserDialogComponent } from './languagecooser.component';
+import { MatButtonModule, MatDialog, MatDialogModule, MatExpansionModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatToolbarModule } from '@angular/material';
 import { Router } from '@angular/router';
-import { SessionModel, SessionProvider, TokenProvider } from '@portal/core';
+import { TokenProvider } from '@portal/core';
+import { ConfigurationProvider } from 'src/realm/configuration/configuration.provider';
+import { LangaugeChooserDialogComponent } from './languagecooser.component';
 
 @Component({
     selector: 'navbar-component',
@@ -35,24 +27,31 @@ export class NavBarComponent implements OnChanges {
     public accountRouts: any[] = [];
     public open = false;
     private token;
+    public portalName;
 
     public constructor(
         public dialog: MatDialog,
         private router: Router,
-        private session: TokenProvider
+        private tokenProvider: TokenProvider,
+        private configProvider: ConfigurationProvider
         ) {
         this.router.events.subscribe(() => {
             this.close();
         });
-        this.initGlobalTabs();
-        this.session.value.subscribe((next) => {
+        this.configProvider.readAll()
+        .subscribe(configs => {
+            this.portalName = configs.find(
+                config => config.item === 'portalName').value;
+                this.initGlobalTabs();
+        });
+        this.tokenProvider.value.subscribe((next) => {
             this.token = next.access;
           });
         this.initAccountRouts();
     }
 
     ngOnChanges(): void {
-        this.session.value.subscribe((next) => {
+        this.tokenProvider.value.subscribe((next) => {
             this.token = next.access;
           });
         this.initAccountRouts();
@@ -61,11 +60,11 @@ export class NavBarComponent implements OnChanges {
   initGlobalTabs(): void {
         this.routeLinks.push(
         {
-            label: 'portalName',
+            label: this.portalName,
             link: '/home',
         },
         {
-            label: 'activities',
+            label: 'timer',
             link: '/list/activities',
         },
         {
@@ -82,7 +81,6 @@ export class NavBarComponent implements OnChanges {
         });
   }
 
-//   Just Prototyping
   initAccountRouts() {
     if (this.token && this.token.sub) {
         this.accountRouts = [

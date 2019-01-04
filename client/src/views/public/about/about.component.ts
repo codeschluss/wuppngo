@@ -10,12 +10,15 @@ export class AboutComponent implements OnInit {
 
   public activities: any[];
 
-  index = 0;
-  speed = 5000;
-  infinite = false;
-  direction = 'right';
-  directionToggle = true;
-  autoplay = false;
+  public index = 0;
+  public speed = 5000;
+  public infinite = false;
+  public direction = 'right';
+  public directionToggle = true;
+  public autoplay = false;
+
+  public portalSubtitle;
+
 
   constructor(
     public route: ActivatedRoute,
@@ -23,6 +26,10 @@ export class AboutComponent implements OnInit {
 
   public ngOnInit() {
     this.activities = this.route.snapshot.data.activities;
+    const configurations = this.route.snapshot.data.configurations;
+
+    this.portalSubtitle =
+    configurations.find(item => item.item === 'portalSubtitle').value;
   }
 
 }
