@@ -9,9 +9,10 @@
         class="clickable"
         src="imgs/Logo_bunt_cmyk.svg"
         [style.width]="'10%'" 
+        [style.min-width]="'80px'" 
         (click)="goToHome()">
     <h2>
-        <i18n class="color-primary" i18n="@@portalSubtitle">portalSubtitle</i18n>
+        <i18n class="h2 color-primary" i18n="@@registration">registration</i18n>
     </h2>
     <form #registerForm="ngForm" 
         (ngSubmit)="register()" 

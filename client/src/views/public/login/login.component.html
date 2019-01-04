@@ -9,8 +9,9 @@
         class="clickable"
         src="imgs/Logo_bunt_cmyk.svg"
         [style.width]="'10%'" 
+        [style.min-width]="'80px'" 
         (click)="goToHome()">
-        <div fxLayout="row">
+        <div fxLayout="row" fxLayout.lt-md="column" [style.text-align]="'center'">
             <i18n class="h2 color-primary" i18n="@@welcomeTo">welcomeTo</i18n>
             &nbsp;
             <div class="h2 color-primary">{{portalName}}</div>
