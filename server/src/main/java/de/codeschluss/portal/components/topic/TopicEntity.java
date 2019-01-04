@@ -73,6 +73,8 @@ public class TopicEntity extends BaseResource {
         .readOne(id)).withSelfRel());
     links.add(linkTo(methodOn(TopicController.class)
         .readTranslations(id)).withRel("translations"));
+    links.add(linkTo(methodOn(TopicController.class)
+        .readPages(id, null)).withRel("pages"));
 
     return links;
   }
