@@ -2,11 +2,12 @@
     <div fxLayout="row wrap" fxLayoutAlign="space-between center">
         <div class="footerSection">
             <div fxLayout="row wrap">
-                <fb-like [ngStyle]="{'margin-right': '10px'}" >
+                <fb-like *ngIf="cookiesDenied" [ngStyle]="{'margin-right': '10px'}" >
                 </fb-like>
                 <a class="iconContainer" 
                 [style.width]="'30px'" 
-                [href]="getWhatsAppText()">
+                [href]="getWhatsAppText()"
+                *ngIf="isMobile()">
                     <img src="imgs/whatsApp.svg">
                 </a>
             </div>

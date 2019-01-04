@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivityControllerService } from 'src/api/services/activity-controller.service';
 import { BlogControllerService } from 'src/api/services/blog-controller.service';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'social-media-component',
@@ -16,6 +16,9 @@ export class SocialMediaComponent {
 
     @Input()
     public modelName: string;
+
+    // TODO: Store cookie acceptance
+    public cookiesDenied: boolean = true;
 
     constructor(
       private blogService: BlogControllerService,
@@ -57,10 +60,8 @@ export class SocialMediaComponent {
 
         if (likedEntitiesIds.find(
         entitiyId => this.entity.id === entitiyId)) {
-          console.log('already liked');
           return true;
         } else {
-          console.log('thats new for you!');
           return false;
         }
       }
@@ -75,4 +76,11 @@ export class SocialMediaComponent {
       window.localStorage.setItem(
         storageName, JSON.stringify(likedEntitiesIds));
     }
+
+    isMobile(): boolean {
+      if (/mobile/i.test(navigator.userAgent)) {
+              return true;
+      }
+      return false;
+  }
 }

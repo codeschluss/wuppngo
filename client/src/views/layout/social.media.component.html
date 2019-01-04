@@ -4,9 +4,10 @@
         <fa-icon icon="heart" class="color-primary clickable"></fa-icon> 
         <span class="color-primary">{{entity.likes}}</span>
     </span>
-    <fb-like [ngStyle]="{'margin-right': '10px'}" ></fb-like>
+    <fb-like *ngIf="cookiesDenied" [ngStyle]="{'margin-right': '10px'}" ></fb-like>
     <a class="iconContainer" 
-    [href]="getWhatsAppText()">
+    [href]="getWhatsAppText()"
+    *ngIf="isMobile()">
         <img src="imgs/whatsApp.svg">
     </a>
 </div>
