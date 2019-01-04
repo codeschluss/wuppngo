@@ -6,6 +6,7 @@
     [style.margin]="'auto'"
     fxLayoutGap="40px"> 
     <img id="logo"
+        class="clickable"
         src="imgs/Logo_bunt_cmyk.svg"
         [style.width]="'10%'" 
         (click)="goToHome()">
@@ -50,7 +51,6 @@
             <mat-select placeholder="Organisationen" [formControl]="organisationsCtrl" multiple>
                 <mat-option *ngFor="let organisation of organisations" [value]="organisation">{{organisation.name}}</mat-option>
             </mat-select>
-            {{organisationsCtrl.value}}
         </mat-form-field>
         
         <mat-form-field [style.width]="'100%'">

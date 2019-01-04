@@ -6,10 +6,15 @@
     [style.margin]="'auto'"
     fxLayoutGap="30px"> 
     <img id="logo"
+        class="clickable"
         src="imgs/Logo_bunt_cmyk.svg"
         [style.width]="'10%'" 
         (click)="goToHome()">
-        <i18n class="color-primary" class="h2" i18n="@@portalSubtitle">portalSubtitle</i18n>
+        <div fxLayout="row">
+            <i18n class="h2 color-primary" i18n="@@welcomeTo">welcomeTo</i18n>
+            &nbsp;
+            <div class="h2 color-primary">{{portalName}}</div>
+        </div>
         <form #loginForm="ngForm" 
         (ngSubmit)="login()" 
         [style.width]="'100%'"

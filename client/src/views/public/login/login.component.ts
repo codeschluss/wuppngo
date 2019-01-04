@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { MatFormFieldModule, MatInputModule, MatButtonModule, MatBottomSheet } from '@angular/material';
 import { FormsModule } from '@angular/forms';
+import { MatBottomSheet, MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { Router } from '@angular/router';
+import { TokenProvider } from '@portal/core';
+import { ConfigurationProvider } from 'src/realm/configuration/configuration.provider';
 import { UserProvider } from 'src/realm/user/user.provider';
 import { InfoBottomComponent } from './info.bottomsheet.component';
-import { TokenProvider } from '@portal/core';
 
 @Component({
     templateUrl: 'login.component.html'
@@ -18,18 +19,24 @@ export class LoginComponent {
         FormsModule,
         MatButtonModule];
 
-    userName: string = '';
-    password: string = '';
-    error: string;
+    public userName: string = '';
+    public password: string = '';
+    public error: string;
+    public portalName: string;
 
     constructor(
         private router: Router,
         private tokenProvider: TokenProvider,
         private userProvider: UserProvider,
-        private bottomSheet: MatBottomSheet) {
+        private bottomSheet: MatBottomSheet,
+        private configProvider: ConfigurationProvider) {
             if (this.router.url.endsWith('logout')) {
-                // this.tokenProvider.logout();
+                this.tokenProvider.remove();
             }
+            this.configProvider.readAll().subscribe(configs => {
+                this.portalName = configs.find(
+                    config => config.item === 'portalName').value;
+                });
         }
 
     login(): void {
@@ -37,7 +44,7 @@ export class LoginComponent {
             () => {
                 this.bottomSheet.open(InfoBottomComponent,
                     { data: { message: 'successfullLoggedIn' } });
-                    this.goToHome();
+                    this.goToAccountArea();
             },
             error => {
                 if (error.error && error.error.message) {
@@ -56,12 +63,18 @@ export class LoginComponent {
             },
             () => { this.bottomSheet.open(InfoBottomComponent,
                     { data: { message: 'genericErrorMessage' } });
-            }
-            );
+            });
+        } else {
+            this.bottomSheet.open(InfoBottomComponent,
+                { data: { message: 'enterUserName' } });
         }
     }
 
     goToHome(): void {
+        this.router.navigate(['/']);
+    }
+
+    goToAccountArea(): void {
         this.router.navigate(['/admin/account/']);
     }
 

@@ -3,17 +3,18 @@
 INSERT INTO `configurations` (`id`, `item`, `value`) VALUES
 ('10000000-0000-0000-0001-100000000000', 'mapcenterLongitude', '7.1756'),
 ('10000000-0000-0000-0001-200000000000', 'mapcenterLatitude', '51.2640'),
-('10000000-0000-0000-0001-300000000000', 'zoomfactor', '13.5'),
+('10000000-0000-0000-0001-300000000000', 'zoomfactor', '11.5'),
 ('10000000-0000-0000-0001-400000000000', 'mapProjection', 'EPSG:4326'),
-('10000000-0000-0000-0001-500000000000', 'portalName', 'Wuppngo'),
-('10000000-0000-0000-0001-600000000000', 'portalSubtitle', 'Jugendportal'),
+('10000000-0000-0000-0001-500000000000', 'portalName', 'Wupp''n''go'),
+('10000000-0000-0000-0001-600000000000', 'portalSubtitle', 'Willkommen bei Wupp''n''go - deinem online Event-Portal'),
 ('10000000-0000-0000-0001-700000000000', 'portalMail', 'milli@codeschluss.de');
 
 INSERT INTO `languages` (`id`, `locale`, `name`) VALUES
 ('00000000-0000-0000-0013-100000000000', 'es', 'Español'),
 ('00000000-0000-0000-0013-200000000000', 'fr', 'Français'),
 ('00000000-0000-0000-0013-300000000000', 'en', 'English'),
-('00000000-0000-0000-0013-400000000000', 'de', 'Deutsch');
+('00000000-0000-0000-0013-400000000000', 'de', 'Deutsch'),
+('00000000-0000-0000-0013-500000000000', 'ar', 'Arab');
 
 INSERT INTO `tags` (`id`, `description`) VALUES
 ('10000000-0000-0000-0002-100000000000', 'sport'),
