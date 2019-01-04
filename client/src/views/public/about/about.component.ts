@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 
 export class AboutComponent implements OnInit {
 
-  public activities: any[] = [];
+  public activities: any[];
 
   index = 0;
   speed = 5000;

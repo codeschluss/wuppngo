@@ -47,7 +47,7 @@
           </activity-card>
         </div>
       </div>
-      <div *ngIf="activities && activities.length && mapConfigurations" fxHide.lt-md="true" id="map-container">
+      <div *ngIf="activities && mapConfigurations" fxHide.lt-md="true" id="map-container">
         <mapping-component [activities]="activities" [configurations]="mapConfigurations">
         </mapping-component>
       </div>
