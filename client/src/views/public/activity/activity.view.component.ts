@@ -1,15 +1,15 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ActivityModel } from 'src/realm/activity/activity.model';
+import { BlogModel } from 'src/realm/blog/blog.model';
 import { AddressModel } from '../../../realm/address/address.model';
 import { OrganisationModel } from '../../../realm/organisation/organisation.model';
 import { ScheduleModel } from '../../../realm/schedule/schedule.model';
 import { TargetGroupModel } from '../../../realm/target-group/target-group.model';
 import { BottomSheetMapComponent } from '../mapping/map.bottomsheet.component';
-import { BottomSheetScheduleComponent } from './schedules.bottom.sheet.component';
-import { ActivityModel } from 'src/realm/activity/activity.model';
-import { BlogModel } from 'src/realm/blog/blog.model';
 import { MappingComponent } from '../mapping/mapping.component';
+import { BottomSheetScheduleComponent } from './schedules.bottom.sheet.component';
 
 
 @Component({
@@ -48,11 +48,13 @@ export class ActivityViewComponent implements OnInit, AfterViewInit {
   }
 
   getNextdate(date: string): string {
-    return new Date(date).toLocaleDateString('de-DE');
+    return new Date(date.replace(' ', 'T'))
+    .toLocaleDateString('de-DE');
   }
 
   getNextdateTime(date: string): string {
-    return new Date(date).toLocaleTimeString('de-DE').substring(0, 5);
+    return new Date(date.replace(' ', 'T'))
+    .toLocaleTimeString('de-DE').substring(0, 5);
   }
 
   openBottomSheetSchedules(schedules: ScheduleModel[]): void {

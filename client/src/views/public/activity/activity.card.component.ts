@@ -18,7 +18,7 @@ export class ActivityCardComponent {
   ) { }
 
   getNextdate(date: string): string {
-    return new Date(date).toLocaleDateString('de-DE');
+    return new Date(date.replace(' ', 'T')).toLocaleDateString('de-DE');
   }
 
   getCategoryImageURI(categoryName: string): string {
