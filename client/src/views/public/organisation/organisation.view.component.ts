@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ActivityModel } from 'src/realm/activity/activity.model';
-import { OrganisationImageModel } from 'src/realm/image/organisation-image.model';
 import { MatDialog } from '@angular/material';
 import { OrgaMediaDialogComponent } from './organisation.mediacontent.dialog.component';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ImageModel } from 'src/realm/image/image.model';
 
 @Component({
   selector: 'organisation-view',
@@ -39,10 +39,10 @@ export class OrganisationViewComponent {
     this.router.navigate(['/view/activities/', activityId]);
   }
 
-  initOrgaImg(imgs: OrganisationImageModel[]): void {
+  initOrgaImg(imgs: ImageModel[]): void {
     imgs.forEach(img =>
       this.images.push({url: 'data:' + img.mimeType + ';base64,'
-      + atob(img.image), caption: img.caption})
+      + atob(img.image.toString()), caption: img.caption})
     );
   }
 

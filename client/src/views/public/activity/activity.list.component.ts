@@ -17,7 +17,7 @@ export class ActivityListComponent {
 
   public static readonly imports = [];
 
-  public activities: Observable<ActivityModel[]>;
+  public activities: ActivityModel[];
   public suburbs: Observable<SuburbModel[]>;
   public categories: Observable<CategoryModel[]>;
   public target_groups: Observable<TargetGroupModel[]>;
