@@ -11,7 +11,7 @@ import {
 } from '@angular/material';
 import { LangaugeChooserDialogComponent } from './languagecooser.component';
 import { Router } from '@angular/router';
-import { SessionModel, SessionProvider } from '@portal/core';
+import { SessionModel, SessionProvider, TokenProvider } from '@portal/core';
 
 @Component({
     selector: 'navbar-component',
@@ -39,21 +39,21 @@ export class NavBarComponent implements OnChanges {
     public constructor(
         public dialog: MatDialog,
         private router: Router,
-        private session: SessionProvider
+        private session: TokenProvider
         ) {
         this.router.events.subscribe(() => {
             this.close();
         });
         this.initGlobalTabs();
         this.session.value.subscribe((next) => {
-            this.token = next.accessToken;
+            this.token = next.access;
           });
         this.initAccountRouts();
     }
 
     ngOnChanges(): void {
         this.session.value.subscribe((next) => {
-            this.token = next.accessToken;
+            this.token = next.access;
           });
         this.initAccountRouts();
     }

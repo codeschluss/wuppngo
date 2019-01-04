@@ -29,7 +29,6 @@ export class ActivityListComponent extends ListComponent implements OnInit {
   ];
 
   public activities: ActivityModel[];
-  public mapActivities: ActivityModel[] = [];
   public suburbs: Observable<SuburbModel[]>;
   public categories: Observable<CategoryModel[]>;
   public target_groups: Observable<TargetGroupModel[]>;

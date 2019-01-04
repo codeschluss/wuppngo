@@ -28,7 +28,7 @@ export class OrganisationCardComponent {
     if (this.organisation.images && this.organisation.images[0]) {
       const image = this.organisation.images[0];
       return 'data:' + image.mimeType + ';base64,'
-      + atob(image.image);
+      + atob(image.image.toString());
     } else {
       return 'imgs/placeHolder.jpg';
     }

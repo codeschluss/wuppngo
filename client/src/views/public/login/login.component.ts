@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { MatFormFieldModule, MatInputModule, MatButtonModule, MatBottomSheet } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SessionProvider } from '@portal/core';
 import { UserProvider } from 'src/realm/user/user.provider';
 import { InfoBottomComponent } from './info.bottomsheet.component';
+import { TokenProvider } from '@portal/core';
 
 @Component({
     templateUrl: 'login.component.html'
@@ -24,16 +24,16 @@ export class LoginComponent {
 
     constructor(
         private router: Router,
-        private session: SessionProvider,
+        private tokenProvider: TokenProvider,
         private userProvider: UserProvider,
         private bottomSheet: MatBottomSheet) {
             if (this.router.url.endsWith('logout')) {
-                this.session.logout();
+                // this.tokenProvider.logout();
             }
         }
 
     login(): void {
-        this.session.login(this.userName, this.password).subscribe(
+        this.tokenProvider.login(this.userName, this.password).subscribe(
             () => {
                 this.bottomSheet.open(InfoBottomComponent,
                     { data: { message: 'successfullLoggedIn' } });

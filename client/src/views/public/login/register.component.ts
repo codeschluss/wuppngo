@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { MatSelectModule, MatBottomSheet, MatBottomSheetModule, MatCheckboxModule } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { SessionProvider } from '@portal/core';
 import { UserModel } from 'src/realm/user/user.model';
 import { UserProvider } from 'src/realm/user/user.provider';
 import { InfoBottomComponent } from './info.bottomsheet.component';
 import { Location } from '@angular/common';
+import { TokenProvider } from '@portal/core';
 
 @Component({
     templateUrl: 'register.component.html'
@@ -33,7 +33,7 @@ export class RegisterComponent {
 
     constructor(
         private router: Router,
-        private session: SessionProvider,
+        private tokenProvider: TokenProvider,
         private _location: Location,
         private route: ActivatedRoute,
         private userProvider: UserProvider,
@@ -55,7 +55,7 @@ export class RegisterComponent {
         user.organisations = this.organisationsCtrl.value;
         this.userProvider.create(user).subscribe(() => {
             this.openBottomSheet();
-            this.session.login(this.userName, this.password).subscribe(
+            this.tokenProvider.login(this.userName, this.password).subscribe(
                 () => {
                     if (this.organisationsCtrl &&
                         this.organisationsCtrl.value &&
