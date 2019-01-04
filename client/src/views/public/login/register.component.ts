@@ -42,7 +42,7 @@ export class RegisterComponent {
             this.organisations = this.route.snapshot.data.organisations;
             this.organisations.unshift({
                 name: 'Meine Organisation ist nicht dabei',
-                value: 'orgaNotThere'});
+                id: 'orgaDoesNotExist'});
         }
 
     register(): void {
@@ -57,9 +57,10 @@ export class RegisterComponent {
             this.openBottomSheet();
             this.session.login(this.userName, this.password).subscribe(
                 () => {
-                    if (this.organisations.find
-                        (entry => entry.value === 'orgaNotThere')) {
-                            console.log('new organisation will be created');
+                    if (this.organisationsCtrl &&
+                        this.organisationsCtrl.value &&
+                        this.organisationsCtrl.value.find
+                        (entry => entry.id === 'orgaDoesNotExist')) {
                             this.goToCreateOrganisation();
                     } else {
                         this.goToLogin();
@@ -78,7 +79,7 @@ export class RegisterComponent {
     }
 
     goToCreateOrganisation(): void {
-        this.router.navigate(['/admin/edit/organisation/']);
+        this.router.navigate(['/admin/edit/organisation/new']);
     }
 
     goToHome(): void {
