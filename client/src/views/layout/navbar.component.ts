@@ -3,7 +3,7 @@ import { MatButtonModule, MatDialog, MatDialogModule, MatExpansionModule, MatFor
 import { Router } from '@angular/router';
 import { TokenProvider } from '@portal/core';
 import { ConfigurationProvider } from 'src/realm/configuration/configuration.provider';
-import { LangaugeChooserDialogComponent } from './languagecooser.component';
+import { LangaugeChooserDialogComponent } from './languagechooser.component';
 
 @Component({
     selector: 'navbar-component',

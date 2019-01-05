@@ -1,5 +1,23 @@
 <div id="publicContainer" fxLayout="column" fxLayoutAlign="space-between none">
     <navbar-component></navbar-component>
     <router-outlet></router-outlet>
-    <footer-component></footer-component>
+    <footer-component [style.margin-bottom]="showCookiesInfo ? '30px' : ''"></footer-component>
+    <div *ngIf="showCookiesInfo"
+      id="cookiesInfo"
+      class="background-color-secondary"
+      [style.position]="'fixed'"
+      [style.z-index]="'10'"
+      [style.width]="'100%'"
+      [style.bottom]="'0px'">
+      <div [style.height]="'40px'">
+        <div>
+          Wir verwenden Cookies, um das Teilen von Inhalten auf
+          Facebook zu ermöglichen.
+        </div>
+        &nbsp;
+        <a class="clickable color-primary" (click)="acceptCookies(true)">Einverstanden</a>
+        &nbsp;
+        <a class="clickable color-primary" (click)="acceptCookies(false)">Nein</a>
+      </div>
+    </div>
 </div>
