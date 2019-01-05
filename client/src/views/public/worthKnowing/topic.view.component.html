@@ -1,9 +1,27 @@
-<div *ngIf="topic" [style.width]="'90%'" [style.margin]="'auto'">
+<div
+  *ngIf="topic"
+  [style.width]="'90%'"
+  [style.margin]="'auto'"
+  [style.min-height]="'60vh'">
     <h2>{{topic.name}}</h2>
-    <div>{{topic?.pages}}</div>
-    <div fxLayout="column" fxLayoutAlign="space-around stretch"> 
-        <div *ngFor="let page of topic.pages" class="background-color-primary" (click)="toPage(page.id)">
-            {{page.title}} {{page.created}}
+      <div fxLayout="column" fxLayoutAlign="space-around stretch" *ngIf="topic.pages">
+        <div class="background-color-primary"
+            [style.font-size]="'30px'"
+            [style.margin-top]="'20px'"
+            [style.padding]="'15px'"
+            [style.border-radius]="'5px'"
+            fxLayout = "row"
+            fxLayoutAlign="space-between stretch"
+            *ngFor="let page of topic.pages"
+            (click)="toPage(page.id)">
+            <div>
+              {{page.title}}
+            </div>
+            <div>
+              <i18n i18n="@@createdAt">createdAt</i18n>
+              &nbsp;
+              {{getCreationDate(page.created)}}
+            </div>
         </div>
     </div>
 </div>

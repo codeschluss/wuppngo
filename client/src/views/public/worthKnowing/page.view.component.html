@@ -1,13 +1,18 @@
-<div *ngIf="page" 
-    fxLayout="column" 
-    fxLayoutAlign="space-between">
+<div *ngIf="page"
+    fxLayout="column"
+    [style.width]="'90%'"
+    [style.margin]="'auto'"
+    [style.min-height]="'60vh'">
     <h2 class="color-primary">
         {{page.title}}
     </h2>
-    <div>{{page.created}}</div>
-    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between center">
-        <div fxFlex="80" [style.min-height]="'20vh'" class="background-color-secondary">
-            {{page.content}}
-        </div>
-    </div>
-</div> 
+    <div>{{getCreationDate(page.created)}}</div>
+      <div [style.width]="'100%'"
+        [style.margin-top]="'30px'"
+        [style.min-height]="'20vh'"
+        [style.border-radius]="'5px'"
+        [style.padding]="'20px'"
+        class="background-color-secondary">
+          {{page.content}}
+      </div>
+</div>

@@ -20,4 +20,8 @@ export class PageViewComponent implements OnInit {
     this.page = this.route.snapshot.data.page;
   }
 
+  public getCreationDate(dateString: string): string {
+    return new Date(dateString.replace(' ', 'T')).toLocaleDateString('de-DE');
+  }
+
 }
