@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { SessionProvider } from '@portal/core';
 import { ActivityControllerService } from 'src/api/services/activity-controller.service';
 import { BlogControllerService } from 'src/api/services/blog-controller.service';
 
@@ -18,12 +19,16 @@ export class SocialMediaComponent {
     public modelName: string;
 
     // TODO: Store cookie acceptance
-    public cookiesDenied: boolean = true;
+    public cookiesAccepted: boolean = true;
 
     constructor(
       private blogService: BlogControllerService,
       private activityService: ActivityControllerService,
-      private sanitizer: DomSanitizer) {}
+      private sanitizer: DomSanitizer,
+      private sessionProvider: SessionProvider) {
+        this.sessionProvider.value
+        .subscribe((next) => this.cookiesAccepted = next.cookiesAccepted);
+      }
 
     getWhatsAppText() {
         return this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -34,47 +39,22 @@ export class SocialMediaComponent {
     like(): void {
       switch (this.modelName) {
         case 'BlogModel':
-          if (!this.isLiked(this.entity.id)) {
+          if (!this.sessionProvider.isLiked(this.entity.id)) {
+            this.sessionProvider.like(this.entity.id);
             this.entity.likes++;
-            this.storeInStorage(this.entity.id);
             this.blogService
             .blogControllerIncreaseLike(this.entity.id).subscribe();
           }
           break;
         case 'ActivityModel':
-          if (!this.isLiked(this.entity.id)) {
+          if (!this.sessionProvider.isLiked(this.entity.id)) {
+            this.sessionProvider.like(this.entity.id);
             this.entity.likes++;
-            this.storeInStorage(this.entity.id);
             this.activityService
             .activityControllerIncreaseLike(this.entity.id).subscribe();
           }
           break;
       }
-    }
-
-    public isLiked(modelName: string): boolean {
-      const storageName = 'liked' + modelName + 'Ids';
-      const likedEntitiesIds
-        = window.localStorage.getItem(storageName)
-        ? JSON.parse(window.localStorage.getItem(storageName)) : [];
-
-        if (likedEntitiesIds.find(
-        entitiyId => this.entity.id === entitiyId)) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-
-    public storeInStorage(modelName: string): void {
-    const storageName = 'liked' + modelName + 'Ids';
-    const likedEntitiesIds
-      = window.localStorage.getItem(storageName)
-      ? JSON.parse(window.localStorage.getItem(storageName)) : [];
-
-      likedEntitiesIds.push(this.entity.id);
-      window.localStorage.setItem(
-        storageName, JSON.stringify(likedEntitiesIds));
     }
 
     isMobile(): boolean {

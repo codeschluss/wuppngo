@@ -2,10 +2,10 @@
     <div fxLayout="row wrap" fxLayoutAlign="space-between center">
         <div class="footerSection">
             <div fxLayout="row wrap">
-                <fb-like *ngIf="cookiesDenied" [ngStyle]="{'margin-right': '10px'}" >
+                <fb-like *ngIf="cookiesAccepted" [ngStyle]="{'margin-right': '10px'}" >
                 </fb-like>
-                <a class="iconContainer" 
-                [style.width]="'30px'" 
+                <a class="iconContainer"
+                [style.width]="'30px'"
                 [href]="getWhatsAppText()"
                 *ngIf="isMobile()">
                     <img src="imgs/whatsApp.svg">
@@ -15,7 +15,7 @@
         <div class="footerSection">
             &copy; 2018
         </div>
-        <div class="footerSection clickable" (click)="openImprintDialog()">    
+        <div class="footerSection clickable" (click)="openImprintDialog()">
             <span [style.margin-right]="'10px'">
                 <i18n i18n="@@dataProtection">dataProtection</i18n>
             </span>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
+import { SessionProvider } from '@portal/core';
 import { ImprintDialogComponent } from './imprint.dialog.component';
 
 @Component({
@@ -15,12 +16,15 @@ export class FooterComponent {
     public instagramUrl: string;
 
     // TODO: Store cookie acceptance
-    public cookiesDenied: boolean = true;
+    public cookiesAccepted: boolean = true;
 
     constructor(
         public dialog: MatDialog,
-        private sanitizer: DomSanitizer
-        ) {}
+        private sanitizer: DomSanitizer,
+        private sessionProvider: SessionProvider) {
+          this.sessionProvider.value
+          .subscribe((next) => this.cookiesAccepted = next.cookiesAccepted);
+    }
 
     openImprintDialog(): void {
         const dialogRef = this.dialog.open(ImprintDialogComponent, {
