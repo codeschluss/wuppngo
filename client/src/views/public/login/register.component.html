@@ -1,46 +1,45 @@
-<div id="loginView" 
-    fxLayout="column" 
-    fxLayoutAlign="space-around center" 
-    [style.width]="'80%'" 
-    [style.height]="'80vh'" 
+<div id="loginView"
+    fxLayout="column"
+    fxLayoutAlign="space-around center"
+    [style.width]="'80%'"
     [style.margin]="'auto'"
-    fxLayoutGap="40px"> 
+    fxLayoutGap="40px">
     <img id="logo"
         class="clickable"
         src="imgs/Logo_bunt_cmyk.svg"
-        [style.width]="'10%'" 
-        [style.min-width]="'80px'" 
+        [style.width]="'10%'"
+        [style.min-width]="'80px'"
         (click)="goToHome()">
     <h2>
         <i18n class="h2 color-primary" i18n="@@registration">registration</i18n>
     </h2>
-    <form #registerForm="ngForm" 
-        (ngSubmit)="register()" 
+    <form #registerForm="ngForm"
+        (ngSubmit)="register()"
         [style.width]="'100%'"
-        fxLayout="column" 
+        fxLayout="column"
         fxLayoutAlign="space-around center">
         <mat-form-field [style.width]="'100%'">
-            <input matInput 
-                placeholder="Email" 
-                name="userName" 
-                type="text" 
-                [(ngModel)]="userName" 
+            <input matInput
+                placeholder="Email"
+                name="userName"
+                type="text"
+                [(ngModel)]="userName"
                 required>
         </mat-form-field>
 
         <mat-form-field [style.width]="'100%'">
-            <input matInput 
-                placeholder="Vor- und Nachname" 
-                name="fullName" 
-                type="text" 
+            <input matInput
+                placeholder="Vor- und Nachname"
+                name="fullName"
+                type="text"
                 [(ngModel)]="fullName">
         </mat-form-field>
 
         <mat-form-field [style.width]="'100%'">
-            <input matInput 
-                placeholder="Telefon" 
-                name="phone" 
-                type="text" 
+            <input matInput
+                placeholder="Telefon"
+                name="phone"
+                type="text"
                 [(ngModel)]="phone">
         </mat-form-field>
 
@@ -50,43 +49,48 @@
 
         <mat-form-field [style.width]="'100%'">
             <mat-select placeholder="Organisationen" [formControl]="organisationsCtrl" multiple>
-                <mat-option *ngFor="let organisation of organisations" [value]="organisation">{{organisation.name}}</mat-option>
+                <mat-option *ngFor="let organisation of organisations; let i = index" [value]="organisation">
+                  <i18n *ngIf="i == 0; else regularOption" i18n="@@ + organisation.name">{{organisation.name}}</i18n>
+                  <ng-template #regularOption>
+                      {{organisation.name}}
+                  </ng-template>
+                </mat-option>
             </mat-select>
         </mat-form-field>
-        
+
         <mat-form-field [style.width]="'100%'">
-            <input matInput 
-                placeholder="Neues Passwort" 
-                name="password" 
-                type="password" 
-                [(ngModel)]="password" 
+            <input matInput
+                placeholder="Neues Passwort"
+                name="password"
+                type="password"
+                [(ngModel)]="password"
                 required>
         </mat-form-field>
 
         <mat-form-field [style.width]="'100%'">
-            <input matInput 
-                placeholder="Passwort wiederholen" 
-                name="passwordRepeat" 
-                type="password" 
-                [(ngModel)]="passwordRepeat" 
+            <input matInput
+                placeholder="Passwort wiederholen"
+                name="passwordRepeat"
+                type="password"
+                [(ngModel)]="passwordRepeat"
                 required>
         </mat-form-field>
 
     </form>
     <div fxFlex
-        fxLayout="row" 
-        fxLayoutAlign="end end" 
-        [style.width]="'100%'" 
+        fxLayout="row"
+        fxLayoutAlign="end end"
+        [style.width]="'100%'"
         [style.margin]="'20px'">
 
         <button mat-raised-button type="button" color="primary" [style.background-coorl]="'#9F9F9F'">
             <i18n i18n="@@back" (click)="back()">back</i18n>
         </button>
 
-        <button mat-raised-button 
+        <button mat-raised-button
             (click)="register()"
-            color="primary" 
-            form="ngForm" 
+            color="primary"
+            form="ngForm"
             [disabled]="password !== passwordRepeat || !registerForm.form.valid">
             <i18n i18n="@@register">register</i18n>
         </button>

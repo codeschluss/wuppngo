@@ -1,12 +1,12 @@
+import { Location } from '@angular/common';
 import { Component } from '@angular/core';
-import { MatSelectModule, MatBottomSheet, MatBottomSheetModule, MatCheckboxModule } from '@angular/material';
 import { FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { MatBottomSheet, MatBottomSheetModule, MatCheckboxModule, MatSelectModule } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TokenProvider } from '@portal/core';
 import { UserModel } from 'src/realm/user/user.model';
 import { UserProvider } from 'src/realm/user/user.provider';
 import { InfoBottomComponent } from './info.bottomsheet.component';
-import { Location } from '@angular/common';
-import { TokenProvider } from '@portal/core';
 
 @Component({
     templateUrl: 'register.component.html'
@@ -41,7 +41,7 @@ export class RegisterComponent {
         ) {
             this.organisations = this.route.snapshot.data.organisations;
             this.organisations.unshift({
-                name: 'Meine Organisation ist nicht dabei',
+                name: 'orgaDoesNotExist',
                 id: 'orgaDoesNotExist'});
         }
 
@@ -54,16 +54,17 @@ export class RegisterComponent {
         user.username = this.userName;
         user.organisations = this.organisationsCtrl.value;
         this.userProvider.create(user).subscribe(() => {
-            this.openBottomSheet();
             this.tokenProvider.login(this.userName, this.password).subscribe(
                 () => {
                     if (this.organisationsCtrl &&
                         this.organisationsCtrl.value &&
                         this.organisationsCtrl.value.find
                         (entry => entry.id === 'orgaDoesNotExist')) {
-                            this.goToCreateOrganisation();
+                      this.openBottomSheet('createMissingOrganisation');
+                      this.goToCreateOrganisation();
                     } else {
-                        this.goToLogin();
+                      this.openBottomSheet('successfullRegister');
+                      this.goToLogin();
                     }
                 }
             );
@@ -86,9 +87,9 @@ export class RegisterComponent {
         this.router.navigate(['/home']);
     }
 
-    openBottomSheet(): void {
+    openBottomSheet(message: string): void {
         this.bottomSheet.open(InfoBottomComponent,
-            { data: { message: 'successfullRegister' } });
+            { data: { message: message} });
     }
 
     back(): void {

@@ -1,47 +1,46 @@
-<div id="loginView" 
-    fxLayout="column" 
-    fxLayoutAlign="space-around center" 
-    [style.width]="'80%'" 
-    [style.height]="'80vh'" 
+<div id="loginView"
+    fxLayout="column"
+    fxLayoutAlign="space-around center"
+    [style.width]="'80%'"
     [style.margin]="'auto'"
-    fxLayoutGap="30px"> 
+    fxLayoutGap="30px">
     <img id="logo"
         class="clickable"
         src="imgs/Logo_bunt_cmyk.svg"
-        [style.width]="'10%'" 
-        [style.min-width]="'80px'" 
+        [style.width]="'10%'"
+        [style.min-width]="'80px'"
         (click)="goToHome()">
         <div fxLayout="row" fxLayout.lt-md="column" [style.text-align]="'center'">
             <i18n class="h2 color-primary" i18n="@@welcomeTo">welcomeTo</i18n>
             &nbsp;
             <div class="h2 color-primary">{{portalName}}</div>
         </div>
-        <form #loginForm="ngForm" 
-        (ngSubmit)="login()" 
+        <form #loginForm="ngForm"
+        (ngSubmit)="login()"
         [style.width]="'100%'"
-        fxLayout="column" 
+        fxLayout="column"
         fxLayoutAlign="space-around center">
         <mat-form-field [style.width]="'100%'">
-            <input matInput 
-                placeholder="User name" 
-                name="userName" 
-                type="text" 
-                [(ngModel)]="userName" 
+            <input matInput
+                placeholder="User name"
+                name="userName"
+                type="text"
+                [(ngModel)]="userName"
                 required>
         </mat-form-field>
-        
+
         <mat-form-field [style.width]="'100%'">
-            <input matInput 
-                placeholder="Passwort" 
-                name="password" 
-                type="password" 
-                [(ngModel)]="password" 
+            <input matInput
+                placeholder="Passwort"
+                name="password"
+                type="password"
+                [(ngModel)]="password"
                 required>
         </mat-form-field>
     </form>
-    <div fxLayout="row" 
-        fxLayoutAlign="space-between center" 
-        [style.width]="'100%'" 
+    <div fxLayout="row"
+        fxLayoutAlign="space-between center"
+        [style.width]="'100%'"
         [style.margin]="'20px'">
         <button mat-button type="button" color="primary" (click)="goToRegister()">
             <i18n i18n="@@register">register</i18n>
@@ -51,15 +50,15 @@
             <i18n i18n="@@forgetPassword" class="color-accent" (click)="resetPassword()">forgetPassword</i18n>
         </button>
     </div>
-    <div fxFlex 
-        fxLayout="row" 
-        fxLayoutAlign="end end" 
-        [style.width]="'100%'" 
+    <div fxFlex
+        fxLayout="row"
+        fxLayoutAlign="end end"
+        [style.width]="'100%'"
         [style.margin]="'20px'">
-        <button mat-raised-button 
+        <button mat-raised-button
             (click)="login()"
-            color="primary" 
-            form="ngForm" 
+            color="primary"
+            form="ngForm"
             [disabled]="!loginForm.form.valid">
             <i18n i18n="@@login">login</i18n>
         </button>
