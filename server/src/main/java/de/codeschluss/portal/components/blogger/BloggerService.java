@@ -30,108 +30,111 @@ import org.springframework.stereotype.Service;
 @Service
 public class BloggerService extends ResourceDataService<BloggerEntity, BloggerQueryBuilder> {
 
-  public BloggerService(DataRepository<BloggerEntity> repo, BloggerQueryBuilder entities,
-      PagingAndSortingAssembler assembler) {
-    super(repo, entities, assembler);
-  }
+	public BloggerService(DataRepository<BloggerEntity> repo, BloggerQueryBuilder entities,
+			PagingAndSortingAssembler assembler) {
+		super(repo, entities, assembler);
+	}
 
-  @Override
-  public BloggerEntity getExisting(BloggerEntity newBlogger) {
-    try {
-      return getByUser(newBlogger.getUser().getId());
-    } catch (NotFoundException e) {
-      return null;
-    }
-  }
+	@Override
+	public BloggerEntity getExisting(BloggerEntity newBlogger) {
+		try {
+			return getByUser(newBlogger.getUser().getId());
+		} catch (NotFoundException e) {
+			return null;
+		}
+	}
 
-  /**
-   * Gets the by user.
-   *
-   * @param userId
-   *          the user id
-   * @return the by user
-   */
-  public BloggerEntity getByUser(String userId) {
-    return repo.findOne(entities.withUserId(userId))
-        .orElseThrow(() -> new NotFoundException(userId));
-  }
+	/**
+	 * Gets the by user.
+	 *
+	 * @param userId the user id
+	 * @return the by user
+	 */
+	public BloggerEntity getByUser(String userId) {
+		return repo.findOne(entities.withUserId(userId)).orElseThrow(() -> new NotFoundException(userId));
+	}
 
-  @Override
-  public <P extends FilterSortPaginate> Resources<?> getSortedListResources(P params) {
-    List<BloggerEntity> result = getSortedList(params);    
-    
-    if (result == null || result.isEmpty()) {
-      throw new NotFoundException("no bloggers found");
-    }
-    return assembler.toListResources(convertToEmbedded(result.stream()), params);
-  }
+	@Override
+	public <P extends FilterSortPaginate> Resources<?> getSortedListResources(P params) {
+		List<BloggerEntity> result = getSortedList(params);
 
-  @Override
-  public <P extends FilterSortPaginate> PagedResources<Resource<?>> getPagedResources(
-      P params) {
-    Page<BloggerEntity> pagedResult = getPaged(params);
-    
-    if (pagedResult == null || pagedResult.isEmpty()) {
-      throw new NotFoundException("no bloggers found");
-    }
-    
-    return assembler.toPagedResources(
-        convertToEmbedded(pagedResult.stream()), pagedResult, params);
-  }
-  
-  /**
-   * Convert to embedded.
-   *
-   * @param stream the stream
-   * @return the list
-   */
-  public List<Resource<?>> convertToEmbedded(Stream<BloggerEntity> stream) {   
-    return stream.map(blogger -> {
-      Map<String, Object> embedded = new HashMap<>();
-      embedded.put("blogger", blogger);
-      return assembler.resourceWithEmbeddable(blogger.getUser(), embedded);
-    }).collect(Collectors.toList());
-  }
+		if (result == null || result.isEmpty()) {
+			throw new NotFoundException("no bloggers found");
+		}
+		return assembler.toListResources(convertToEmbedded(result.stream()), params);
+	}
 
-  @Override
-  public boolean validFieldConstraints(BloggerEntity newEntity) {
-    return newEntity.getUser().getBlogger() != null;
-  }
+	@Override
+	public <P extends FilterSortPaginate> PagedResources<Resource<?>> getPagedResources(P params) {
+		Page<BloggerEntity> pagedResult = getPaged(params);
 
-  @Override
-  public BloggerEntity update(String id, BloggerEntity updatedEntity) {
-    throw new NotImplementedException("For security reasons");
-  }
+		if (pagedResult == null || pagedResult.isEmpty()) {
+			throw new NotFoundException("no bloggers found");
+		}
 
-  /**
-   * Sets the blogger approval by user id.
-   *
-   * @param userId
-   *          the user id
-   * @param approved
-   *          the approved
-   */
-  public void setBloggerApprovalByUserId(String userId, Boolean approved) {
-    BloggerEntity blogger = getByUser(userId);
-    blogger.setApproved(approved);
-    repo.save(blogger);
-  }
+		return assembler.toPagedResources(convertToEmbedded(pagedResult.stream()), pagedResult, params);
+	}
 
-  /**
-   * Creates the application.
-   *
-   * @param user
-   *          the user
-   */
-  public BloggerEntity createApplication(UserEntity user) {
-    BloggerEntity blogger = new BloggerEntity();
-    blogger.setApproved(false);
-    blogger.setUser(user);
-    if (getExisting(blogger) == null) {
-      return repo.save(blogger);
-    } else {
-      throw new DuplicateEntryException("Blogger already exists");
-    }
+	/**
+	 * Convert to embedded.
+	 *
+	 * @param stream the stream
+	 * @return the list
+	 */
+	public List<Resource<?>> convertToEmbedded(Stream<BloggerEntity> stream) {
+		return stream.map(blogger -> {
+			Map<String, Object> embedded = new HashMap<>();
+			embedded.put("blogger", blogger);
+			return assembler.resourceWithEmbeddable(blogger.getUser(), embedded);
+		}).collect(Collectors.toList());
+	}
 
-  }
+	public boolean validFieldConstraints(BloggerEntity newEntity) {
+		return newEntity.getUser().getBlogger() != null;
+	}
+
+	@Override
+	public BloggerEntity update(String id, BloggerEntity updatedEntity) {
+		throw new NotImplementedException("For security reasons");
+	}
+
+	/**
+	 * Sets the blogger approval by user id.
+	 *
+	 * @param userId   the user id
+	 * @param approved the approved
+	 */
+	public void setBloggerApprovalByUserId(String userId, Boolean approved) {
+		BloggerEntity blogger = getByUser(userId);
+		blogger.setApproved(approved);
+		repo.save(blogger);
+	}
+
+	/**
+	 * Creates the application.
+	 *
+	 * @param user the user
+	 */
+	public BloggerEntity createApplication(UserEntity user) {
+		BloggerEntity blogger = new BloggerEntity();
+		blogger.setApproved(false);
+		blogger.setUser(user);
+		if (getExisting(blogger) == null) {
+			return repo.save(blogger);
+		} else {
+			throw new DuplicateEntryException("Blogger already exists");
+		}
+
+	}
+
+	@Override
+	public boolean validCreateFieldConstraints(BloggerEntity newEntity) {
+		return newEntity.getUser().getBlogger() != null;
+
+	}
+
+	@Override
+	public boolean validUpdateFieldConstraints(BloggerEntity newEntity) {
+		return newEntity.getUser().getBlogger() != null;
+	}
 }
