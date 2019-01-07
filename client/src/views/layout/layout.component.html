@@ -1,10 +1,11 @@
 <div id="publicContainer" fxLayout="column" fxLayoutAlign="space-between none">
     <navbar-component></navbar-component>
     <router-outlet></router-outlet>
-    <footer-component [style.margin-bottom]="showCookiesInfo ? '30px' : ''"></footer-component>
+    <footer-component [style.margin-bottom]="showCookiesInfo ? '80px' : ''"></footer-component>
     <div *ngIf="showCookiesInfo"
       id="cookiesInfo"
-      class="background-color-secondary"
+      [style.background-color]="'gray'"
+      [style.color]="'white'"
       [style.position]="'fixed'"
       [style.z-index]="'10'"
       [style.width]="'100%'"
@@ -16,9 +17,12 @@
           Facebook zu ermöglichen.
         </div>
         &nbsp;
-        <a class="clickable color-primary" (click)="acceptCookies(true)">Einverstanden</a>
+        <button mat-button class="clickable"
+          [style.color]="'white'"
+          (click)="acceptCookies(true)">Einverstanden</button>
         &nbsp;
-        <a class="clickable color-primary" (click)="acceptCookies(false)">Nein</a>
+        <button mat-button [style.color]="'white'"
+        class="clickable" (click)="acceptCookies(false)">Nein</button>
       </div>
     </div>
 </div>

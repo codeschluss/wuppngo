@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { DomSanitizer } from '@angular/platform-browser';
 import { SessionProvider } from '@portal/core';
 import { ImprintDialogComponent } from './imprint.dialog.component';
 
@@ -20,7 +19,6 @@ export class FooterComponent {
 
     constructor(
         public dialog: MatDialog,
-        private sanitizer: DomSanitizer,
         private sessionProvider: SessionProvider) {
           this.sessionProvider.value
           .subscribe((next) => this.cookiesAccepted = next.cookiesAccepted);
@@ -42,10 +40,9 @@ export class FooterComponent {
         return false;
     }
 
-    getWhatsAppText() {
-        return this.sanitizer.bypassSecurityTrustResourceUrl(
-            'whatsapp://send?text=kennst%20du%20schon%20'
-            + window.location.origin + '?');
+    sendWhatsAppText() {
+        window.location.href =  'whatsapp://send?text=kennst%20du%20schon%20'
+            + window.location.origin + '?';
     }
 
 }

@@ -6,8 +6,8 @@
                 </fb-like>
                 <a class="iconContainer"
                 [style.width]="'30px'"
-                [href]="getWhatsAppText()"
-                *ngIf="isMobile()">
+                *ngIf="isMobile()"
+                (click)="sendWhatsAppText()">
                     <img src="imgs/whatsApp.svg">
                 </a>
             </div>

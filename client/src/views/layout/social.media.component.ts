@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { SessionProvider } from '@portal/core';
 import { ActivityControllerService } from 'src/api/services/activity-controller.service';
 import { BlogControllerService } from 'src/api/services/blog-controller.service';
@@ -24,16 +23,15 @@ export class SocialMediaComponent {
     constructor(
       private blogService: BlogControllerService,
       private activityService: ActivityControllerService,
-      private sanitizer: DomSanitizer,
       private sessionProvider: SessionProvider) {
         this.sessionProvider.value
         .subscribe((next) => this.cookiesAccepted = next.cookiesAccepted);
       }
 
-    getWhatsAppText() {
-        return this.sanitizer.bypassSecurityTrustResourceUrl(
-          'whatsapp://send?text=Kennst%20du%20das%20schon%20'
-          + window.location.href);
+    sendWhatsAppText() {
+      const linkToSend = window.location.href;
+      window.location.href =  'whatsapp://send?text=kennst%20du%20schon%20'
+      + linkToSend + '?';
     }
 
     like(): void {

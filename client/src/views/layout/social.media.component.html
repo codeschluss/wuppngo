@@ -7,7 +7,8 @@
     <fb-like *ngIf="cookiesAccepted" [ngStyle]="{'margin-right': '10px'}" ></fb-like>
     <a class="iconContainer"
     [href]="getWhatsAppText()"
-    *ngIf="isMobile()">
+    *ngIf="isMobile()"
+    (click)="sendWhatsAppText()">
         <img src="imgs/whatsApp.svg">
     </a>
 </div>
