@@ -30,9 +30,6 @@ export class LoginComponent {
         private userProvider: UserProvider,
         private bottomSheet: MatBottomSheet,
         private configProvider: ConfigurationProvider) {
-            if (this.router.url.endsWith('logout')) {
-                this.tokenProvider.remove();
-            }
             this.configProvider.readAll().subscribe(configs => {
                 this.portalName = configs.find(
                     config => config.item === 'portalName').value;

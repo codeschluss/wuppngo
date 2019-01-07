@@ -1,18 +1,18 @@
 <div id="navbarHeader">
     <!-- desktop version renders as horizontal navbar -->
-        <div fxHide.lt-md="true" fxLayout="column">
+        <div fxHide.lt-md="false" fxLayout="column">
             <div fxLayoutAlign="space-around center">
                 <img id="logo" class="clickable" src="imgs/Logo_bunt_cmyk.svg" (click)="goToHome()">
             </div>
             <div id="navbar" fxFlex="100">
                 <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between center">
 
-                    <div fxLayout="row" 
-                    fxLayout.lt-md="column" 
-                    fxFlex="60" 
+                    <div fxLayout="row"
+                    fxLayout.lt-md="column"
+                    fxFlex="60"
                     fxLayoutAlign="space-around center">
-                        <span *ngFor="let routeLink of routeLinks; let i = index;" 
-                        class="nav-item" 
+                        <span *ngFor="let routeLink of routeLinks; let i = index;"
+                        class="nav-item"
                         [routerLink]="routeLink.link"
                         routerLinkActive="color-primary"
                         [routerLinkActiveOptions]="{exact: true}">
@@ -23,14 +23,17 @@
                     </div>
                     <div fxLayout="row" fxLayoutAlign="space-around center">
                         <search-input></search-input>
-                        <img id="login" 
+                        <img id="login"
                             class="clickable"
-                            mat-button 
-                            [matMenuTriggerFor]="menu" 
+                            mat-button
+                            [matMenuTriggerFor]="menu"
                             src="imgs/account.svg">
                         <mat-menu #menu="matMenu">
                             <button mat-menu-item *ngFor="let route of accountRouts" (click)="navigateTo(route.link)">
                                 <i18n i18n='"@@" + route.label'>{{route.label}}</i18n>
+                            </button>
+                            <button mat-menu-item *ngIf="token && token.sub" (click)="logout()">
+                                <i18n i18n="@@logout">logout</i18n>
                             </button>
                             <button mat-menu-item (click)="openLanguageChooser()">
                                 <i18n i18n="@@selectLanguage">selectLanguage</i18n>
@@ -50,31 +53,34 @@
                     <div [style.margin-top]="'8px'"><img id="logoSmall" src="imgs/Logo_bunt_cmyk.svg"></div>
                 </mat-panel-title>
                 <mat-panel-description (keydown.enter)="$event.preventDefault();">
-                    <search-input 
+                    <search-input
                         (click)="$event.stopPropagation();"
                         (keydown.enter)="$event.stopPropagation();">
                     </search-input>
                     <div [style.margin-top]="'25px'" [style.margin-left]="'auto'">
                         <fa-icon icon="bars"></fa-icon>
                     </div>
-                </mat-panel-description>        
+                </mat-panel-description>
             </mat-expansion-panel-header>
-    
+
             <mat-toolbar color="secondary">
-                <mat-toolbar-row *ngFor="let routeLink of routeLinks; let i = index;" 
-                class="nav-item" 
-                [routerLink]="routeLink.link" 
+                <mat-toolbar-row *ngFor="let routeLink of routeLinks; let i = index;"
+                class="nav-item"
+                [routerLink]="routeLink.link"
                 routerLinkActive="background-color-primary"
-                [routerLinkActiveOptions]="{exact: true}" 
+                [routerLinkActiveOptions]="{exact: true}"
                 (click)="activeLinkIndex = i">
                     <i18n i18n='"@@" + routeLink.label'>{{routeLink.label}}</i18n>
                 </mat-toolbar-row>
-                <mat-toolbar-row *ngFor="let route of accountRouts" 
+                <mat-toolbar-row *ngFor="let route of accountRouts"
                     [routerLink]="route.link">
                     <i18n i18n='"@@" + route.label'>{{route.label}}</i18n>
                 </mat-toolbar-row>
                 <mat-toolbar-row (click)="openLanguageChooser()">
-                    <i18n i18n="@@selectLanguage">selectLanguage</i18n> 
+                    <i18n i18n="@@selectLanguage">selectLanguage</i18n>
+                </mat-toolbar-row>
+                <mat-toolbar-row  *ngIf="token && token.sub" (click)="logout()">
+                    <i18n i18n="@@logout">logout</i18n>
                 </mat-toolbar-row>
             </mat-toolbar>
 

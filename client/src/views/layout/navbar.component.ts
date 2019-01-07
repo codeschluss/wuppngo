@@ -26,7 +26,7 @@ export class NavBarComponent implements OnChanges {
     public routeLinks: any[] = [];
     public accountRouts: any[] = [];
     public open = false;
-    private token;
+    public token;
     public portalName;
 
     public constructor(
@@ -91,10 +91,6 @@ export class NavBarComponent implements OnChanges {
         {
             label: 'personalData',
             link: '/admin',
-        },
-        {
-            label: 'logOut',
-            link: '/logout',
         }];
         if (this.token.superuser) {
             this.accountRouts.push(
@@ -126,7 +122,11 @@ export class NavBarComponent implements OnChanges {
     goToHome(): void {
         this.router.navigate(['/home']);
         this.close();
+    }
 
+    logout(): void {
+      this.tokenProvider.remove();
+      this.initAccountRouts();
     }
 
     close(): void {
