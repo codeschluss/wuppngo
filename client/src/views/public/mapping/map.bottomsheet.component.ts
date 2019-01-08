@@ -10,17 +10,17 @@ import { ActivityModel } from '../../../realm/activity/activity.model';
   <div id="largeMap"
   [style.height]="'50vh'"
   *ngIf="configurations && activities; else loading">
-      <mapping-component
-        [activities] = activities
-        [configurations] = configurations
-        [disableCarousel] = "true">
-      </mapping-component>
-    </div>
-    <ng-template #loading>
-      <i18n [style.width]="'100%'"
-      [style.text-align]="'center'">
-        waitingForMap
-      </i18n>
+    <mapping-component
+      [activities] = activities
+      [configurations] = configurations
+      [disableCarousel] = "true">
+    </mapping-component>
+  </div>
+  <ng-template #loading>
+    <i18n [style.width]="'100%'"
+    [style.text-align]="'center'">
+      waitingForMap
+    </i18n>
   </ng-template>`,
   styleUrls: ['map.bottomsheet.component.css']
 })

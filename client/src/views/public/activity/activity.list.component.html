@@ -1,20 +1,24 @@
 <ng-container>
   <div id="activityList">
     <div fxLayout="row wrap">
-      <div fxFlex="100" 
-        fxLayout="row wrap" 
-        id="activity-filter" 
-        fxLayout.xs="column" 
-        fxLayoutAlign="space-between center" 
+      <div fxFlex="100"
+        fxLayout="row wrap"
+        id="activity-filter"
+        fxLayout.xs="column"
+        fxLayoutAlign="space-between center"
         fxLayoutGap="10px">
         <mat-chip-list>
-          <mat-chip *ngFor="let category of categories" 
-            [style.border]="isActiveCategory(category.id) ? 'solid' : ''" 
+          <mat-chip *ngFor="let category of categories"
+            class="clickable"
+            [style.border]="isActiveCategory(category.id) ? 'solid' : ''"
             [style.color]="isActiveCategory(category.id) ? category.color : ''"
             (click)="toggleCategoryFilter(category.id)">
             {{category.name}}
           </mat-chip>
         </mat-chip-list>
+
+      </div>
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="10px">
         <mat-form-field>
           <mat-select placeholder="Quartiere" [formControl]="suburbCtrl" multiple>
             <mat-option *ngFor="let suburb of suburbs" [value]="suburb.id">
@@ -31,18 +35,19 @@
         </mat-form-field>
       </div>
 
-      <div id="activitiesContainer" 
-        fxFlex="66" 
-        fxLayout="row wrap" 
+      <div id="activitiesContainer"
+        fxFlex.gt-sm="66"
+        fxLayout="row wrap"
         fxFlex.lt-md="100"
         *ngIf="activities && activities.length">
-        <div class="activityCard" 
-          fxLayoutAlign="space-around" 
-          fxFlex.xs="100" 
+        <div class="activityCard"
+          fxLayoutAlign="space-around"
+          fxFlex="50"
+          fxFlex.xs="100"
           *ngFor="let activity of activities">
           <activity-card [style.min-width]="'20vw'"
-            (mouseenter)="showOnMap(activity)" 
-            (mouseleave)="resetHighlighting()" 
+            (mouseenter)="showOnMap(activity)"
+            (mouseleave)="resetHighlighting()"
             [activity]="activity">
           </activity-card>
         </div>
@@ -53,25 +58,25 @@
       </div>
     </div>
 
-    <mat-chip id="mapIcon" 
-      color="primary" 
-      selected 
-      fxHide 
+    <mat-chip id="mapIcon"
+      color="primary"
+      selected
+      fxHide
       fxShow.lt-md="true">
         <fa-icon icon="map-marker" (click)="navigateToMap()"></fa-icon>
     </mat-chip>
 
     <div fxLayout="row" fxLayoutAlign="space-around center">
-      <button mat-stroked-button 
-          [disabled]="pageNumber == 0" 
-          color="primary" 
+      <button mat-stroked-button
+          [disabled]="pageNumber == 0"
+          color="primary"
           (click)="previousPage()">
           &lt;
       </button>
       {{pageNumber + 1 + ' / ' + totalPages}}
-      <button mat-stroked-button 
-          [disabled]="!moreEntriesExist()" 
-          color="primary" 
+      <button mat-stroked-button
+          [disabled]="!moreEntriesExist()"
+          color="primary"
           (click)="nextPage()">
           &gt;
       </button>
