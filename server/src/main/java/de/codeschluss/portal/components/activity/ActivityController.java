@@ -5,6 +5,7 @@ import static org.springframework.http.ResponseEntity.noContent;
 import static org.springframework.http.ResponseEntity.ok;
 
 import de.codeschluss.portal.components.address.AddressService;
+import de.codeschluss.portal.components.blog.BlogService;
 import de.codeschluss.portal.components.category.CategoryService;
 import de.codeschluss.portal.components.organisation.OrganisationService;
 import de.codeschluss.portal.components.provider.ProviderEntity;
@@ -74,6 +75,9 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 
   /** The organisation service. */
   private final OrganisationService organisationService;
+  
+  /** The blog service. */
+  private final BlogService blogService;
 
   /** The translation service. */
   private final TranslationService translationService;
@@ -110,8 +114,8 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   public ActivityController(ActivityService service, AddressService addressService,
       CategoryService categoryService, ProviderService providerService, UserService userService,
       TagService tagService, TargetGroupService targetGroupService, ScheduleService scheduleService,
-      OrganisationService organisationService, TranslationService translationService,
-      AuthorizationService authService) {
+      OrganisationService organisationService, BlogService blogService, 
+      TranslationService translationService, AuthorizationService authService) {
     super(service);
     this.addressService = addressService;
     this.categoryService = categoryService;
@@ -120,6 +124,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
     this.targetGroupService = targetGroupService;
     this.scheduleService = scheduleService;
     this.organisationService = organisationService;
+    this.blogService = blogService;
     this.translationService = translationService;
     this.authService = authService;
   }
@@ -492,6 +497,22 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   private ProviderEntity getProvider(String organisationId) {
     return providerService.getProviderByUserAndOrganisation(authService.getCurrentUser().getId(),
         organisationId);
+  }
+  
+  /**
+   * Read blogs.
+   *
+   * @param activityId the activity id
+   * @param params the params
+   * @return the response entity
+   */
+  @GetMapping("/activities/{activityId}/blogs")
+  public ResponseEntity<?> readBlogs(@PathVariable String activityId, BaseParams params) {
+    try {
+      return ok(blogService.getResourceByActivity(activityId, params));
+    } catch (IOException e) {
+      throw new RuntimeException(e.getMessage());
+    }
   }
 
   /**

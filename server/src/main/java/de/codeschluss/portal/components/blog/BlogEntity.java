@@ -99,6 +99,8 @@ public class BlogEntity extends BaseResource {
 
     links.add(linkTo(methodOn(BlogController.class)
         .readOne(id)).withSelfRel());
+    links.add(linkTo(methodOn(BlogController.class)
+        .readActivity(id)).withRel("activity"));
     
     return links;
   }
