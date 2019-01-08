@@ -21,7 +21,7 @@ export class FooterComponent {
         public dialog: MatDialog,
         private sessionProvider: SessionProvider) {
           this.sessionProvider.value
-          .subscribe((next) => this.cookiesAccepted = next.cookiesAccepted);
+          .subscribe((next) => this.cookiesAccepted = next.isCookieAccepted);
     }
 
     openImprintDialog(): void {

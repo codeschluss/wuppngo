@@ -25,7 +25,7 @@ export class SocialMediaComponent {
       private activityService: ActivityControllerService,
       private sessionProvider: SessionProvider) {
         this.sessionProvider.value
-        .subscribe((next) => this.cookiesAccepted = next.cookiesAccepted);
+        .subscribe((next) => this.cookiesAccepted = next.isCookieAccepted);
       }
 
     sendWhatsAppText() {

@@ -54,7 +54,8 @@ export class LoginComponent {
 
     resetPassword(): void {
         if (this.userName) {
-            this.userProvider.resetPassword(this.userName).subscribe(() => {
+            this.userProvider.resetPassword({value: this.userName})
+            .subscribe(() => {
                 this.bottomSheet.open(InfoBottomComponent,
                     { data: { message: 'successfullResetPassword' } });
             },
