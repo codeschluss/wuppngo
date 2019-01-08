@@ -210,4 +210,24 @@ public class BlogService extends ResourceDataService<BlogEntity, BlogQueryBuilde
     blog.setActivity(activity);
     return repo.save(blog);
   }
+
+  /**
+   * Gets the resource by activity.
+   *
+   * @param activityId the activity id
+   * @param params the params
+   * @return the resource by activity
+   * @throws JsonParseException the json parse exception
+   * @throws JsonMappingException the json mapping exception
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
+  public Resources<?> getResourceByActivity(String activityId, BaseParams params) 
+      throws JsonParseException, JsonMappingException, IOException {
+    Predicate query = entities.forActivity(activityId);
+    List<BlogEntity> result = repo.findAll(query, entities.createSort(params));
+    if (result == null || result.isEmpty()) {
+      throw new NotFoundException(activityId);
+    }
+    return assembler.entitiesToResources(result, params);
+  }
 }
