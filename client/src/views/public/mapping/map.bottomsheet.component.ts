@@ -7,7 +7,8 @@ import { ActivityModel } from '../../../realm/activity/activity.model';
 @Component({
   selector: 'bottom-sheet',
   template: `
-  <div id="largeMap" *ngIf="configurations; else loading">
+  <div id="largeMap" [style.height]="'50vh'"
+  *ngIf="configurations; else loading">
       <mapping-component
         [activities] = activities
         [configurations] = configurations
