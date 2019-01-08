@@ -21,6 +21,7 @@
 		<oauth.version>3.4.0</oauth.version>
 		<greenmail.version>1.5.5</greenmail.version>
 		<webpush.version>4.0.0</webpush.version>
+        <imgscalr.version>4.2</imgscalr.version>
 	</properties>
 
 	<parent>
@@ -139,6 +140,11 @@
 			<artifactId>greenmail</artifactId>
 			<version>${greenmail.version}</version>
 			<scope>test</scope>
+		</dependency>
+        <dependency>
+			<groupId>org.imgscalr</groupId>
+			<artifactId>imgscalr-lib</artifactId>
+			<version>${imgscalr.version}</version>
 		</dependency>
 	</dependencies>
 
