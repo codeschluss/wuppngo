@@ -1,14 +1,14 @@
-<div id="blog-container" 
-    *ngIf="blog" 
-    fxLayout="column" 
+<div id="blog-container"
+    *ngIf="blog"
+    fxLayout="column"
     fxLayoutAlign="space-between">
     <div class="color-primary blogTitle">
         {{blog.title}}
     </div>
     <div>{{getDate(blog.created)}}</div>
-    <social-media-component 
-        [style.margin-top]="'20px'" 
-        [style.margin-bottom]="'20px'" 
+    <social-media-component
+        [style.margin-top]="'20px'"
+        [style.margin-bottom]="'20px'"
         [entity]="blog"
         [modelName]="'BlogModel'">
     </social-media-component>
@@ -17,8 +17,10 @@
         <div class="blogTextContainer">
             {{blog.content}}
         </div>
-        <div class="blogActivityContainer" *ngIf="blog.activity">
-            <activity-card [activity]="blog.activity"></activity-card>
+        <div class="blogActivityContainer">
+            <activity-card [style.min-width]="'20vw'"
+            [activity]="blog.activity">
+          </activity-card>
         </div>
     </div>
-</div> 
+</div>

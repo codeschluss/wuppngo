@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BlogModel } from 'src/realm/blog/blog.model';
 
 @Component({
     selector: 'blog-view',
@@ -11,15 +10,16 @@ import { BlogModel } from 'src/realm/blog/blog.model';
 export class BlogViewComponent implements OnInit {
 
   public static readonly imports = [];
-  public blog: BlogModel;
+  public blog: any;
 
   constructor(
     private route: ActivatedRoute
   ) { }
 
-  ngOnInit() {
-    this.blog = this.route.snapshot.data.blog;
-  }
+    ngOnInit() {
+      this.blog = this.route.snapshot.data.blog;
+      console.log(this.blog.activity);
+    }
 
   public getDate(dateString: string): string {
     return new Date(dateString).toLocaleDateString('de-DE');
