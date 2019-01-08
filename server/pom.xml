@@ -20,7 +20,6 @@
 		<springfoxswagger.version>2.8.0</springfoxswagger.version>
 		<oauth.version>3.4.0</oauth.version>
 		<greenmail.version>1.5.5</greenmail.version>
-		<tika.version>1.19.1</tika.version>
 		<webpush.version>4.0.0</webpush.version>
 	</properties>
 
@@ -121,16 +120,10 @@
 			<version>${liquibase.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.tika</groupId>
-			<artifactId>tika-core</artifactId>
-			<version>${tika.version}</version>
-		</dependency>
-		<dependency>
 		    <groupId>nl.martijndwars</groupId>
 		    <artifactId>web-push</artifactId>
 		    <version>${webpush.version}</version>
 		</dependency>
-
 		<dependency>
 			<scope>test</scope>
 			<groupId>org.springframework.boot</groupId>
