@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ActivityModel } from 'src/realm/activity/activity.model';
@@ -17,7 +17,7 @@ import { BottomSheetScheduleComponent } from './schedules.bottom.sheet.component
   templateUrl: 'activity.view.component.html'
 })
 
-export class ActivityViewComponent implements OnInit, AfterViewInit {
+export class ActivityViewComponent implements OnInit {
 
   public static readonly imports = [];
   public activity: ActivityModel;
@@ -26,7 +26,6 @@ export class ActivityViewComponent implements OnInit, AfterViewInit {
   public targetGroups: TargetGroupModel[];
   public address: AddressModel;
   public blogs: BlogModel[] = [];
-  public showMap: boolean;
 
   @ViewChild(MappingComponent)
   private mapping: MappingComponent;
@@ -39,12 +38,6 @@ export class ActivityViewComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.activity = this.route.snapshot.data.activity;
-  }
-
-  ngAfterViewInit() {
-    if (this.activity) {
-      this.showMap = true;
-    }
   }
 
   getNextdate(date: string): string {

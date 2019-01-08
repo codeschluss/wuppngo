@@ -2,7 +2,7 @@
   <div fxLayout="column" fxLayoutGap="20px">
     <h3 class="color-primary">{{ activity.name }}</h3>
     <mat-chip-list>
-      <mat-chip id="category" 
+      <mat-chip id="category"
       [ngStyle]="{'background-color':activity.category.color}">
         {{ activity.category.name }}
       </mat-chip>
@@ -16,23 +16,23 @@
       <div fxFlex="60" fxLayout="column">
         <p>{{ activity.description }}</p>
         <div>
-          <social-media-component *ngIf="activity" 
-          [entity]="activity"  
+          <social-media-component *ngIf="activity"
+          [entity]="activity"
           [modelName]="'ActivityModel'">
           </social-media-component>
         </div>
       </div>
-      <div fxFlex="40" fxLayout="column">
+      <div fxFlex="40" fxFlex.lt-md="100" fxLayout="column">
         <mat-card id="actDateTimePanel">
           <mat-card-content fxLayout="column">
             <div fxLayout="row">
               <div *ngIf="activity.address && activity.address.suburb" fxFlex="50" fxFlexAlign="start">
                 <p mat-line>
-                  {{ activity.address.suburb.name }} 
+                  {{ activity.address.suburb.name }}
                   {{ activity.address.street }}
                   {{ activity.address.houseNumber }}
                 </p>
-                <p mat-line>                  
+                <p mat-line>
                   {{ activity.address.postalCode }}
                   {{ activity.address.place }}
                 </p>
@@ -40,11 +40,11 @@
               <img src="imgs/map.png"
                   class="clickable"
                   fxFlex="50"
-                  fxFlexAlign="start" 
+                  fxFlexAlign="start"
                   (click)="openBottomSheetMap()">
             </div>
-            <div *ngIf="activity.schedules && activity.schedules.length" 
-              fxLayout="row" 
+            <div *ngIf="activity.schedules && activity.schedules.length"
+              fxLayout="row"
               class="clickable"
               (click)="openBottomSheetSchedules(activity.schedules)">
               <div fxLayout="column" id="addressCard">

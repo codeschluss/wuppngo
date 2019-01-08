@@ -27,6 +27,6 @@ export class BlogListItemComponent {
   }
 
   openActivityView(): void {
-        this.router.navigate(['/view/activities/', this.blog.activity.id]);
+    this.router.navigate(['/view/activities/', this.blog.activity.id]);
   }
 }

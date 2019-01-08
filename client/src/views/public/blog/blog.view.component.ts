@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
-import { BlogModel } from 'src/realm/blog/blog.model';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { BlogModel } from 'src/realm/blog/blog.model';
 
 @Component({
     selector: 'blog-view',
@@ -9,14 +8,16 @@ import { Observable } from 'rxjs';
     templateUrl: 'blog.view.component.html'
 })
 
-export class BlogViewComponent {
+export class BlogViewComponent implements OnInit {
 
   public static readonly imports = [];
-  public blog: Observable<BlogModel>;
+  public blog: BlogModel;
 
   constructor(
     private route: ActivatedRoute
-  ) {
+  ) { }
+
+  ngOnInit() {
     this.blog = this.route.snapshot.data.blog;
   }
 
