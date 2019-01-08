@@ -1,7 +1,13 @@
-<div [style.margin]="'auto'" 
-    [style.width]="'90%'">
+<div [style.margin]="'auto'"
+    [style.width]="'90%'"
+    *ngIf="topics">
     <i18n i18n="@@worthKnowing" class="h2">worthKnowing</i18n>
-    <div fxLayout="column" fxLayoutAlign="space-around stretch" *ngIf="topics"> 
+    <mat-accordion>
+      <ng-container *ngFor="let topic of topics">
+        <topic-list-item [topic]="topic"></topic-list-item>
+      </ng-container>
+    </mat-accordion>
+    <!-- <div fxLayout="column" fxLayoutAlign="space-around stretch" *ngIf="topics">
         <div class="background-color-secondary"
             [style.font-size]="'30px'"
             [style.margin-top]="'20px'"
@@ -18,5 +24,5 @@
                 <fa-icon icon="plus"></fa-icon>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>

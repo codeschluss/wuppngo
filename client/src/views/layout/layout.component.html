@@ -1,7 +1,10 @@
 <div id="publicContainer" fxLayout="column" fxLayoutAlign="space-between none">
     <navbar-component></navbar-component>
     <router-outlet></router-outlet>
-    <footer-component [style.margin-bottom]="showCookiesInfo ? '80px' : ''"></footer-component>
+    <footer-component
+      [style.margin-bottom]="showCookiesInfo ? '80px' : ''"
+      [style.margin-top]="'20px'">
+    </footer-component>
     <div *ngIf="showCookiesInfo"
       id="cookiesInfo"
       [style.background-color]="'gray'"

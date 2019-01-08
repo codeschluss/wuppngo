@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-    selector: 'topics-list-component',
+    selector: 'topic-list-component',
     styleUrls: ['pages.component.css'],
     templateUrl: 'topics.list.component.html'
 })
