@@ -1,31 +1,19 @@
- <mat-expansion-panel class="background-color-secondary topicExpansionPanel"
+<mat-expansion-panel class="background-color-secondary topicExpansionPanel"
   *ngIf="topic"
   hideToggle
   (opened)="panelOpenState = true"
   (closed)="panelOpenState = false">
   <mat-expansion-panel-header>
-      <mat-panel-title [style.font-size]="'30px'">
-        {{topic.name}}
-      </mat-panel-title>
-      <fa-icon icon="plus" [ngClass]="panelOpenState ? 'indicatorOpen' : 'indicatorClosed'"></fa-icon>
-    </mat-expansion-panel-header>
-    <div fxLayout="column" fxLayoutAlign="space-around stretch" *ngIf="topic.pages">
-      <div class="background-color-primary"
-        [style.font-size]="'30px'"
-        [style.margin-top]="'20px'"
-        [style.padding]="'15px'"
-        [style.border-radius]="'5px'"
-        fxLayout = "row"
-        fxLayoutAlign="space-between stretch"
-        *ngFor="let page of topic.pages"
-        (click)="toPage(page.id)">
-        <div>
-          {{page.title}}
-        </div>
-        <div>
-          <i18n i18n="@@createdAt">createdAt</i18n>
-          &nbsp;
-          {{getCreationDate(page.created)}}
-        </div>
-      </div>
-    </div>
+    <mat-panel-title [style.font-size]="'30px'">
+      {{topic.name}}
+    </mat-panel-title>
+    <fa-icon icon="plus" [ngClass]="panelOpenState ? 'indicatorOpen' : 'indicatorClosed'"></fa-icon>
+  </mat-expansion-panel-header>
+  <div fxLayout="column" fxLayoutAlign="space-around stretch" *ngIf="topic.pages.length; else nothingFound">
+    <pages-list [pages]="topic.pages"></pages-list>
+  </div>
+  <ng-template #nothingFound>
+      <i18n i18n="@@noResults" [style.width]="'100%'"
+      [style.text-align]="'center'">noResults</i18n>
+  </ng-template>
+</mat-expansion-panel>

@@ -1,0 +1,20 @@
+<ng-container *ngIf="pages">
+  <div class="background-color-accent"
+    [style.font-size]="'30px'"
+    [style.margin-top]="'20px'"
+    [style.padding]="'15px'"
+    [style.border-radius]="'5px'"
+    fxLayout = "row"
+    fxLayoutAlign="space-between stretch"
+    *ngFor="let page of pages"
+    (click)="toPage(page.id)">
+    <div>
+      {{page.title}}
+    </div>
+    <div>
+      <i18n i18n="@@createdAt">createdAt</i18n>
+      &nbsp;
+      {{getCreationDate(page.created)}}
+    </div>
+  </div>
+</ng-container>
