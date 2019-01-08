@@ -1,14 +1,15 @@
-import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MatTabsModule } from '@angular/material';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap, mergeMap, tap, map } from 'rxjs/operators';
-import { OrganisationModel } from 'src/realm/organisation/organisation.model';
+import { CrudGraph, CrudJoiner, CrudResolver } from '@portal/core';
+import { map, mergeMap } from 'rxjs/operators';
 import { ActivityModel } from 'src/realm/activity/activity.model';
 import { ActivityProvider } from 'src/realm/activity/activity.provider';
-import { OrganisationProvider } from 'src/realm/organisation/organisation.provider';
 import { BlogModel } from 'src/realm/blog/blog.model';
 import { BlogProvider } from 'src/realm/blog/blog.provider';
-import { CrudJoiner, CrudGraph, CrudResolver, CrudProvider, CrudModel } from '@portal/core';
+import { OrganisationModel } from 'src/realm/organisation/organisation.model';
+import { OrganisationProvider } from 'src/realm/organisation/organisation.provider';
+import { PageModel } from 'src/realm/page/page.model';
+import { PageProvider } from 'src/realm/page/page.provider';
 
 @Component({
     selector: 'search-list',
@@ -23,6 +24,7 @@ export class SearchResultListComponent implements OnInit, OnChanges {
   public activities: ActivityModel[] = [];
   public organisations: OrganisationModel[] = [];
   public blogs: BlogModel[] = [];
+  public pages: PageModel[] = [];
 
   @Input()
   public query: string;
@@ -31,6 +33,7 @@ export class SearchResultListComponent implements OnInit, OnChanges {
     private organisationProvider: OrganisationProvider,
     private activityProvider: ActivityProvider,
     private blogProvider: BlogProvider,
+    private pageProvider: PageProvider,
     private crudResolver: CrudResolver
     ) {}
 
@@ -49,9 +52,11 @@ export class SearchResultListComponent implements OnInit, OnChanges {
       this.getActivityResults();
       this.getOrganisationResults();
       this.getBlogResults();
+      this.getPageResults();
     }
   }
 
+  // ActivityResults start
   public getActivityResults(): void {
     const graph = CrudJoiner.of(ActivityModel)
     .with('category')
@@ -84,6 +89,9 @@ export class SearchResultListComponent implements OnInit, OnChanges {
     ).subscribe((acts: any) => this.activities = acts,
       () => this.activities = []);
   }
+  // ActivityResults end
+
+  // OrganisationResults start
 
   public getOrganisationResults(): void {
     const graph = CrudJoiner.of(OrganisationModel)
@@ -117,10 +125,13 @@ export class SearchResultListComponent implements OnInit, OnChanges {
     () => this.organisations = []);
   }
 
+  // OrganisationResults end
+
+  // BlogResults start
+
   public getBlogResults(): void {
     // TODO: include transient field
-    const graph = CrudJoiner.of(BlogModel)
-    // .with('activity')
+    const graph = CrudJoiner.of(BlogModel).with('activity')
     .graph;
 
     const params = {
@@ -135,7 +146,7 @@ export class SearchResultListComponent implements OnInit, OnChanges {
 
   private basicBlog(graph: CrudGraph, params: any) {
     this.blogProvider.readAll(params).pipe(mergeMap(
-      (orgas: any) => this.crudResolver.refine(orgas, graph))
+      (blogs: any) => this.crudResolver.refine(blogs, graph))
   ).subscribe(
     () => {},
     () => {});
@@ -152,7 +163,44 @@ export class SearchResultListComponent implements OnInit, OnChanges {
       () => {console.log('no blogs found'); this.blogs = []; });
   }
 
+  // BlogResults end
 
+  // PageResults start
+
+  public getPageResults(): void {
+    const graph = CrudJoiner.of(PageModel).with('topic')
+    .graph;
+
+    const params = {
+      filter: this.query,
+      embeddings: this.embed(graph)
+    };
+
+    this.basicPage(graph, params);
+    this.complexPage(graph, params);
+  }
+
+
+  private basicPage(graph: CrudGraph, params: any) {
+    this.pageProvider.readAll(params).pipe(mergeMap(
+      (pages: any) => this.crudResolver.refine(pages, graph))
+  ).subscribe(
+    () => {},
+    () => {});
+  }
+
+  private complexPage(graph: CrudGraph, params: any) {
+    const provider = this.pageProvider.system;
+    provider.call(provider.methods.readAll, params)
+    .pipe(
+      map((response) => provider.cast(response)),
+      mergeMap((pages: any) => this.crudResolver.refine(pages, graph))
+    ).subscribe(
+      (pages: any) => this.pages = pages,
+      () => {console.log('no pages found'); this.pages = []; });
+  }
+
+  // PageResults end
 
 
   private embed(tree: CrudGraph): string {

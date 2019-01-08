@@ -2,29 +2,34 @@
 
     <div fxFlex="100" [style.min-height]="'60vh'">
         <mat-tab-group>
-            <mat-tab label="Aktivitäten ({{activities.length}})"> 
-                <ng-container *ngIf="activities && activities.length"> 
-                    <div fxLayout="row wrap" fxFlex="100">
+            <mat-tab label="Aktivitäten ({{activities.length}})">
+                <ng-container *ngIf="activities && activities.length">
+                    <div fxLayout="row wrap" fxFlex="100" fxLayout.lt-md="column" fxLayoutAlign="space-between center">
                         <div fxFlex="30" fxFlex.xs="100" class="results-container" *ngFor="let activity of activities">
                             <activity-card *ngIf="activity && activity.category" [activity]="activity"></activity-card>
-                        </div> 
+                        </div>
                     </div>
                 </ng-container>
             </mat-tab>
             <mat-tab label="Organisationen ({{organisations.length}})">
                 <ng-container *ngIf="organisations && organisations.length">
-                    <div fxLayout="row wrap" fxFlex="100" >
+                    <div fxLayout="row wrap" fxFlex="100" fxLayout.lt-md="column" fxLayoutAlign="space-between center">
                         <div fxFlex="30" fxFlex.xs="100" class="results-container" *ngFor="let organisation of organisations">
                             <organisation-card [organisation]="organisation"></organisation-card>
-                        </div> 
+                        </div>
                     </div>
                 </ng-container>
             </mat-tab>
-            <mat-tab label="Blogs ({{blogs.length}})"> 
+            <mat-tab label="Blogs ({{blogs.length}})">
                 <ng-container *ngIf="blogs && blogs.length">
                     <div *ngFor="let blog of blogs" fxFlex="100" class="results-container" fxLayout="column">
                         <blog-list-item [blog]="blog" class="background-color-secondary"></blog-list-item>
                     </div>
+                </ng-container>
+            </mat-tab>
+            <mat-tab label="Wissenswertes ({{pages.length}})">
+                <ng-container *ngIf="pages && pages.length">
+                  <pages-list [pages]="pages"></pages-list>
                 </ng-container>
             </mat-tab>
         </mat-tab-group>
