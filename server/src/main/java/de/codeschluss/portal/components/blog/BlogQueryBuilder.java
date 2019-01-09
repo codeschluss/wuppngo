@@ -86,7 +86,8 @@ public class BlogQueryBuilder extends QueryBuilder<QBlogEntity> {
    * @return the boolean expression
    */
   private BooleanExpression likeTitle(String filter) {
-    return query.translatables.any().title.likeIgnoreCase(filter);
+    return query.translatables.any().title.likeIgnoreCase(filter)
+        .and(query.translatables.any().language.locale.in(languageService.getCurrentReadLocales()));
   }
 
   /**
@@ -96,7 +97,8 @@ public class BlogQueryBuilder extends QueryBuilder<QBlogEntity> {
    * @return the boolean expression
    */
   private BooleanExpression likeContent(String filter) {
-    return query.translatables.any().content.likeIgnoreCase(filter);
+    return query.translatables.any().content.likeIgnoreCase(filter)
+        .and(query.translatables.any().language.locale.in(languageService.getCurrentReadLocales()));
   }
   
   /**
