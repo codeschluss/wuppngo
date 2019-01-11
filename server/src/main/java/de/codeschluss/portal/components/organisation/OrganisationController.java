@@ -14,6 +14,7 @@ import de.codeschluss.portal.components.user.UserService;
 import de.codeschluss.portal.core.api.CrudController;
 import de.codeschluss.portal.core.api.dto.BaseParams;
 import de.codeschluss.portal.core.api.dto.BooleanPrimitive;
+import de.codeschluss.portal.core.api.dto.StringPrimitive;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
@@ -118,30 +119,15 @@ public class OrganisationController
       throws URISyntaxException {
     validateCreate(newOrga);
     
-    Resource<OrganisationEntity> resource = service.convertToResource(
-        createOrgaWithAdmin(newOrga));
+    try {
+      newOrga.setAddress(addressService.getById(newOrga.getAddressId()));
+    } catch (NotFoundException e) {
+      throw new BadParamsException("Need existing Address!");
+    }
     
+    Resource<OrganisationEntity> resource = service.addResource(newOrga);
+    providerService.addAdmin(resource.getContent(), authService.getCurrentUser());
     return created(new URI(resource.getId().expand().getHref())).body(resource);
-  }
-
-  /**
-   * Creates the orga with admin.
-   *
-   * @param newOrga the new orga
-   * @return the organisation entity
-   */
-  private OrganisationEntity createOrgaWithAdmin(OrganisationEntity newOrga) {
-    newOrga.setApproved(false);
-    OrganisationEntity orga = service.add(newOrga);
-    
-    ProviderEntity admin = new ProviderEntity();
-    admin.setApproved(true);
-    admin.setAdmin(true);
-    admin.setOrganisation(orga);
-    admin.setUser(authService.getCurrentUser());
-    
-    providerService.add(admin);
-    return orga;
   }
   
   /**
@@ -206,9 +192,10 @@ public class OrganisationController
   @PutMapping("/organisations/{organisationId}/address")
   @OrgaAdminOrSuperUserPermission
   public ResponseEntity<?> updateAddress(@PathVariable String organisationId,
-      @RequestBody String addressId) {
-    if (addressService.existsById(addressId) && service.existsById(organisationId)) {
-      service.updateAddress(organisationId, addressService.getById(addressId));
+      @RequestBody StringPrimitive addressId) {
+    if (addressService.existsById(addressId.getValue())
+        && service.existsById(organisationId)) {
+      service.updateAddress(organisationId, addressService.getById(addressId.getValue()));
       return ok(readAddress(organisationId));
     } else {
       throw new BadParamsException("Organisation or Address with given ID do not exist!");
