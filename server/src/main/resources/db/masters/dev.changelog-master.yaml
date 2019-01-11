@@ -30,13 +30,15 @@ databaseChangeLog:
     - include:
         file: classpath:db/changelogs/0013.rename_fullname_column.yaml
     - include:
-        file: classpath:db/changelogs/0014.add_likes_column.yaml
+        file: classpath:db/changelogs/0014.add_addressnotnull_constraint.yaml
     - include:
-        file: classpath:db/changelogs/0015.add_topic_tables.yaml
+        file: classpath:db/changelogs/0015.add_likes_column.yaml
     - include:
-        file: classpath:db/changelogs/0016.add_page_tables.yaml
+        file: classpath:db/changelogs/0016.add_topic_tables.yaml
     - include:
-        file: classpath:db/changelogs/0017.add_subscription_table.yaml
+        file: classpath:db/changelogs/0017.add_page_tables.yaml
+    - include:
+        file: classpath:db/changelogs/0018.add_subscription_table.yaml
 
     - include:
         file: classpath:db/changelogs/dev.aftermigdata.yaml
