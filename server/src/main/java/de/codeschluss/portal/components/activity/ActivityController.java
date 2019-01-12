@@ -31,7 +31,6 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,6 +43,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 // TODO: Auto-generated Javadoc
@@ -311,10 +311,10 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   @PostMapping("/activities/{activityId}/tags")
   @OwnOrOrgaActivityOrSuperUserPermission
   public ResponseEntity<?> addTags(@PathVariable String activityId,
-      @RequestBody TagEntity... tags) {
+      @RequestBody List<TagEntity> tags) {
     try {
       validateTags(tags);
-      return ok(service.addTags(activityId, tagService.addAll(Arrays.asList(tags))));
+      return ok(service.addTags(activityId, tagService.addAll(tags)));
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Activity does not exist");
     }
@@ -325,7 +325,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    *
    * @param tags the tags
    */
-  private void validateTags(TagEntity[] tags) {
+  private void validateTags(List<TagEntity> tags) {
     for (TagEntity tag : tags) {
       if (!tagService.validCreateFieldConstraints(tag)) {
         throw new BadParamsException("Tags must have a name");
@@ -336,18 +336,16 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   /**
    * Delete tags.
    *
-   * @param activityId
-   *          the activity id
-   * @param tagId
-   *          the tag id
+   * @param activityId the activity id
+   * @param tagIds the tag ids
    * @return the response entity
    */
-  @DeleteMapping("/activities/{activityId}/tags/{tagId}")
+  @DeleteMapping("/activities/{activityId}/tags")
   @OwnOrOrgaActivityOrSuperUserPermission
   public ResponseEntity<?> deleteTags(@PathVariable String activityId,
-      @PathVariable String... tagId) {
+      @RequestParam(value = "tagIds", required = true) List<String> tagIds) {
     try {
-      service.deleteTags(activityId, Arrays.asList(tagId));
+      service.deleteTags(activityId, tagIds);
       return noContent().build();
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Activity does not exist");
@@ -384,9 +382,9 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   @PostMapping("/activities/{activityId}/targetgroups")
   @OwnOrOrgaActivityOrSuperUserPermission
   public ResponseEntity<?> addTargetGroups(@PathVariable String activityId,
-      @RequestBody String... targetGroupIds) {
+      @RequestBody List<String> targetGroupIds) {
     try {
-      List<String> distinctTargetGroups = Arrays.asList(targetGroupIds).stream().distinct()
+      List<String> distinctTargetGroups = targetGroupIds.stream().distinct()
           .collect(Collectors.toList());
       return ok(
           service.addTargetGroups(activityId, targetGroupService.getByIds(distinctTargetGroups)));
@@ -398,18 +396,16 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   /**
    * Delete target groups.
    *
-   * @param activityId
-   *          the activity id
-   * @param targetGroupId
-   *          the target group id
+   * @param activityId the activity id
+   * @param targetGroupIds the target group ids
    * @return the response entity
    */
-  @DeleteMapping("/activities/{activityId}/targetgroups/{targetGroupId}")
+  @DeleteMapping("/activities/{activityId}/targetgroups")
   @OwnOrOrgaActivityOrSuperUserPermission
   public ResponseEntity<?> deleteTargetGroups(@PathVariable String activityId,
-      @PathVariable String... targetGroupId) {
+      @RequestParam(value = "targetGroupIds", required = true) List<String> targetGroupIds) {
     try {
-      service.deleteTargetGroup(activityId, Arrays.asList(targetGroupId));
+      service.deleteTargetGroup(activityId, targetGroupIds);
       return noContent().build();
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Activity does not exist");
@@ -444,11 +440,11 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   @PostMapping("/activities/{activityId}/schedules")
   @OwnOrOrgaActivityOrSuperUserPermission
   public Resources<?> addSchedules(@PathVariable String activityId,
-      @RequestBody ScheduleEntity... schedules) {
+      @RequestBody List<ScheduleEntity> schedules) {
     validateSchedules(schedules);
     try {
       return scheduleService.addAllResourcesWithActivity(
-          Arrays.asList(schedules), service.getById(activityId));
+          schedules, service.getById(activityId));
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Activity does not exist");
     } catch (IOException e) {
@@ -461,7 +457,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    *
    * @param schedules the schedules
    */
-  private void validateSchedules(ScheduleEntity[] schedules) {
+  private void validateSchedules(List<ScheduleEntity> schedules) {
     for (ScheduleEntity schedule : schedules) {
       if (!scheduleService.validCreateFieldConstraints(schedule)) {
         throw new BadParamsException("Schedules need Start and End date");
@@ -472,18 +468,16 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   /**
    * Delete schedules.
    *
-   * @param activityId
-   *          the activity id
-   * @param scheduleId
-   *          the schedule id
+   * @param activityId the activity id
+   * @param scheduleIds the schedule ids
    * @return the response entity
    */
-  @DeleteMapping("/activities/{activityId}/schedules/{scheduleId}")
+  @DeleteMapping("/activities/{activityId}/schedules")
   @OwnOrOrgaActivityOrSuperUserPermission
   public ResponseEntity<?> deleteSchedules(@PathVariable String activityId,
-      @PathVariable String... scheduleId) {
+      @RequestParam(value = "scheduleIds", required = true) List<String> scheduleIds) {
     try {
-      scheduleService.deleteAll(Arrays.asList(scheduleId));
+      scheduleService.deleteAll(scheduleIds);
       return noContent().build();
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Activity does not exist");
