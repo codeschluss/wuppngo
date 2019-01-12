@@ -38,6 +38,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 // TODO: Auto-generated Javadoc
@@ -252,8 +253,7 @@ public class OrganisationController
   @GetMapping("/organisations/{organisationId}/users")
   @OrgaAdminOrSuperUserPermission
   public ResponseEntity<?> readUsers(
-      @PathVariable String organisationId,
-      BaseParams params) {
+      @PathVariable String organisationId) {
     List<ProviderEntity> providers = providerService.getProvidersByOrganisation(organisationId);
     return ok(userService.convertToResourcesEmbeddedProviders(providers));
   }
@@ -388,21 +388,20 @@ public class OrganisationController
     }
   }
 
+
   /**
    * Delete images.
    *
-   * @param organisationId
-   *          the organisation id
-   * @param imageId
-   *          the image id
+   * @param organisationId the organisation id
+   * @param imageIds the image ids
    * @return the response entity
    */
-  @DeleteMapping("/organisations/{organisationId}/images/{imageId}")
+  @DeleteMapping("/organisations/{organisationId}/images")
   @OrgaAdminOrSuperUserPermission
   public ResponseEntity<?> deleteImages(@PathVariable String organisationId,
-      List<String> imageId) {
+      @RequestParam(value = "imageIds", required = true) List<String> imageIds) {
     try {
-      organisationImageService.deleteAll(imageId);
+      organisationImageService.deleteAll(imageIds);
       return noContent().build();
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Organisation does not exist");
