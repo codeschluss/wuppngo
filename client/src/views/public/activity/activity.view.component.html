@@ -72,7 +72,7 @@
           </div>
         </div>
       </div>
-      <div fxFlex="40">
+      <div fxFlex="40" fxFlex.lt-md="100">
         <div *ngFor="let blog of activity.blogs" fxLayout="column" >
           <blog-list-item [blog]="blog" class="blogCard background-color-secondary">
           </blog-list-item>

@@ -32,14 +32,15 @@
 				</aol-source-cluster>
 			</ng-container>
 		</aol-layer-vector>
-		<mat-chip id="listIcon" 
-			color="primary" 
-			*ngIf="fullScreen" 
-			selected>
-			<fa-icon icon="list" 
-				(click)="toListView()">
+    <button mat-fab
+      type="button"
+      id="listIcon"
+			color="primary"
+			*ngIf="fullScreen"
+      (click)="toListView()">
+			<fa-icon icon="list">
 			</fa-icon>
-		</mat-chip>
+		</button>
 	</aol-map>
 	<div [style.position]="'absolute'"
 		[style.top]="fullScreen ? '10vh' : '0px'"

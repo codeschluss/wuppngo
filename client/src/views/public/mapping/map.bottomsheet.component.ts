@@ -9,19 +9,13 @@ import { ActivityModel } from '../../../realm/activity/activity.model';
   template: `
   <div id="largeMap"
   [style.height]="'50vh'"
-  *ngIf="configurations && activities; else loading">
+  *ngIf="configurations && activities">
     <mapping-component
       [activities] = activities
       [configurations] = configurations
       [disableCarousel] = "true">
     </mapping-component>
-  </div>
-  <ng-template #loading>
-    <i18n [style.width]="'100%'"
-    [style.text-align]="'center'">
-      waitingForMap
-    </i18n>
-  </ng-template>`,
+  </div>`,
   styleUrls: ['map.bottomsheet.component.css']
 })
 
@@ -38,7 +32,7 @@ export class BottomSheetMapComponent implements OnInit {
 
   ngOnInit() {
     this.configProvider.readAll().subscribe(
-      configs => this.configurations = configs);
+      configs => this.configurations = configs );
   }
 
 }

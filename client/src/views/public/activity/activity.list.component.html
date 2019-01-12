@@ -58,13 +58,16 @@
       </div>
     </div>
 
-    <mat-chip id="mapIcon"
+    <button mat-fab
+      type="button"
+      id="mapIcon"
       color="primary"
       selected
       fxHide
-      fxShow.lt-md="true">
-        <fa-icon icon="map-marker" (click)="navigateToMap()"></fa-icon>
-    </mat-chip>
+      fxShow.lt-md="true"
+      (click)="navigateToMap()">
+        <fa-icon icon="map-marker"></fa-icon>
+    </button>
 
     <div fxLayout="row" fxLayoutAlign="space-around center">
       <button mat-stroked-button

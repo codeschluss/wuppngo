@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { ActivityModel } from 'src/realm/activity/activity.model';
 import { MatDialog } from '@angular/material';
-import { OrgaMediaDialogComponent } from './organisation.mediacontent.dialog.component';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ActivityModel } from 'src/realm/activity/activity.model';
 import { ImageModel } from 'src/realm/image/image.model';
+import { OrgaMediaDialogComponent } from './organisation.mediacontent.dialog.component';
 
 @Component({
   selector: 'organisation-view',
@@ -26,7 +26,7 @@ export class OrganisationViewComponent {
     public dialog: MatDialog,
     private _sanitizer: DomSanitizer
   ) {
-    this.organisation = route.snapshot.data.organisation;
+    this.organisation = this.route.snapshot.data.organisation;
     if (this.organisation.images) {
       this.initOrgaImg(this.organisation.images);
     }
@@ -42,7 +42,7 @@ export class OrganisationViewComponent {
   initOrgaImg(imgs: ImageModel[]): void {
     imgs.forEach(img =>
       this.images.push({url: 'data:' + img.mimeType + ';base64,'
-      + atob(img.image.toString()), caption: img.caption})
+      + atob(img.imageData.toString()), caption: img.caption})
     );
   }
 

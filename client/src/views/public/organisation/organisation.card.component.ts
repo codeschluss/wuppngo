@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { OrganisationModel } from 'src/realm/organisation/organisation.model';
 import { Router } from '@angular/router';
+import { OrganisationModel } from 'src/realm/organisation/organisation.model';
 
 
 @Component({
@@ -28,7 +28,7 @@ export class OrganisationCardComponent {
     if (this.organisation.images && this.organisation.images[0]) {
       const image = this.organisation.images[0];
       return 'data:' + image.mimeType + ';base64,'
-      + atob(image.image.toString());
+      + atob(image.imageData.toString());
     } else {
       return 'imgs/placeHolder.jpg';
     }
