@@ -4,6 +4,7 @@ import { FormControl } from '@angular/forms';
 import { MatBottomSheet, MatBottomSheetModule, MatCheckboxModule, MatSelectModule } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TokenProvider } from '@portal/core';
+import { OrganisationProvider } from 'src/realm/organisation/organisation.provider';
 import { UserModel } from 'src/realm/user/user.model';
 import { UserProvider } from 'src/realm/user/user.provider';
 import { InfoBottomComponent } from './info.bottomsheet.component';
@@ -37,12 +38,15 @@ export class RegisterComponent {
         private _location: Location,
         private route: ActivatedRoute,
         private userProvider: UserProvider,
+        private organisationProvider: OrganisationProvider,
         private bottomSheet: MatBottomSheet
         ) {
-            this.organisations = this.route.snapshot.data.organisations;
+          this.organisationProvider.readAll().subscribe(orgas => {
+            this.organisations = orgas;
             this.organisations.unshift({
                 name: 'orgaDoesNotExist',
                 id: 'orgaDoesNotExist'});
+          });
         }
 
     register(): void {
