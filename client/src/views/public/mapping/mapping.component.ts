@@ -1,11 +1,10 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild, Output, AfterViewChecked } from '@angular/core';
+import { AfterViewChecked, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AngularOpenlayersModule, LayerVectorComponent, MapComponent, ViewComponent } from 'ngx-openlayers';
 import { Feature, MapBrowserEvent, proj, style } from 'openlayers';
 import { Subject } from 'rxjs';
-import { AddressModel } from '../../../realm/address/address.model';
-import { EventEmitter } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigurationModel } from 'src/realm/configuration/configuration.model';
+import { AddressModel } from '../../../realm/address/address.model';
 
 
 @Component({
@@ -165,15 +164,9 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewChecked {
         anchor: [.5, 1],
         color: '#dd574a',
         src: `/imgs/map${acts.length > 1 ? 'cluster' : 'marker'}.svg`,
-        scale: this.isHighlighted(acts) ? 1.4 : 1,
+        scale: this.isHighlighted(acts) ? 0.12 : 0.08,
         opacity: this.isHighlighted(acts) ? 1 : 0.8,
       };
-
-      // const categoryIcon = {
-      //   anchor: [.5, 2],
-      //   src: `/imgs/categories/holiday.svg`,
-      //   scale: 0.1
-      // };
 
       if (window.navigator.userAgent.match(/(MSIE|Trident)/)) {
         Object.assign(icon, {
@@ -201,7 +194,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewChecked {
           anchor: [.5, 1],
           color: '#dd574a',
           src: `/imgs/mapmarker.svg`,
-          scale: 1,
+          scale: 0.08,
           opacity: 1
         };
         return [new style.Style({

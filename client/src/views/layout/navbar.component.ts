@@ -1,8 +1,9 @@
 import { Component, OnChanges } from '@angular/core';
-import { MatButtonModule, MatDialog, MatDialogModule, MatExpansionModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatToolbarModule } from '@angular/material';
+import { MatBottomSheet, MatButtonModule, MatDialog, MatDialogModule, MatExpansionModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatToolbarModule } from '@angular/material';
 import { Router } from '@angular/router';
 import { TokenProvider } from '@portal/core';
 import { ConfigurationProvider } from 'src/realm/configuration/configuration.provider';
+import { InfoBottomComponent } from '../public/login/info.bottomsheet.component';
 import { LangaugeChooserDialogComponent } from './languagechooser.component';
 
 @Component({
@@ -33,7 +34,8 @@ export class NavBarComponent implements OnChanges {
         public dialog: MatDialog,
         private router: Router,
         private tokenProvider: TokenProvider,
-        private configProvider: ConfigurationProvider
+        private configProvider: ConfigurationProvider,
+        private bottomSheet: MatBottomSheet
         ) {
         this.router.events.subscribe(() => {
             this.close();
@@ -126,6 +128,8 @@ export class NavBarComponent implements OnChanges {
 
     logout(): void {
       this.tokenProvider.remove();
+      this.bottomSheet.open(InfoBottomComponent,
+        { data: { message: 'successfullyLoggedOut' } });
       this.initAccountRouts();
     }
 

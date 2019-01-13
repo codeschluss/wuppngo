@@ -44,8 +44,8 @@ export class RegisterComponent {
           this.organisationProvider.readAll().subscribe(orgas => {
             this.organisations = orgas;
             this.organisations.unshift({
-                name: 'orgaDoesNotExist',
-                id: 'orgaDoesNotExist'});
+                name: 'createNewOrganisation',
+                id: 'createNewOrganisation'});
           });
         }
 
@@ -63,7 +63,7 @@ export class RegisterComponent {
                     if (this.organisationsCtrl &&
                         this.organisationsCtrl.value &&
                         this.organisationsCtrl.value.find
-                        (entry => entry.id === 'orgaDoesNotExist')) {
+                        (entry => entry.id === 'createNewOrganisation')) {
                       this.openBottomSheet('createMissingOrganisation');
                       this.goToCreateOrganisation();
                     } else {
@@ -75,7 +75,6 @@ export class RegisterComponent {
         },
         error => {
             this.error = error;
-            console.log(error);
         });
     }
 
