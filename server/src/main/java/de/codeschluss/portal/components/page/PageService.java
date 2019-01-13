@@ -3,6 +3,7 @@ package de.codeschluss.portal.components.page;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import de.codeschluss.portal.components.topic.TopicEntity;
 import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 import de.codeschluss.portal.core.api.dto.BaseParams;
 import de.codeschluss.portal.core.exception.NotFoundException;
@@ -11,6 +12,7 @@ import de.codeschluss.portal.core.service.ResourceDataService;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.stereotype.Service;
 
@@ -96,5 +98,18 @@ public class PageService extends ResourceDataService<PageEntity, PageQueryBuilde
       throw new NotFoundException(topicId);
     }
     return assembler.entitiesToResources(pages, params);
+  }
+
+  /**
+   * Update topic resource.
+   *
+   * @param pageId the page id
+   * @param topic the topic
+   * @return the resource
+   */
+  public Resource<?> updateResourceWithTopic(String pageId, TopicEntity topic) {
+    PageEntity page = getById(pageId);
+    page.setTopic(topic);
+    return assembler.toResource(repo.save(page));
   }
 }

@@ -6,6 +6,7 @@ import de.codeschluss.portal.components.topic.TopicEntity;
 import de.codeschluss.portal.components.topic.TopicService;
 import de.codeschluss.portal.core.api.CrudController;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
+import de.codeschluss.portal.core.api.dto.StringPrimitive;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
@@ -106,6 +107,26 @@ public class PageController extends CrudController<PageEntity, PageService> {
   @GetMapping("/pages/{pageId}/topic")
   public ResponseEntity<?> readTopic(@PathVariable String pageId) {
     return ok(topicService.getResourceByPage(pageId));
+  }
+  
+  /**
+   * Update topic.
+   *
+   * @param pageId the page id
+   * @param topicId the topic id
+   * @return the response entity
+   */
+  @PutMapping("/pages/{pageId}/topic")
+  @SuperUserPermission
+  public ResponseEntity<?> updateTopic(@PathVariable String pageId,
+      @RequestBody StringPrimitive topicId) {
+    if (topicService.existsById(topicId.getValue()) 
+        && service.existsById(pageId)) {
+      return ok(
+          service.updateResourceWithTopic(pageId, topicService.getById(topicId.getValue())));
+    } else {
+      throw new BadParamsException("Page or Topic with given ID do not exist!");
+    }
   }
   
   /**
