@@ -65,6 +65,17 @@ public class BloggerService extends ResourceDataService<BloggerEntity, BloggerQu
     return repo.findOne(entities.withUserId(userId))
         .orElseThrow(() -> new NotFoundException(userId));
   }
+  
+  /**
+   * Gets the by user.
+   *
+   * @param userId
+   *          the user id
+   * @return the by user
+   */
+  public Resource<?> getResourceByUser(String userId) {
+    return assembler.toResource(getByUser(userId));
+  }
 
   @Override
   public <P extends FilterSortPaginate> Resources<?> getSortedListResources(P params) {
@@ -108,16 +119,13 @@ public class BloggerService extends ResourceDataService<BloggerEntity, BloggerQu
   }
 
   /**
-   * Sets the blogger approval by user id.
+   * Approve by user id.
    *
-   * @param userId
-   *          the user id
-   * @param approved
-   *          the approved
+   * @param userId the user id
    */
-  public void setBloggerApprovalByUserId(String userId, Boolean approved) {
+  public void approveByUserId(String userId) {
     BloggerEntity blogger = getByUser(userId);
-    blogger.setApproved(approved);
+    blogger.setApproved(true);
     repo.save(blogger);
   }
 
@@ -136,6 +144,14 @@ public class BloggerService extends ResourceDataService<BloggerEntity, BloggerQu
     } else {
       throw new DuplicateEntryException("Blogger already exists");
     }
+  }
 
+  /**
+   * Delete by user.
+   *
+   * @param userId the user id
+   */
+  public void deleteByUser(String userId) {
+    repo.delete(getByUser(userId));
   }
 }

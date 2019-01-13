@@ -4,7 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.blogger.BloggerService;
 import de.codeschluss.portal.components.user.UserController;
+import de.codeschluss.portal.core.api.dto.BooleanPrimitive;
 import de.codeschluss.portal.core.exception.BadParamsException;
+import de.codeschluss.portal.core.exception.NotFoundException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,8 +34,9 @@ public class UserControllerGrantBloggerRightTest {
   @WithUserDetails("super@user")
   public void grantBloggerOk() {
     String userId = "00000006-0000-0000-0004-000000000000";
+    BooleanPrimitive value = new BooleanPrimitive(true);
 
-    ResponseEntity<?> result = (ResponseEntity<?>) controller.grantBloggerRight(userId, true);
+    ResponseEntity<?> result = (ResponseEntity<?>) controller.grantBloggerRight(userId, value);
 
     assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
     assertThat(bloggerService.getByUser(userId).isApproved()).isTrue();
@@ -43,27 +46,39 @@ public class UserControllerGrantBloggerRightTest {
   @WithUserDetails("super@user")
   public void takeBloggerOk() {
     String userId = "00000008-0000-0000-0004-000000000000";
+    BooleanPrimitive value = new BooleanPrimitive(false);
 
-    ResponseEntity<?> result = (ResponseEntity<?>) controller.grantBloggerRight(userId, false);
+    ResponseEntity<?> result = (ResponseEntity<?>) controller.grantBloggerRight(userId, value);
 
     assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
-    assertThat(bloggerService.getByUser(userId).isApproved()).isFalse();
+    assertNotContaining(userId);
   }
 
   @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
   public void takeBloggerBadRequest() {
     String notExistingUserId = "12345678-0000-0000-0004-XX0000000000";
+    BooleanPrimitive value = new BooleanPrimitive(false);
 
-    controller.grantBloggerRight(notExistingUserId, false);
+    controller.grantBloggerRight(notExistingUserId, value);
   }
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("blogNotApproved@user")
   public void grantSuperuserDenied() {
     String userId = "00000006-0000-0000-0004-000000000000";
+    BooleanPrimitive value = new BooleanPrimitive(true);
 
-    controller.grantBloggerRight(userId, true);
+    controller.grantBloggerRight(userId, value);
+  }
+  
+  private void assertNotContaining(String userId) {
+    try {
+      controller.readBlogger(userId);
+      assertThat(true).isFalse();
+    } catch (NotFoundException e) {
+      assertThat(true).isTrue();
+    }
   }
   
 }
