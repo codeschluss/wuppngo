@@ -1,10 +1,14 @@
 package de.codeschluss.portal.components.blogger;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import de.codeschluss.portal.components.blog.BlogEntity;
+import de.codeschluss.portal.components.user.UserController;
 import de.codeschluss.portal.components.user.UserEntity;
 import de.codeschluss.portal.core.entity.BaseResource;
 
@@ -51,7 +55,7 @@ public class BloggerEntity extends BaseResource {
   @JsonProperty(access = Access.READ_ONLY)
   private boolean approved;
   
-  @OneToOne
+  @OneToOne(fetch = FetchType.EAGER)
   @JsonIgnore
   @ToString.Exclude
   @JoinColumn(nullable = false)
@@ -64,7 +68,12 @@ public class BloggerEntity extends BaseResource {
 
   @Override
   public List<Link> createResourceLinks() {
-    return new ArrayList<Link>();
+    List<Link> links = new ArrayList<Link>();
+
+    links.add(linkTo(methodOn(UserController.class)
+        .readBlogger(getUser().getId())).withSelfRel());
+
+    return links;
   }
 
 }

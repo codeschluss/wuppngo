@@ -345,12 +345,45 @@ public class UserController extends CrudController<UserEntity, UserService> {
   @PutMapping("/users/{userId}/grantblogger")
   @SuperUserPermission
   public ResponseEntity<?> grantBloggerRight(@PathVariable String userId,
-      @RequestBody Boolean isBlogger) {
+      @RequestBody BooleanPrimitive isBlogger) {
     try {
-      bloggerService.setBloggerApprovalByUserId(userId, isBlogger);
+      if (isBlogger.getValue()) {
+        bloggerService.approveByUserId(userId);
+      } else {
+        bloggerService.deleteByUser(userId);
+      }
       return noContent().build();
     } catch (NotFoundException e) {
       throw new BadParamsException("User with given ID does not exist!");
+    }
+  }
+  
+  /**
+   * Read blogger.
+   *
+   * @param userId the user id
+   * @return the response entity
+   */
+  @GetMapping("/users/{userId}/blogger")
+  @OwnUserOrSuperUserPermission
+  public ResponseEntity<?> readBlogger(@PathVariable String userId) {
+    return ok(bloggerService.getResourceByUser(userId));
+  }
+  
+  /**
+   * Delete blogger.
+   *
+   * @param userId the user id
+   * @return the response entity
+   */
+  @DeleteMapping("/users/{userId}/blogger")
+  @OwnUserOrSuperUserPermission
+  public ResponseEntity<?> deleteBlogger(@PathVariable String userId) {
+    try {
+      bloggerService.deleteByUser(userId);
+      return noContent().build();
+    } catch (NotFoundException e) {
+      return noContent().build();
     }
   }
 }
