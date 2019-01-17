@@ -5,8 +5,32 @@ import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
   selector: 'info-bottom-sheet',
   template: `
   <div [style.height]="'10vh'" [style.text-align]="'center'">
-    <i18n i18n="'@@' + message">{{message}}</i18n>
-  </div>`
+    <ng-container [ngSwitch]="message">
+      <ng-container *ngSwitchCase="'successfullResetPassword'">
+        <i18n i18n="@@successfullResetPassword">successfullResetPassword</i18n>
+      </ng-container>
+      <ng-container *ngSwitchCase="'genericErrorMessage'">
+        <i18n i18n="@@genericErrorMessage">genericErrorMessage</i18n>
+      </ng-container>
+      <ng-container *ngSwitchCase="'enterUserName'">
+        <i18n i18n="@@enterUserName">enterUserName</i18n>
+      </ng-container>
+      <ng-container *ngSwitchCase="'successfullRegister'">
+        <i18n i18n="@@successfullRegister">successfullRegister</i18n>
+      </ng-container>
+      <ng-container *ngSwitchCase="'successfullyLoggedOut'">
+      <i18n i18n="@@successfullyLoggedOut">successfullyLoggedOut</i18n>
+      </ng-container>
+      <ng-container *ngSwitchCase="'successfullyLoggedIn'">
+        <i18n i18n="@@successfullyLoggedIn">successfullyLoggedIn</i18n>
+      </ng-container>
+      <ng-container *ngSwitchCase="'createMissingOrganisation'">
+        <i18n
+          i18n="@@createMissingOrganisation">createMissingOrganisation</i18n>
+      </ng-container>
+    </ng-container>
+  </div>
+  `
 })
 
 export class InfoBottomComponent implements AfterViewInit {

@@ -40,7 +40,7 @@ export class LoginComponent {
         this.tokenProvider.login(this.userName, this.password).subscribe(
             () => {
                 this.bottomSheet.open(InfoBottomComponent,
-                    { data: { message: 'successfullLoggedIn' } });
+                    { data: { message: 'successfullyLoggedIn' } });
                     this.goToAccountArea();
             },
             error => {

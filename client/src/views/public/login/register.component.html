@@ -49,11 +49,11 @@
 
         <mat-form-field [style.width]="'100%'">
             <mat-select placeholder="Organisationen" [formControl]="organisationsCtrl" multiple>
-                <mat-option *ngFor="let organisation of organisations; let i = index" [value]="organisation">
-                  <i18n *ngIf="i == 0; else regularOption" i18n="@@ + organisation.name">{{organisation.name}}</i18n>
-                  <ng-template #regularOption>
-                      {{organisation.name}}
-                  </ng-template>
+                <mat-option value="createNewOrganisation">
+                  <i18n i18n="@@createNewOrganisation">createNewOrganisation</i18n>
+                </mat-option>
+                <mat-option *ngFor="let organisation of organisations" [value]="organisation">
+                  {{organisation.name}}
                 </mat-option>
             </mat-select>
         </mat-form-field>

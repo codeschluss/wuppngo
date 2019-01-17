@@ -91,16 +91,29 @@ export class NavBarComponent implements OnChanges {
             link: '/home',
         },
         {
-            label: 'personalData',
+            label: 'accountPanel',
             link: '/admin',
         }];
         if (this.token.superuser) {
             this.accountRouts.push(
             {
-                label: 'adminArea',
+                label: 'applicationPanel',
                 link: '/admin/application',
             });
+            this.accountRouts.push(
+              {
+                  label: 'organisationPanel',
+                  link: '/admin/organisation',
+              });
         }
+        if (this.token.adminOrgas.length) {
+          this.accountRouts.push(
+          {
+              label: 'organisationPanel',
+              link: '/admin/organisation',
+          });
+      }
+
     } else {
         this.accountRouts = [{
             label: 'login',

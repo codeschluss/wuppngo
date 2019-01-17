@@ -43,9 +43,6 @@ export class RegisterComponent {
         ) {
           this.organisationProvider.readAll().subscribe(orgas => {
             this.organisations = orgas;
-            this.organisations.unshift({
-                name: 'createNewOrganisation',
-                id: 'createNewOrganisation'});
           });
         }
 
@@ -63,7 +60,7 @@ export class RegisterComponent {
                     if (this.organisationsCtrl &&
                         this.organisationsCtrl.value &&
                         this.organisationsCtrl.value.find
-                        (entry => entry.id === 'createNewOrganisation')) {
+                        (entry => entry === 'createNewOrganisation')) {
                       this.openBottomSheet('createMissingOrganisation');
                       this.goToCreateOrganisation();
                     } else {

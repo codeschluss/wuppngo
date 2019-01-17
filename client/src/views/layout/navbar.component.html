@@ -11,14 +11,31 @@
                     fxLayout.lt-md="column"
                     fxFlex="60"
                     fxLayoutAlign="space-around center">
+                                    <!-- TDOD: NGSwitch... -->
                         <span *ngFor="let routeLink of routeLinks; let i = index;"
                         class="nav-item"
                         [routerLink]="routeLink.link"
                         routerLinkActive="color-primary"
                         [routerLinkActiveOptions]="{exact: true}">
-                            <a mat-button (click)="activeLinkIndex = i">
-                                <i18n i18n='"@@" + routeLink.label'>{{routeLink.label}}</i18n>
-                            </a>
+                          <a mat-button (click)="activeLinkIndex = i">
+                            <ng-container [ngSwitch]="routeLink.label">
+                              <ng-container *ngSwitchCase="'timer'">
+                                <i18n i18n="@@timer">timer</i18n>
+                              </ng-container>
+                              <ng-container *ngSwitchCase="'organisations'">
+                                <i18n i18n="@@organisations">organisations</i18n>
+                              </ng-container>
+                              <ng-container *ngSwitchCase="'worthKnowing'">
+                                <i18n i18n="@@worthKnowing">worthKnowing</i18n>
+                              </ng-container>
+                              <ng-container *ngSwitchCase="'blogs'">
+                                <i18n i18n="@@blogs">blogs</i18n>
+                              </ng-container>
+                              <ng-container *ngSwitchDefault>
+                                <div>{{routeLink.label}}</div>
+                              </ng-container>
+                            </ng-container>
+                          </a>
                         </span>
                     </div>
                     <div fxLayout="row" fxLayoutAlign="space-around center">
@@ -30,7 +47,20 @@
                             src="imgs/account.svg">
                         <mat-menu #menu="matMenu">
                             <button mat-menu-item *ngFor="let route of accountRouts" (click)="navigateTo(route.link)">
-                                <i18n i18n='"@@" + route.label'>{{route.label}}</i18n>
+                              <ng-container [ngSwitch]="route.label">
+                                  <ng-container *ngSwitchCase="'accountPanel'">
+                                    <i18n i18n="@@accountPanel">accountPanel</i18n>
+                                  </ng-container>
+                                  <ng-container *ngSwitchCase="'applicationPanel'">
+                                    <i18n i18n="@@applicationPanel">applicationPanel</i18n>
+                                  </ng-container>
+                                  <ng-container *ngSwitchCase="'organisationPanel'">
+                                    <i18n i18n="@@organisationPanel">organisationPanel</i18n>
+                                  </ng-container>
+                                  <ng-container *ngSwitchDefault>
+                                    <div>{{route.label}}</div>
+                                  </ng-container>
+                                </ng-container>
                             </button>
                             <button mat-menu-item *ngIf="token && token.sub" (click)="logout()">
                                 <i18n i18n="@@logout">logout</i18n>
@@ -70,11 +100,43 @@
                 routerLinkActive="background-color-primary"
                 [routerLinkActiveOptions]="{exact: true}"
                 (click)="activeLinkIndex = i">
-                    <i18n i18n='"@@" + routeLink.label'>{{routeLink.label}}</i18n>
+                <ng-container [ngSwitch]="routeLink.label">
+                    <ng-container *ngSwitchCase="'timer'">
+                      <i18n i18n="@@timer">timer</i18n>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'organisations'">
+                      <i18n i18n="@@organisations">organisations</i18n>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'worthKnowing'">
+                      <i18n i18n="@@worthKnowing">worthKnowing</i18n>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'blogs'">
+                      <i18n i18n="@@blogs">blogs</i18n>
+                    </ng-container>
+                    <ng-container *ngSwitchDefault>
+                      {{routeLink.label}}
+                    </ng-container>
+                  </ng-container>
                 </mat-toolbar-row>
                 <mat-toolbar-row *ngFor="let route of accountRouts"
-                    [routerLink]="route.link">
-                    <i18n i18n='"@@" + route.label'>{{route.label}}</i18n>
+                  [routerLink]="route.link">
+                  <ng-container [ngSwitch]="route.label">
+                    <ng-container *ngSwitchCase="'accountPanel'">
+                      <i18n i18n="@@accountPanel">accountPanel</i18n>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'applicationPanel'">
+                      <i18n i18n="@@applicationPanel">applicationPanel</i18n>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'organisationPanel'">
+                      <i18n i18n="@@organisationPanel">organisationPanel</i18n>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'login'">
+                      <i18n i18n="@@login">login</i18n>
+                    </ng-container>
+                    <ng-container *ngSwitchDefault>
+                      {{route.label}}
+                    </ng-container>
+                  </ng-container>
                 </mat-toolbar-row>
                 <mat-toolbar-row (click)="openLanguageChooser()">
                     <i18n i18n="@@selectLanguage">selectLanguage</i18n>
