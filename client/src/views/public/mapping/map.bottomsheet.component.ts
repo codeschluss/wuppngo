@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
 import { ConfigurationModel } from 'src/realm/configuration/configuration.model';
 import { ConfigurationProvider } from 'src/realm/configuration/configuration.provider';
@@ -19,7 +19,7 @@ import { ActivityModel } from '../../../realm/activity/activity.model';
   styleUrls: ['map.bottomsheet.component.css']
 })
 
-export class BottomSheetMapComponent implements OnInit {
+export class BottomSheetMapComponent {
   public activities: ActivityModel[];
   public configurations: ConfigurationModel[];
 
@@ -28,11 +28,7 @@ export class BottomSheetMapComponent implements OnInit {
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
     private bottomSheetRef: MatBottomSheetRef<BottomSheetMapComponent>) {
     this.activities = data.activities;
-  }
-
-  ngOnInit() {
-    this.configProvider.readAll().subscribe(
-      configs => this.configurations = configs );
+    this.configurations = data.configurations;
   }
 
 }

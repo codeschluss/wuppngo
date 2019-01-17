@@ -37,11 +37,20 @@
                   {{ activity.address.place }}
                 </p>
               </div>
-              <img src="imgs/map.png"
-                  class="clickable"
-                  fxFlex="50"
-                  fxFlexAlign="start"
-                  (click)="openBottomSheetMap()">
+              <div
+                fxFlex="50"
+                fxFlexAlign="start"
+                [style.backgroundImage]="'url(\'imgs/map.png\')'"
+                [style.backgroundSize]="'cover'"
+                (click)="activity && configurations && openBottomSheetMap()">
+                <mapping-component
+                  [style.pointerEvents]="'none'"
+                  *ngIf="activity && configurations"
+                  [activities] = [activity]
+                  [configurations] = configurations
+                  [disableCarousel] = "true">
+                </mapping-component>
+              </div>
             </div>
             <div *ngIf="activity.schedules && activity.schedules.length"
               fxLayout="row"
@@ -49,8 +58,8 @@
               (click)="openBottomSheetSchedules(activity.schedules)">
               <div fxLayout="column" id="addressCard">
                 <div fxLayout="row">
-                  <span>{{ getNextdate(activity.schedules[0].startDate) }}</span>
                   <fa-icon id="calendar-icon" icon="calendar-alt"></fa-icon>
+                  &nbsp;<span>{{ getNextdate(activity.schedules[0].startDate) }}</span>
                 </div>
                 <div>
                   {{ getNextdateTime(activity.schedules[0].startDate) }}
