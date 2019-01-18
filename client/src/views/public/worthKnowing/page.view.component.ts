@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import * as moment from 'moment';
 import { PageModel } from 'src/realm/page/page.model';
 
 @Component({
@@ -14,14 +15,16 @@ export class PageViewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute
-  ) {}
+  ) {
+    moment.locale('de');
+  }
 
   ngOnInit() {
     this.page = this.route.snapshot.data.page;
   }
 
   public getCreationDate(dateString: string): string {
-    return new Date(dateString.replace(' ', 'T')).toLocaleDateString('de-DE');
+    return moment(dateString).format('L');
   }
 
 }

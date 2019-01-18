@@ -24,27 +24,4 @@ export class OrganisationCardComponent {
     this.router.navigate(['/view/organisations/', this.organisation.id]);
   }
 
-  getOrgaImg(): string {
-    if (this.organisation.images && this.organisation.images[0]) {
-      const image = this.organisation.images[0];
-      return 'data:' + image.mimeType + ';base64,'
-      + atob(image.imageData.toString());
-    } else {
-      return 'imgs/placeHolder.jpg';
-    }
-  }
-
-  getHeadLineFontSize(name: string): string {
-    if (name.length >= 20) {
-      return '1.5em';
-    }
-    if (name.length > 10 && name.length < 20) {
-      return '2em';
-    }
-    if (name.length <= 10) {
-      return '2.5em';
-    }
-
-  }
-
 }

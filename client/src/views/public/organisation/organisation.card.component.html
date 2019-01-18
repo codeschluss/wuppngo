@@ -1,35 +1,23 @@
 <mat-card (click)="openOrganisationView()"
-    class="background-color-accent clickable">
-    <div [style.height]="'100%'" fxLayout="column" fxLayoutAlign="space-evenly center">
-        <div *ngIf="organisation.name"
-            [style.font-weight]="'bold'"
-            [style.font-size]="getHeadLineFontSize(organisation.name)">
-                {{organisation.name}}
-            </div>
-        <div fxLayout="row"
-            fxFlex="100"
-            fxLayoutAlign="space-between center"
-            fxLayoutGap="20px grid">
-            <div fxFlex>
-                <img [style.width]="'100%'" [src]="getOrgaImg()">
-            </div>
-
-            <div class="organisation-contact-card"
-                fxFlex="60"
-                fxLayout="column"
-                fxLayoutGap="10px grid">
-                <div fxLayout="column" *ngIf="organisation.address">
-                    <div>
-                        {{organisation?.address?.street + ' ' + organisation?.address?.houseNumber}}
-                    </div>
-                    <div>{{organisation?.address?.postalCode}}</div>
-                    <div>{{organisation?.address?.place}}</div>
-                </div>
-                <div fxLayout="column">
-                    <div>{{'T:' + organisation?.phone}}</div>
-                    <div>{{'E:' + organisation?.mail}}</div>
-                </div>
-            </div>
+    class="background-color-primary clickable"
+    [style.height]="'190px'">
+  <mat-card-content [style.height]="'100%'" >
+    <div [style.height]="'100%'" fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="5px">
+      <div fxLayout="column" fxLayoutAlign="end">
+        <div class="smallText">
+          <div [style.fontWeight]="'bold'">
+            <div>{{organisation?.address?.street}}&nbsp;{{organisation?.address?.houseNumber}}</div>
+            <div>{{organisation?.address?.postalCode}}&nbsp;{{organisation?.address?.place}}</div>
+          </div>
+          <div>
+            {{ organisation?.address?.suburb.name }}
+          </div>
         </div>
+        <div [style.font-size]="'25px'" [style.fontWeight]="'bold'" [style.word-break]="'break-word'">
+          {{ organisation.name }}
+        </div>
+      </div>
     </div>
+  </mat-card-content>
 </mat-card>
+

@@ -12,6 +12,7 @@
             class="clickable"
             [style.border]="isActiveCategory(category.id) ? 'solid' : ''"
             [style.color]="isActiveCategory(category.id) ? category.color : ''"
+            [style.background]="'transparent'"
             (click)="toggleCategoryFilter(category.id)">
             {{category.name}}
           </mat-chip>
@@ -36,23 +37,21 @@
       </div>
 
       <div id="activitiesContainer"
-        fxFlex.gt-sm="66"
         fxLayout="row wrap"
-        fxFlex.lt-md="100"
-        *ngIf="activities && activities.length">
+        fxLayoutGap="10px"
+        fxFlex
+        *ngIf="activities && activities.length"
+        fxLayoutAlign="space-around center">
         <div class="activityCard"
           fxLayoutAlign="space-around"
-          fxFlex="50"
-          fxFlex.xs="100"
           *ngFor="let activity of activities">
-          <activity-card [style.min-width]="'20vw'"
-            (mouseenter)="showOnMap(activity)"
+          <activity-card (mouseenter)="showOnMap(activity)"
             (mouseleave)="resetHighlighting()"
             [activity]="activity">
           </activity-card>
         </div>
       </div>
-      <div *ngIf="activities && mapConfigurations" fxHide.lt-md="true" id="map-container">
+      <div fxFlex="30" *ngIf="activities && mapConfigurations" fxHide.lt-md="true" id="map-container">
         <mapping-component [activities]="activities" [configurations]="mapConfigurations">
         </mapping-component>
       </div>

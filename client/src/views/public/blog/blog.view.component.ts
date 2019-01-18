@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import * as moment from 'moment';
+
 
 @Component({
     selector: 'blog-view',
@@ -14,7 +16,9 @@ export class BlogViewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute
-  ) { }
+  ) {
+    moment.locale('de');
+   }
 
     ngOnInit() {
       this.blog = this.route.snapshot.data.blog;
@@ -22,6 +26,6 @@ export class BlogViewComponent implements OnInit {
     }
 
   public getDate(dateString: string): string {
-    return new Date(dateString).toLocaleDateString('de-DE');
+    return moment(dateString).format('L');
   }
 }

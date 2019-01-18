@@ -3,7 +3,9 @@
     <h3 class="color-primary">{{ activity.name }}</h3>
     <mat-chip-list>
       <mat-chip id="category"
-      [ngStyle]="{'background-color':activity.category.color}">
+        [style.border]="'solid'"
+        [style.color]="activity.category.color"
+        [style.background]="'transparent'">
         {{ activity.category.name }}
       </mat-chip>
     </mat-chip-list>
@@ -23,7 +25,7 @@
         </div>
       </div>
       <div fxFlex="40" fxFlex.lt-md="100" fxLayout="column">
-        <mat-card id="actDateTimePanel">
+        <mat-card id="actDateTimePanel" [style.max-width]="'600px'">
           <mat-card-content fxLayout="column">
             <div fxLayout="row">
               <div *ngIf="activity.address && activity.address.suburb" fxFlex="50" fxFlexAlign="start">

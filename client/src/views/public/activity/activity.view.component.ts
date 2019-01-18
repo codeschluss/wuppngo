@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as moment from 'moment';
 import { ActivityModel } from 'src/realm/activity/activity.model';
 import { BlogModel } from 'src/realm/blog/blog.model';
 import { ConfigurationModel } from 'src/realm/configuration/configuration.model';
@@ -12,7 +13,6 @@ import { TargetGroupModel } from '../../../realm/target-group/target-group.model
 import { BottomSheetMapComponent } from '../mapping/map.bottomsheet.component';
 import { MappingComponent } from '../mapping/mapping.component';
 import { BottomSheetScheduleComponent } from './schedules.bottom.sheet.component';
-
 
 @Component({
   styleUrls: ['activity.view.component.scss'],
@@ -38,22 +38,22 @@ export class ActivityViewComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private configProvider: ConfigurationProvider
-  ) {}
+  ) {
+    moment.locale('de');
+  }
 
   ngOnInit() {
     this.activity = this.route.snapshot.data.activity;
-    // this.configProvider.readAll().subscribe(
-    //   configs => this.configurations = configs );
+    this.configProvider.readAll().subscribe(
+      configs => this.configurations = configs );
   }
 
   getNextdate(date: string): string {
-    return new Date(date.replace(' ', 'T'))
-    .toLocaleDateString('de-DE');
+    return moment(date).format('L');
   }
 
   getNextdateTime(date: string): string {
-    return new Date(date.replace(' ', 'T'))
-    .toLocaleTimeString('de-DE').substring(0, 5);
+    return moment(date).format('LT');
   }
 
   openBottomSheetSchedules(schedules: ScheduleModel[]): void {

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { ActivityModel } from 'src/realm/activity/activity.model';
 
 @Component({
@@ -15,29 +16,20 @@ export class ActivityCardComponent {
 
   constructor(
     private router: Router,
-  ) { }
+  ) {
+    moment.locale('de');
+   }
 
-  getNextdate(date: string): string {
-    return new Date(date.replace(' ', 'T')).toLocaleDateString('de-DE');
+   getNextdate(date: string): string {
+    return moment(date).format('L');
   }
 
   getCategoryImageURI(categoryName: string): string {
     const uri = '/imgs/categories/' + categoryName + '.svg';
-    // if (this.ImageExists(uri)) {
-      return uri;
-    // } else {
-    //   return '/imgs/categories/events.svg';
-    // }
+    return uri;
   }
 
   openActivityView(): void {
     this.router.navigate(['/view/activities/', this.activity.id]);
   }
-
-  ImageExists(url: string): boolean {
-    const img = new Image();
-    img.src = url;
-    return img.height !== 0;
-  }
-
 }
