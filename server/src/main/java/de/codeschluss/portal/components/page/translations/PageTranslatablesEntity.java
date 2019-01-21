@@ -3,7 +3,7 @@ package de.codeschluss.portal.components.page.translations;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-import de.codeschluss.portal.components.category.CategoryController;
+import de.codeschluss.portal.components.page.PageController;
 import de.codeschluss.portal.components.page.PageEntity;
 import de.codeschluss.portal.core.i18n.entities.TranslatableEntity;
 
@@ -52,8 +52,8 @@ public class PageTranslatablesEntity extends TranslatableEntity<PageEntity> {
   public List<Link> createResourceLinks() {    
     List<Link> links = new ArrayList<Link>();
 
-    links.add(linkTo(methodOn(CategoryController.class)
-        .readTranslations(getId())).withSelfRel());
+    links.add(linkTo(methodOn(PageController.class)
+        .readTranslations(parent.getId())).withSelfRel());
 
     return links;
   }

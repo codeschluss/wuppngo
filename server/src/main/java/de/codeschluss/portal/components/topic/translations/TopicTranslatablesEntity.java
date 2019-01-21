@@ -48,7 +48,7 @@ public class TopicTranslatablesEntity extends TranslatableEntity<TopicEntity> {
     List<Link> links = new ArrayList<Link>();
 
     links.add(linkTo(methodOn(TopicController.class)
-        .readTranslations(getId())).withSelfRel());
+        .readTranslations(parent.getId())).withSelfRel());
 
     return links;
   }
