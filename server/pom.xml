@@ -67,6 +67,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
+        <dependency>
+			<groupId>com.icegreen</groupId>
+			<artifactId>greenmail</artifactId>
+			<version>${greenmail.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>mysql</groupId>
@@ -134,12 +139,6 @@
 			<scope>test</scope>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.icegreen</groupId>
-			<artifactId>greenmail</artifactId>
-			<version>${greenmail.version}</version>
-			<scope>test</scope>
 		</dependency>
         <dependency>
 			<groupId>org.imgscalr</groupId>
