@@ -2,11 +2,6 @@ blog-list-item {
     border-radius: 5px;
 }
 
-::ng-deep mat-tab-header.mat-tab-header {
-    margin: auto !important;
-    max-width: 90%;
-}
-
 #searchResultContainer {
     width: 90%;
     margin: auto;
@@ -22,4 +17,29 @@ blog-list-item {
 
 ::ng-deep mat-card {
     min-width: 200px !important;
+}
+
+.searchResultExpansionPanel {
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+.indicatorClosed {
+  -ms-transform: rotate(0deg); /* IE 9 */
+  -webkit-transform: rotate(0deg); /* Safari 3-8 */
+  transform: rotate(0deg);
+  transition-duration: 0.8s;
+  transition-property: transform;
+}
+
+.indicatorOpen {
+  -ms-transform: rotate(-45deg); /* IE 9 */
+  -webkit-transform: rotate(-45deg); /* Safari 3-8 */
+  transform: rotate(-45deg);
+  transition-duration: 0.8s;
+  transition-property: transform;
+}
+
+::ng-deep .mat-expansion-panel-content {
+  background-color: #F5F5F5 !important;
 }

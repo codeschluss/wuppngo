@@ -4,6 +4,7 @@ import { MatDialogRef } from '@angular/material';
 @Component({
     selector: 'imprint-dialog',
     templateUrl: 'imprint.dialog.component.html',
+    styleUrls: ['imprint.scss']
   })
 
   export class ImprintDialogComponent {

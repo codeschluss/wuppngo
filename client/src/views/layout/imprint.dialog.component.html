@@ -1,56 +1,281 @@
 
-<div [style.max-height]="'80vh'" [style.word-break]="'break-word'">
-    <div fxLayout="column" fxlayoutGap="20">
-        <h2>Redaktionelle Hinweise</h2>
-        Alle redaktionellen Inhalte (Angebote, Textinhalte, etc.) dieser Website
-        sind geistiges Eigentum und obliegen der Verantwortlichkeit der
-        erstellenden und edierenden Personnen bzw. rechtlichen Körper.
-
-        <h2>Erfassung allgemeiner Informationen</h2>
-        Wenn Sie auf unsere Webseite zugreifen, werden automatisch Informationen
-        allgemeiner Natur erfasst. Diese Informationen beinhalten etwa die Art
-        Ihres Webbrowsers, Ihr verwendetes Betriebssystem, Ihre IP Adresse und
-        Ähnliches. Hierbei handelt es sich ausschließlich um Informationen,
-        welche keine Rückschlüsse auf Ihre Person zulassen. Diese Informationen
-        sind technisch notwendig, um von Ihnen angeforderte Webinhalte korrekt
-        auszuliefern und fallen bei Nutzung des Internets zwingend an. Anonyme
-        Informationen dieser Art werden von uns statistisch ausgewertet, um
-        unseren Internetauftritt und die dahinterstehende Technik zu optimieren
-        und vor Schäden zu bewahren.
-
-        <h2>Verwendung von OpenStreeMap</h2>
-        Diese Webseite verwendet OpenStreetMap zur Darstellung der Landkarten.
-        Durch Ihre Nutzung werden somit Daten von Ihnen an die OpenStreetMaps
-        Foundation übermittelt.  Nähere Informationen über die Datenverarbeitung
-        durch die OpenStreeMap Foundation können Sie den entsprechenden
-        Datenschutzhinweisen entnehmen.
-
-        <h2>Nutzerrechte</h2>
-        Als Nutzende unserer Webseite haben Sie jederzeit die Möglichkeit uns
-        gegenüber die Ihnen durch den Gesetzgeber zugesicherten Rechte geltend
-        zu machen. Hierzu wenden Sie Sich bitte an den oben genannten
-        Ansprechpartner für Datenschutz.
+<div [style.max-height]="'80vh'">
+  <mat-list>
+    <div>
+      <h3><i18n i18n="@@publicAgencies">publicAgencies</i18n></h3>
     </div>
 
-    <div fxLayout="column">
-        <h2>Datenschutzbestimmungen</h2>
-        Darüber hinaus können Sie Sich (gem. Art. 77 DSGVO) im Beschwerdefall an
-        eine entsprechende Aufsichtsbehörde wenden. Die Zuständigkeit richtet
-        sich nach Bundesland, Arbeitsbereich und mutmaßlichem Verstoß. Für
-        weitere Informationen und Beratung konsultieren Sie bitte die
-        Dienststelle der Bundesbeauftragten für den Datenschutz und die
-        Informationsfreiheit.
+    <h4 mat-subheader>Ressort Kinder, Jugend und Familie - Jugendamt der Stadt Wuppertal</h4>
 
-        <h2>Änderung unserer Datenschutzbestimmungen</h2>
-        Wir behalten uns vor, diese Datenschutzerklärung jederzeit anzupassen,
-        damit stets allen aktuellen rechtlichen Anforderungen entsprochen wird
-        oder um sie an Funktionserweiterungen dieser Applikation anzupassen.
-        Für Ihren Besuch gilt stets die aktuellste Datenschutzerklärung.
+    <div>
+        Als familienfreundliche Stadt bietet Wuppertal viel für Kinder, Jugendliche und Familien u.a.
+        in den Bereichen Freizeit, Kultur, Bildung, Sport. Aber auch in den Bereichen, in denen Kinder,
+        Jugendliche und Familien der besonderen Zuwendung, der Beratung und Hilfe bedürfen, sind wir tätig.
     </div>
-    <button mat-fab 
-        color="primary"
-        [style.position]="'absolute'"
-        [style.top]="'20px'"
-        [style.right]="'20px'"
-        (click)="close()">X</button>
+
+    <a mat-button color="primary" tabindex="-1" target="_blank"
+      href="https://www.wuppertal.de/jugendamt">
+      <mat-list-item>
+        <fa-icon mat-list-icon icon="star"></fa-icon>
+        <div class="mat-list-text">
+          <strong mat-line>
+            <i18n i18n="@@website">website</i18n>
+          </strong>
+          <p mat-line>https://www.wuppertal.de/jugendamt</p>
+        </div>
+      </mat-list-item>
+    </a>
+
+    <a mat-button color="primary" tabindex="-1"
+      href="tel:+49 202 563 5262 ">
+      <mat-list-item>
+        <fa-icon mat-list-icon icon="phone"></fa-icon>
+        <div class="mat-list-text">
+          <strong mat-line>
+            <i18n i18n="@@contactPhone">contactPhone</i18n>
+          </strong>
+          <p mat-line>(+49) 202 563 5262 </p>
+        </div>
+      </mat-list-item>
+    </a>
+
+    <div>
+      <h3><i18n i18n="@@orgaRealisation">orgaRealisation</i18n></h3>
+    </div>
+
+    <div>
+        Die folgenden Personen haben maßgeblich an der organisatorischen
+        Betreuung, Beratung und damit Umsetzung dieses Portals mitgewirkt.
+    </div>
+
+    <a mat-button color="primary" tabindex="-1"
+      href="mailto:Niklas.Werth@stadt.wuppertal.de">
+      <mat-list-item>
+        <fa-icon mat-list-icon icon="user"></fa-icon>
+        <div class="mat-list-text">
+          <strong mat-line>Niklas Werth</strong>
+          <p mat-line>
+            <i18n i18n="@@municipalSupport">municipalSupport</i18n>
+          </p>
+        </div>
+      </mat-list-item>
+    </a>
+
+    <mat-divider></mat-divider>
+
+    <div>
+      <h3><i18n i18n="@@techRealisation">techRealisation</i18n></h3>
+    </div>
+
+    <div>
+        Die technische Umsetzung dieses Portals wurde im Rahmen des ehrenamtlichen
+        Engagements der Folgenden Personen vollzogen.
+    </div>
+
+    <a mat-button color="primary" tabindex="-1"
+      href="mailto:valmir.e@gmx.de">
+      <mat-list-item>
+        <fa-icon mat-list-icon icon="user"></fa-icon>
+        <div class="mat-list-text">
+          <strong mat-line>Valmir Etemi</strong>
+          <p mat-line>valmir.e@gmx.de</p>
+        </div>
+      </mat-list-item>
+    </a>
+
+    <a mat-button color="primary" tabindex="-1"
+      href="mailto:me@phil.re">
+      <mat-list-item>
+        <fa-icon mat-list-icon icon="user"></fa-icon>
+        <div class="mat-list-text">
+          <strong mat-line>Philip Schildkamp</strong>
+          <p mat-line>me@phil.re</p>
+        </div>
+      </mat-list-item>
+    </a>
+
+    <a mat-button color="primary" tabindex="-1"
+      href="mailto:pseipel@web.de">
+      <mat-list-item>
+        <fa-icon mat-list-icon icon="user"></fa-icon>
+        <div class="mat-list-text">
+          <strong mat-line>Peter Seipel</strong>
+          <p mat-line>pseipel@web.de</p>
+        </div>
+      </mat-list-item>
+    </a>
+
+    <a mat-button color="primary" tabindex="-1"
+    href="mailto:design@yudovich.de">
+      <mat-list-item>
+        <fa-icon mat-list-icon icon="user"></fa-icon>
+        <div class="mat-list-text">
+          <strong mat-line>Maryna Yudovich (Design)</strong>
+          <p mat-line>design@yudovich.de</p>
+        </div>
+      </mat-list-item>
+    </a>
+
+    <a mat-button color="primary" tabindex="-1" target="_blank"
+      href="https://github.com/codeschluss/wuppngo">
+      <mat-list-item>
+        <fa-icon mat-list-icon icon="code"></fa-icon>
+        <div class="mat-list-text">
+          <strong mat-line>Wupp'n'go Code-Repository</strong>
+          <p mat-line>github.com/codeschluss/wuppngo</p>
+        </div>
+      </mat-list-item>
+    </a>
+
+    <mat-divider></mat-divider>
+
+    <div>
+      <h3><i18n i18n="@@legalNotices">legalNotices</i18n></h3>
+    </div>
+
+    <mat-list-item>
+      <fa-icon mat-list-icon icon="balance-scale"></fa-icon>
+      <strong mat-line>Hinweise</strong>
+      <p mat-line>Rechtliche Hinweise bzgl. TMG und DSGVO anzeigen</p>
+    </mat-list-item>
+
+    <ng-container>
+      <h4 mat-subheader>Angaben gemäß §5 TMG</h4>
+
+      <mat-list-item>
+        <fa-icon mat-list-icon icon="user"></fa-icon>
+        <div class="mat-list-text">
+          <strong mat-line>Ansprechpartner</strong>
+          <p mat-line>Ressort Kinder, Jugend und Familie - Jugendamt der Stadt Wuppertal</p>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item>
+        <fa-icon mat-list-icon icon="map-marker-alt"></fa-icon>
+        <div class="mat-list-text">
+          <strong mat-line>Anschrift</strong>
+          <p mat-line>Alexanderstr. 18, 42103  Wuppertal</p>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item>
+        <p class="hypernate">
+          <em>Redaktionelle Hinweise</em>
+          Alle redaktionellen Inhalte (Angebote, Textinhalte, etc.) dieser Website
+          sind geistiges Eigentum und obliegen der Verantwortlichkeit der
+          erstellenden und edierenden Personnen bzw. rechtlichen Körper.
+        </p>
+      </mat-list-item>
+
+      <mat-divider></mat-divider>
+
+      <h4 mat-subheader>Datenschutzerklärung gemäß DSGVO</h4>
+
+      <mat-list-item>
+        <fa-icon mat-list-icon icon="user"></fa-icon>
+        <div class="mat-list-text">
+          <strong mat-line>Ansprechpartner</strong>
+          <p mat-line>Ressort Kinder, Jugend und Familie - Jugendamt der Stadt Wuppertal</p>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item>
+        <fa-icon mat-list-icon icon="key"></fa-icon>
+        <div class="mat-list-text">
+          <strong mat-line>Verschlüsste Datenübertragung</strong>
+          <p mat-line>Diese Website nutzt moderne SSL-Verschlüsselung</p>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item>
+        <p class="hypernate">
+          <em>Erfassung allgemeiner Informationen</em>
+          Wenn Sie auf unsere Webseite zugreifen, werden automatisch Informationen
+          allgemeiner Natur erfasst. Diese Informationen beinhalten etwa die Art
+          Ihres Webbrowsers, Ihr verwendetes Betriebssystem, Ihre IP Adresse und
+          Ähnliches. Hierbei handelt es sich ausschließlich um Informationen,
+          welche keine Rückschlüsse auf Ihre Person zulassen. Diese Informationen
+          sind technisch notwendig, um von Ihnen angeforderte Webinhalte korrekt
+          auszuliefern und fallen bei Nutzung des Internets zwingend an. Anonyme
+          Informationen dieser Art werden von uns statistisch ausgewertet, um
+          unseren Internetauftritt und die dahinterstehende Technik zu optimieren
+          und vor Schäden zu bewahren.
+        </p>
+      </mat-list-item>
+
+      <mat-list-item>
+        <p class="hypernate">
+          <em>Verwendung von OpenStreeMap</em>
+          Diese Webseite verwendet OpenStreetMap zur Darstellung der Landkarten.
+          Durch Ihre Nutzung werden somit Daten von Ihnen an die OpenStreetMaps
+          Foundation übermittelt.  Nähere Informationen über die Datenverarbeitung
+          durch die OpenStreeMap Foundation können Sie den entsprechenden
+          Datenschutzhinweisen entnehmen.
+        </p>
+      </mat-list-item>
+
+      <a mat-button color="primary" tabindex="-1" target="_blank"
+        href="https://wiki.openstreetmap.org/wiki/Privacy_Policy">
+        <mat-list-item>
+          <fa-icon mat-list-icon icon="star"></fa-icon>
+          <div class="mat-list-text">
+            <strong mat-line>OpenStreeMap Datenschutzhinweise</strong>
+            <p mat-line>wiki.openstreetmap.org/wiki/Privacy_Policy</p>
+          </div>
+        </mat-list-item>
+      </a>
+
+      <mat-list-item>
+        <p class="hypernate">
+          <em>Nutzerrechte</em>
+          Als Nutzende unserer Webseite haben Sie jederzeit die Möglichkeit uns
+          gegenüber die Ihnen durch den Gesetzgeber zugesicherten Rechte geltend
+          zu machen. Hierzu wenden Sie Sich bitte an den oben genannten
+          Ansprechpartner für Datenschutz.
+        </p>
+      </mat-list-item>
+      <mat-list-item>
+        <ul>
+          <li>Recht auf Widerruf Ihrer Einwilligung zur Datenverarbeitung
+            (gem. Art. 7 Abs. 3 DSGVO)</li>
+          <li>Recht auf Auskunft über alle von uns über Sie erhobenen Daten
+            (gem. Art. 15 DSGVO)</li>
+          <li>Recht auf Berichtigung aller von uns über Sie erhobenen Daten
+            (gem. Art. 16 DSGVO)</li>
+          <li>Recht auf Löschung aller von uns über Sie erhobenen Daten
+            (gem. Art. 17 DSGVO)</li>
+          <li>Recht auf Einschränkung der Verarbeitung ihrer Daten
+            (gem. Art. 18 DSGVO)</li>
+          <li>Recht auf Übertragbarkeit aller von uns über Sie erhobenen Daten
+            (gem. Art. 20 DSGVO)</li>
+          <li>Recht auf Widerspruch gegen unsere Verarbeitung Ihrer Daten
+            (gem. Art. 21 DSGVO)</li>
+        </ul>
+      </mat-list-item>
+      <mat-list-item>
+          Darüber hinaus können Sie Sich (gem. Art. 77 DSGVO) im Beschwerdefall an
+          eine entsprechende Aufsichtsbehörde wenden. Die Zuständigkeit richtet
+          sich nach Bundesland, Arbeitsbereich und mutmaßlichem Verstoß. Für
+          weitere Informationen und Beratung konsultieren Sie bitte die
+          Dienststelle der Bundesbeauftragten für den Datenschutz und die
+          Informationsfreiheit.
+      </mat-list-item>
+
+      <mat-list-item>
+        <p class="hypernate">
+          <em>Änderung unserer Datenschutzbestimmungen</em>
+          Wir behalten uns vor, diese Datenschutzerklärung jederzeit anzupassen,
+          damit stets allen aktuellen rechtlichen Anforderungen entsprochen wird
+          oder um sie an Funktionserweiterungen dieser Applikation anzupassen.
+          Für Ihren Besuch gilt stets die aktuellste Datenschutzerklärung.
+        </p>
+      </mat-list-item>
+    </ng-container>
+  </mat-list>
+  <button mat-fab
+  color="primary"
+  [style.position]="'absolute'"
+  [style.top]="'20px'"
+  [style.right]="'20px'"
+  (click)="close()">X</button>
 </div>

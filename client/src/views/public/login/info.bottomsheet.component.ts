@@ -4,7 +4,7 @@ import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
 @Component({
   selector: 'info-bottom-sheet',
   template: `
-  <div [style.height]="'10vh'" [style.text-align]="'center'">
+  <div [style.text-align]="'center'">
     <ng-container [ngSwitch]="message">
       <ng-container *ngSwitchCase="'successfullResetPassword'">
         <i18n i18n="@@successfullResetPassword">successfullResetPassword</i18n>

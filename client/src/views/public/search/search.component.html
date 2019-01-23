@@ -2,5 +2,24 @@
     <h2 *ngIf="query">
         <i18n i18n="@@resultsFor">resultsFor</i18n> '{{query}}'
     </h2>
-    <search-list [query]="query"></search-list>
+    <mat-accordion>
+      <ng-container *ngIf="activities">
+        <search-result-list [results]="activities" [modelType]="'activities'"></search-result-list>
+      </ng-container>
+    </mat-accordion>
+    <mat-accordion>
+      <ng-container *ngIf="organisations">
+        <search-result-list [results]="organisations" [modelType]="'organisations'"></search-result-list>
+      </ng-container>
+    </mat-accordion>
+    <mat-accordion>
+      <ng-container *ngIf="blogs">
+        <search-result-list [results]="blogs" [modelType]="'blogs'"></search-result-list>
+      </ng-container>
+    </mat-accordion>
+    <mat-accordion>
+      <ng-container *ngIf="pages">
+        <search-result-list [results]="pages" [modelType]="'pages'"></search-result-list>
+      </ng-container>
+    </mat-accordion>
 </div>

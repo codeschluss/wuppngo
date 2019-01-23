@@ -21,7 +21,7 @@ export class PageListComponent {
   }
 
   public toPage(pageID: string) {
-    this.router.navigate(['/view/page/' + pageID]);
+    this.router.navigate(['/view/pages/' + pageID]);
   }
 
   public getCreationDate(date: string): string {

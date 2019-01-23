@@ -1,18 +1,17 @@
-<div fxLayout="column">
+<div fxLayout="column" fxLayoutAlign="space-around center">
   <i18n class="h2" i18n="@@selectLanguage">selectLanguage</i18n>
   <div *ngFor="let lang of languages">
-    <button mat-raised-button 
-    color="primary" 
+    <button mat-stroked-button
+    color="primary"
     (click)="changeLanguage(lang.locale)"
     [ngStyle]="{'margin': '10px' }">
       {{lang.name}}
     </button>
   </div>
-  <button mat-fab 
+  <button mat-fab
   color="primary"
   [style.position]="'absolute'"
   [style.top]="'20px'"
   [style.right]="'20px'"
   (click)="close()">X</button>
 </div>
-      

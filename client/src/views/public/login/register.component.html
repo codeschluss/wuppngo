@@ -1,7 +1,7 @@
 <div id="loginView"
     fxLayout="column"
     fxLayoutAlign="space-around center"
-    [style.width]="'80%'"
+    [style.width]="'60%'"
     [style.margin]="'auto'"
     fxLayoutGap="40px">
     <img id="logo"
@@ -14,70 +14,68 @@
         <i18n class="h2 color-primary" i18n="@@registration">registration</i18n>
     </h2>
     <form #registerForm="ngForm"
-        (ngSubmit)="register()"
-        [style.width]="'100%'"
-        fxLayout="column"
-        fxLayoutAlign="space-around center">
-        <mat-form-field [style.width]="'100%'">
-            <input matInput
-                placeholder="Email"
-                name="userName"
-                type="text"
-                [(ngModel)]="userName"
-                required>
-        </mat-form-field>
+      (ngSubmit)="register()"
+      [style.width]="'100%'"
+      fxLayout="column"
+      fxLayoutAlign="space-around center">
+      <mat-form-field [style.width]="'100%'">
+          <input matInput
+              placeholder="Email"
+              name="userName"
+              type="text"
+              [(ngModel)]="userName"
+              required>
+      </mat-form-field>
 
-        <mat-form-field [style.width]="'100%'">
-            <input matInput
-                placeholder="Vor- und Nachname"
-                name="fullName"
-                type="text"
-                [(ngModel)]="fullName">
-        </mat-form-field>
+      <mat-form-field [style.width]="'100%'">
+          <input matInput
+              placeholder="Anzeigename"
+              name="fullName"
+              type="text"
+              [(ngModel)]="fullName">
+      </mat-form-field>
 
-        <mat-form-field [style.width]="'100%'">
-            <input matInput
-                placeholder="Telefon"
-                name="phone"
-                type="text"
-                [(ngModel)]="phone">
-        </mat-form-field>
+      <mat-form-field [style.width]="'100%'">
+          <input matInput
+              placeholder="Telefon"
+              name="phone"
+              type="text"
+              [(ngModel)]="phone">
+      </mat-form-field>
 
-        <mat-checkbox id="isBlogger" name="isBlgger" [(ngModel)]="isBlogger">
-            <i18n i18n="@@applyAsBlogger">applyAsBlogger</i18n>
-        </mat-checkbox>
+      <mat-checkbox id="isBlogger" name="isBlgger" [(ngModel)]="isBlogger" color="primary">
+          <i18n i18n="@@applyAsBlogger">applyAsBlogger</i18n>
+      </mat-checkbox>
 
-        <mat-form-field [style.width]="'100%'">
-            <mat-select placeholder="Organisationen" [formControl]="organisationsCtrl" multiple>
-                <mat-option value="createNewOrganisation">
-                  <i18n i18n="@@createNewOrganisation">createNewOrganisation</i18n>
-                </mat-option>
-                <mat-option *ngFor="let organisation of organisations" [value]="organisation">
-                  {{organisation.name}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
+      <mat-form-field [style.width]="'100%'">
+          <mat-select placeholder="Organisationen" [formControl]="organisationsCtrl" multiple>
+              <mat-option value="createNewOrganisation">
+                <i18n i18n="@@createNewOrganisation">createNewOrganisation</i18n>
+              </mat-option>
+              <mat-option *ngFor="let organisation of organisations" [value]="organisation">
+                {{organisation.name}}
+              </mat-option>
+          </mat-select>
+      </mat-form-field>
 
-        <mat-form-field [style.width]="'100%'">
-            <input matInput
-                placeholder="Neues Passwort"
-                name="password"
-                type="password"
-                [(ngModel)]="password"
-                required>
-        </mat-form-field>
+      <mat-form-field [style.width]="'100%'">
+          <input matInput
+              placeholder="Neues Passwort"
+              name="password"
+              type="password"
+              [(ngModel)]="password"
+              required>
+      </mat-form-field>
 
-        <mat-form-field [style.width]="'100%'">
-            <input matInput
-                placeholder="Passwort wiederholen"
-                name="passwordRepeat"
-                type="password"
-                [(ngModel)]="passwordRepeat"
-                required>
-        </mat-form-field>
-
-    </form>
-    <div fxFlex
+      <mat-form-field [style.width]="'100%'">
+          <input matInput
+              placeholder="Passwort wiederholen"
+              name="passwordRepeat"
+              type="password"
+              [(ngModel)]="passwordRepeat"
+              required>
+      </mat-form-field>
+      <div fxFlex
         fxLayout="row"
         fxLayoutAlign="end end"
         fxLayoutGap="20px"
@@ -89,11 +87,12 @@
         <button mat-raised-button
             (click)="register()"
             color="primary"
-            form="ngForm"
+            type="submit"
             [disabled]="password !== passwordRepeat || !registerForm.form.valid">
             <i18n i18n="@@register">register</i18n>
         </button>
-    </div>
+      </div>
+    </form>
 
     <div *ngIf="error">
         <!-- TODO: Refactor -->

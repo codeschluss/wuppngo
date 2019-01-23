@@ -26,7 +26,7 @@ export class FooterComponent {
 
     openImprintDialog(): void {
         const dialogRef = this.dialog.open(ImprintDialogComponent, {
-          width: '80vh',
+          width: '80vw',
         });
 
         dialogRef.afterClosed().subscribe(result => {

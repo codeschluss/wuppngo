@@ -1,9 +1,11 @@
 
 <div fxLayout="row wrap" *ngIf="entity">
-    <span class="iconContainer" *ngIf="entity.likes" (click)="like()">
+  <ng-container *ngIf="entity.likes != undefined">
+    <span (click)="like()" class="iconContainer">
         <fa-icon icon="heart" class="color-primary clickable"></fa-icon>
-        <span class="color-primary">{{entity.likes}}</span>
     </span>
+    <span class="color-primary" [style.marginRight]="'10px'">{{entity.likes}}</span>
+  </ng-container>
     <fb-like *ngIf="cookiesAccepted" [ngStyle]="{'margin-right': '10px'}" ></fb-like>
     <a class="iconContainer"
     *ngIf="isMobile()"

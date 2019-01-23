@@ -1,9 +1,9 @@
-<div class="blogListItem" fxLayout="column" fxLayoutAlign="space-around" fxFlex="100">
+<div class="blogListItem clickable" fxLayout="column" fxLayoutAlign="space-around" fxFlex="100">
     <div>{{getDate(blog.created)}}</div>
     <div>{{blog.author}}</div>
     <div class="color-primary blogTitle" (click)="openBlogView()">{{blog.title}}</div>
     <div *ngIf="blog.activity" class="activityTitle" (click)="openActivityView()">
-        <i18n i18n="@@blogAboutActivity">blogAboutactivity</i18n>{{': ' + blog?.activity?.name}}
+        <i18n i18n="@@blogAboutActivity">blogAboutActivity</i18n>{{': ' + blog?.activity?.name}}
     </div>
     <div>{{blog.content.substring(0, 200) + '...'}}</div>
     <span (click)="openBlogView()" class="clickable color-primary" [style.font-weight]="'bold'">

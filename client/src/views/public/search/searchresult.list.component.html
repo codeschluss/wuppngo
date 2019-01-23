@@ -1,36 +1,70 @@
-
-
-    <div fxFlex="100" [style.min-height]="'60vh'">
-        <mat-tab-group>
-            <mat-tab label="Aktivitäten ({{activities.length}})">
-                <ng-container *ngIf="activities && activities.length">
-                    <div fxLayout="row wrap" fxFlex="100" fxLayout.lt-md="column" fxLayoutAlign="space-between center">
-                        <div fxFlex="30" fxFlex.xs="100" class="results-container" *ngFor="let activity of activities">
-                            <activity-card *ngIf="activity && activity.category" [activity]="activity"></activity-card>
-                        </div>
-                    </div>
+<mat-expansion-panel class="background-color-secondary searchResultExpansionPanel"
+  hideToggle
+  (opened)="panelOpenState = true"
+  (closed)="panelOpenState = false">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <div class="h4">
+        <ng-container [ngSwitch]="modelType">
+          <ng-container *ngSwitchCase="'blogs'">
+            <i18n i18n="@@blogs">blogs</i18n>
+          </ng-container>
+          <ng-container *ngSwitchCase="'organisations'">
+            <i18n i18n="@@organisations" class="h4">organisations</i18n>
+          </ng-container>
+          <ng-container *ngSwitchCase="'pages'">
+            <i18n i18n="@@worthKnowing" class="h4">worthKnowing</i18n>
+          </ng-container>
+          <ng-container *ngSwitchCase="'activities'">
+              <i18n i18n="@@activities" class="h4">activities</i18n>
+          </ng-container>
+          <ng-container *ngSwitchDefault>
+            <div class="h4">{{modelType}}</div>
+          </ng-container>
+        </ng-container>
+        ({{results.length}})
+      </div>
+    </mat-panel-title>
+    <fa-icon icon="plus" [ngClass]="panelOpenState ? 'indicatorOpen' : 'indicatorClosed'"></fa-icon>
+  </mat-expansion-panel-header>
+  <div fxLayout="column" fxLayoutAlign="space-around stretch" *ngIf="results.length; else nothingFound">
+    <ng-container *ngIf="results.length">
+        <div class="clickable"
+          [style.margin-top]="'20px'"
+          [style.padding]="'15px'"
+          fxLayout = "column"
+          fxLayoutAlign="space-between"
+          fxLayoutGap="10px"
+          *ngFor="let result of results"
+          (click)="toReult(result.id)">
+            <b class="color-primary" [style.fontSize]="'25px'">{{result.name ? result.name : result.title}}</b>
+            <div>
+              <ng-container [ngSwitch]="modelType">
+                <ng-container *ngSwitchCase="'blogs'">
+                  <i18n i18n="@@blog" [style.fontSize]="'20px'" [style.fontWeight]="'bold'">blog</i18n>
                 </ng-container>
-            </mat-tab>
-            <mat-tab label="Organisationen ({{organisations.length}})">
-                <ng-container *ngIf="organisations && organisations.length">
-                    <div fxLayout="row wrap" fxFlex="100" fxLayout.lt-md="column" fxLayoutAlign="space-between center">
-                        <div fxFlex="30" fxFlex.xs="100" class="results-container" *ngFor="let organisation of organisations">
-                            <organisation-card [organisation]="organisation"></organisation-card>
-                        </div>
-                    </div>
+                <ng-container *ngSwitchCase="'organisations'">
+                  <i18n i18n="@@organisation" [style.fontSize]="'20px'" [style.fontWeight]="'bold'">organisation</i18n>
                 </ng-container>
-            </mat-tab>
-            <mat-tab label="Blogs ({{blogs.length}})">
-                <ng-container *ngIf="blogs && blogs.length">
-                    <div *ngFor="let blog of blogs" fxFlex="100" class="results-container" fxLayout="column">
-                        <blog-list-item [blog]="blog" class="background-color-secondary"></blog-list-item>
-                    </div>
+                <ng-container *ngSwitchCase="'pages'">
+                  <i18n i18n="@@worthKnowing" [style.fontSize]="'20px'" [style.fontWeight]="'bold'">worthKnowing</i18n>
                 </ng-container>
-            </mat-tab>
-            <mat-tab label="Wissenswertes ({{pages.length}})">
-                <ng-container *ngIf="pages && pages.length">
-                  <pages-list [pages]="pages"></pages-list>
+                <ng-container *ngSwitchCase="'activities'">
+                  <div [style.fontSize]="'20px'" [style.fontWeight]="'bold'">{{result.category.name}}</div>
                 </ng-container>
-            </mat-tab>
-        </mat-tab-group>
-    </div>
+                <ng-container *ngSwitchDefault>
+                  <div [style.fontSize]="'20px'" [style.fontWeight]="'bold'">{{modelType}}</div>
+                </ng-container>
+              </ng-container>
+          </div>
+          <div [style.fontSize]="'20px'">
+            {{result.description ? result.description.substring(0, 200) + '...' : result.content.substring(0, 200) + '...'}}
+          </div>
+        </div>
+      </ng-container>
+  </div>
+  <ng-template #nothingFound>
+      <i18n i18n="@@noResults" [style.width]="'100%'"
+      [style.text-align]="'center'">noResults</i18n>
+  </ng-template>
+</mat-expansion-panel>

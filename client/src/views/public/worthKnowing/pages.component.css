@@ -1,6 +1,5 @@
 .topicExpansionPanel {
   margin-top: 20px;
-  padding: 15px;
   border-radius: 5px;
 }
 
@@ -57,4 +56,8 @@
 #authorContainer {
     font-weight: bold;
     /* margin-bottom: 10px; */
+}
+
+::ng-deep .mat-expansion-panel-content {
+  background-color: #F5F5F5 !important;
 }
