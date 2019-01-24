@@ -31,7 +31,7 @@ mvn -B install -DskipTests=true \
 mkdir -p /usr/share/webapps/wuppngo && \
 mv /tmp/client/target /usr/share/webapps/wuppngo/client && \
 mv /tmp/server/target/*.jar /usr/share/webapps/wuppngo/server.jar && \
-ln -fs /conf/application-default.properties /usr/share/webapps/wuppngo && \
+ln -fs /conf/application-*.properties /usr/share/webapps/wuppngo && \
 #
 # cleanup
 apk del --purge build && \
