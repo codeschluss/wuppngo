@@ -106,7 +106,7 @@ export class NavBarComponent implements OnChanges {
                   link: '/admin/organisation',
               });
         }
-        if (this.token.adminOrgas.length) {
+        if (!this.token.superuser && this.token.adminOrgas.length) {
           this.accountRouts.push(
           {
               label: 'organisationPanel',
@@ -140,10 +140,14 @@ export class NavBarComponent implements OnChanges {
     }
 
     logout(): void {
-      this.tokenProvider.remove();
-      this.bottomSheet.open(InfoBottomComponent,
-        { data: { message: 'successfullyLoggedOut' } });
-      this.initAccountRouts();
+      this.router.navigate(['/home']).then(() => {
+        this.tokenProvider.remove();
+        this.initAccountRouts();
+
+        this.bottomSheet.open(InfoBottomComponent, {
+          data: { message: 'successfullyLoggedOut' }
+        });
+      });
     }
 
     close(): void {
