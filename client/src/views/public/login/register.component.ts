@@ -80,7 +80,7 @@ export class RegisterComponent {
     }
 
     goToCreateOrganisation(): void {
-        this.router.navigate(['/admin/edit/organisation/new']);
+        this.router.navigate(['/admin/edit/organisations/new']);
     }
 
     goToHome(): void {
