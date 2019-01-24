@@ -1,6 +1,8 @@
 <div id="publicContainer" fxLayout="column" fxLayoutAlign="space-between none">
     <navbar-component></navbar-component>
-    <router-outlet></router-outlet>
+    <div [style.flexGrow]="1">
+      <router-outlet></router-outlet>
+    </div>
     <footer-component
       [style.margin-bottom]="showCookiesInfo ? '80px' : ''"
       [style.margin-top]="'20px'">
