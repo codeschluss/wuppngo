@@ -143,7 +143,7 @@ public class BlogController extends CrudController<BlogEntity, BlogService> {
    *          the blog id
    * @return the response entity
    */
-  @GetMapping("/activities/{blogId}/translations")
+  @GetMapping("/blogs/{blogId}/translations")
   public ResponseEntity<?> readTranslations(@PathVariable String blogId) {
     try {
       return ok(translationService.getAllTranslations(service.getById(blogId)));
