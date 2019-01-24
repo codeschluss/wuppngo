@@ -44,7 +44,7 @@ EXPOSE 80
 CMD \
   nginx -c /conf/nginx.conf && \
   cd /usr/share/webapps/wuppngo && \
-  java -jar server.jar
+  java -jar -Dspring.profiles.active=int server.jar
 EOF
 
 DOCKERIGNORE<<'EOF'
