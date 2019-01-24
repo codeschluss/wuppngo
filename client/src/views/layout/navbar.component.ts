@@ -142,6 +142,8 @@ export class NavBarComponent implements OnChanges {
     logout(): void {
       this.router.navigate(['/home']).then(() => {
         this.tokenProvider.remove();
+        this.token = null;
+
         this.initAccountRouts();
 
         this.bottomSheet.open(InfoBottomComponent, {
