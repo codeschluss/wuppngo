@@ -8,6 +8,7 @@ import de.codeschluss.portal.components.blogger.BloggerEntity;
 import de.codeschluss.portal.components.blogger.BloggerService;
 import de.codeschluss.portal.core.api.CrudController;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
+import de.codeschluss.portal.core.api.dto.StringPrimitive;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
@@ -128,9 +129,9 @@ public class BlogController extends CrudController<BlogEntity, BlogService> {
   @PutMapping("/blogs/{activityId}/activity")
   @OwnBlogOrSuperuserPermission
   public ResponseEntity<?> updateActivity(@PathVariable String blogId,
-      @RequestBody String activityId) {
-    if (activityService.existsById(activityId) && service.existsById(blogId)) {
-      return ok(service.updateActivity(blogId, activityService.getById(activityId)));
+      @RequestBody StringPrimitive activityId) {
+    if (activityService.existsById(activityId.getValue()) && service.existsById(blogId)) {
+      return ok(service.updateActivity(blogId, activityService.getById(activityId.getValue())));
     } else {
       throw new BadParamsException("Blog or Activity with given ID do not exist!");
     }
