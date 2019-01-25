@@ -18,14 +18,18 @@
 				<aol-source-cluster [distance]="clusterspan">
 					<aol-source-vector [overlaps]="true">
 						<ng-container>
-							<aol-feature *ngFor="let i of activities" [id]="i.id">
+							<aol-feature *ngFor="let i of activities">
 								<aol-geometry-point>
 									<aol-coordinate
 										[srid]="projection"
 										[x]="i.address.longitude"
 										[y]="i.address.latitude">
 									</aol-coordinate>
-								</aol-geometry-point>
+                </aol-geometry-point>
+                <aol-style>
+                  <aol-style-text [text]="i.id">
+                  </aol-style-text>
+                </aol-style>
 							</aol-feature>
 						</ng-container>
 					</aol-source-vector>

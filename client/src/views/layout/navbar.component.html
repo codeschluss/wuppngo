@@ -70,11 +70,11 @@
                                   </ng-container>
                                 </ng-container>
                             </button>
-                            <button mat-menu-item *ngIf="token && token.sub" (click)="logout()">
-                                <i18n i18n="@@logout">logout</i18n>
-                            </button>
                             <button mat-menu-item (click)="openLanguageChooser()">
                                 <i18n i18n="@@selectLanguage">selectLanguage</i18n>
+                            </button>
+                            <button mat-menu-item *ngIf="token && token.sub" (click)="logout()">
+                                <i18n i18n="@@logout">logout</i18n>
                             </button>
                         </mat-menu>
                     </div>

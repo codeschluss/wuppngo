@@ -155,7 +155,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewChecked {
       acts = feature.get('features').map(i => {
         // TODO: ngx-openlayers async id binding bug
         // const activity = this.activities.find(j => i.getId() === j.id);
-        const id = i.getId();
+        const id = i.getStyle().getText().getText();
         return this.activities.find(j => id === j.id);
       });
 
@@ -224,7 +224,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.selectedActivities = [];
       const feats = click && click.length ? click[0].get('features') : [];
       this.selectedActivities = feats.map(i => this.activities.find(
-            j => j.id === i.getId()));
+            j => j.id === i.getStyle().getText().getText()));
       this.highlightPin(this.selectedActivities[0]);
     } else {
       this.selectedActivities = null;

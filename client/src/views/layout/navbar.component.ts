@@ -1,4 +1,4 @@
-import { Component, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatBottomSheet, MatButtonModule, MatDialog, MatDialogModule, MatExpansionModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatToolbarModule } from '@angular/material';
 import { Router } from '@angular/router';
 import { TokenProvider } from '@portal/core';
@@ -12,7 +12,7 @@ import { LangaugeChooserDialogComponent } from './languagechooser.component';
     templateUrl: 'navbar.component.html'
 })
 
-export class NavBarComponent implements OnChanges {
+export class NavBarComponent implements OnInit {
 
     public static readonly imports = [
         MatToolbarModule,
@@ -36,27 +36,21 @@ export class NavBarComponent implements OnChanges {
         private tokenProvider: TokenProvider,
         private configProvider: ConfigurationProvider,
         private bottomSheet: MatBottomSheet
-        ) {
-        this.router.events.subscribe(() => {
-            this.close();
-        });
-        this.configProvider.readAll()
-        .subscribe(configs => {
-            this.portalName = configs.find(
-                config => config.item === 'portalName').value;
-                this.initGlobalTabs();
-        });
-        this.tokenProvider.value.subscribe((next) => {
-            this.token = next.access;
-          });
-        this.initAccountRouts();
-    }
+    ) { }
 
-    ngOnChanges(): void {
-        this.tokenProvider.value.subscribe((next) => {
-            this.token = next.access;
-          });
+    public ngOnInit(): void {
+      this.router.events.subscribe(() => this.close());
+      this.configProvider.readAll().subscribe(configs => {
+          this.portalName = configs
+            .find(config => config.item === 'portalName').value;
+
+          this.initGlobalTabs();
+      });
+
+      this.tokenProvider.value.subscribe((next) => {
+        this.token = next.access;
         this.initAccountRouts();
+      });
     }
 
   initGlobalTabs(): void {
@@ -142,8 +136,6 @@ export class NavBarComponent implements OnChanges {
     logout(): void {
       this.router.navigate(['/home']).then(() => {
         this.tokenProvider.remove();
-        this.initAccountRouts();
-
         this.bottomSheet.open(InfoBottomComponent, {
           data: { message: 'successfullyLoggedOut' }
         });
