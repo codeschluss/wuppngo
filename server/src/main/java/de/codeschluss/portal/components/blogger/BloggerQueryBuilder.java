@@ -15,11 +15,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class BloggerQueryBuilder extends QueryBuilder<QBloggerEntity> {
-  
-  protected final String defaultSortProp = "user.title";
 
   public BloggerQueryBuilder() {
-    super(QBloggerEntity.bloggerEntity);
+    super(QBloggerEntity.bloggerEntity, "user.title");
   }
   
   @Override

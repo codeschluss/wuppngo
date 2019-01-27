@@ -21,13 +21,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class BlogQueryBuilder extends QueryBuilder<QBlogEntity> {
   
-  protected final String defaultSortProp = "translatables.title";
-  
   /** The language service. */
   private final LanguageService languageService;
 
   public BlogQueryBuilder(LanguageService languageService) {
-    super(QBlogEntity.blogEntity);
+    super(QBlogEntity.blogEntity, "translatables.title");
     this.languageService = languageService;
   }
   

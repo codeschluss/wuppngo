@@ -22,8 +22,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class PageQueryBuilder extends QueryBuilder<QPageEntity> {
   
-  protected final String defaultSortProp = "translatables.title";
-  
   /** The language service. */
   private final LanguageService languageService;
   
@@ -31,7 +29,7 @@ public class PageQueryBuilder extends QueryBuilder<QPageEntity> {
    * Instantiates a new page query builder.
    */
   public PageQueryBuilder(LanguageService languageService) {
-    super(QPageEntity.pageEntity);
+    super(QPageEntity.pageEntity, "translatables.title");
     this.languageService = languageService;
   }
   

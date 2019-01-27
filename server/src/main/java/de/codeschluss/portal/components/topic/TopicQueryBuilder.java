@@ -23,8 +23,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class TopicQueryBuilder extends QueryBuilder<QTopicEntity> {
   
-  protected final String defaultSortProp = "translatables.name";
-  
   /** The language service. */
   private final LanguageService languageService;
   
@@ -32,7 +30,7 @@ public class TopicQueryBuilder extends QueryBuilder<QTopicEntity> {
    * Instantiates a new topic query builder.
    */
   public TopicQueryBuilder(LanguageService languageService) {
-    super(QTopicEntity.topicEntity);
+    super(QTopicEntity.topicEntity, "translatables.name");
     this.languageService = languageService;
   }
   
