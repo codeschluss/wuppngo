@@ -45,15 +45,15 @@ export class ActivityViewComponent implements OnInit {
   ngOnInit() {
     this.activity = this.route.snapshot.data.activity;
     this.configProvider.readAll().subscribe(
-      configs => this.configurations = configs );
+      configs => this.configurations = configs);
   }
 
   getNextdate(date: string): string {
-    return moment(date).format('L');
+    return moment(date).utc().format('L');
   }
 
   getNextdateTime(date: string): string {
-    return moment(date).format('LT');
+    return moment(date).utc().format('LT');
   }
 
   openBottomSheetSchedules(schedules: ScheduleModel[]): void {
@@ -63,8 +63,12 @@ export class ActivityViewComponent implements OnInit {
 
   openBottomSheetMap(): void {
     this.bottomSheet.open(BottomSheetMapComponent,
-      { data: { activities: [this.activity],
-        configurations: this.configurations } });
+      {
+        data: {
+          activities: [this.activity],
+          configurations: this.configurations
+        }
+      });
   }
 
   openMap(): void {

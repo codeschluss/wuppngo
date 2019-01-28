@@ -52,7 +52,7 @@ export class ActivityListComponent extends ListComponent implements OnInit {
     private router: Router,
     private activityProvider: ActivityProvider,
     private crudResolver: CrudResolver
-    ) {
+  ) {
     super();
   }
 
@@ -93,10 +93,11 @@ export class ActivityListComponent extends ListComponent implements OnInit {
       targetgroups: this.targetGroupCtrl.value,
       suburbs: this.suburbCtrl.value,
       current: true
-      }).pipe(mergeMap(
-        (acts: any) => this.crudResolver.refine(acts, this.graph))
-    ).subscribe((acts: any) => {}, () => {
-      console.log('nothing found'); });
+    }).pipe(mergeMap(
+      (acts: any) => this.crudResolver.refine(acts, this.graph))
+    ).subscribe((acts: any) => { }, () => {
+      console.log('nothing found');
+    });
   }
 
   private complex(): void {

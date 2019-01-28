@@ -7,14 +7,14 @@ import { ScheduleModel } from '../../../realm/schedule/schedule.model';
 @Component({
   selector: 'bottom-sheet',
   template:
-  '<mat-nav-list>'
-  + '<mat-list-item>Termine:</mat-list-item>'
-  + '<mat-divider></mat-divider>'
-  + '<mat-list-item role="listitem" '
-  + '*ngFor="let schedule of schedulesToString">'
-  + '{{ schedule }}'
-  + '</mat-list-item>'
-  + '</mat-nav-list>',
+    '<mat-nav-list>'
+    + '<mat-list-item>Termine:</mat-list-item>'
+    + '<mat-divider></mat-divider>'
+    + '<mat-list-item role="listitem" '
+    + '*ngFor="let schedule of schedulesToString">'
+    + '{{ schedule }}'
+    + '</mat-list-item>'
+    + '</mat-nav-list>',
   styleUrls: []
 })
 export class BottomSheetScheduleComponent {
@@ -28,8 +28,8 @@ export class BottomSheetScheduleComponent {
     moment.locale('de');
     this.schedules.forEach(schedule => {
       this.schedulesToString.push(
-        moment(schedule.startDate).format('llll') + ' - ' +
-        moment(schedule.endDate).format('llll'));
+        moment(schedule.startDate).utc().format('llll') + ' - ' +
+        moment(schedule.endDate).utc().format('llll'));
     });
   }
 }
