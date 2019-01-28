@@ -1,9 +1,10 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatBottomSheet, MatBottomSheetModule, MatCheckboxModule, MatSelectModule } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TokenProvider } from '@portal/core';
+import { take } from 'rxjs/operators';
 import { OrganisationProvider } from 'src/realm/organisation/organisation.provider';
 import { UserModel } from 'src/realm/user/user.model';
 import { UserProvider } from 'src/realm/user/user.provider';
@@ -13,7 +14,7 @@ import { InfoBottomComponent } from './info.bottomsheet.component';
     templateUrl: 'register.component.html'
 })
 
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
 
     static readonly imports = [
         MatSelectModule,
@@ -45,6 +46,14 @@ export class RegisterComponent {
             this.organisations = orgas;
           });
         }
+
+  public ngOnInit(): void {
+    this.tokenProvider.value.pipe(take(1)).subscribe((tokens) => {
+      if (tokens.access.id) {
+        this.router.navigateByUrl('/admin');
+      }
+    });
+  }
 
     register(): void {
         const user = new UserModel;

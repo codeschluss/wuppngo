@@ -41,8 +41,10 @@ export class OrganisationViewComponent {
 
   initOrgaImg(imgs: ImageModel[]): void {
     imgs.forEach(img =>
-      this.images.push({url: 'data:' + img.mimeType + ';base64,'
-      + atob(img.imageData.toString()), caption: img.caption})
+      this.images.push({
+        url: 'data:' + img.mimeType + ';base64,' + img.imageData,
+        caption: img.caption
+      })
     );
   }
 

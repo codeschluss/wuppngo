@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatBottomSheet, MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { Router } from '@angular/router';
 import { TokenProvider } from '@portal/core';
+import { take } from 'rxjs/operators';
 import { ConfigurationProvider } from 'src/realm/configuration/configuration.provider';
 import { UserProvider } from 'src/realm/user/user.provider';
 import { InfoBottomComponent } from './info.bottomsheet.component';
@@ -11,7 +12,7 @@ import { InfoBottomComponent } from './info.bottomsheet.component';
     templateUrl: 'login.component.html'
 })
 
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
     static readonly imports = [
         MatFormFieldModule,
@@ -35,6 +36,14 @@ export class LoginComponent {
                     config => config.item === 'portalName').value;
                 });
         }
+
+  public ngOnInit(): void {
+    this.tokenProvider.value.pipe(take(1)).subscribe((tokens) => {
+      if (tokens.access.id) {
+        this.router.navigateByUrl('/admin');
+      }
+    });
+  }
 
     login(): void {
         this.tokenProvider.login(this.userName, this.password).subscribe(
