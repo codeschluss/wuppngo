@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { CrudGraph, CrudJoiner, CrudResolver, StrictHttpResponse } from '@portal/core';
+import { of } from 'rxjs';
+import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { BlogModel } from 'src/realm/blog/blog.model';
-import { CrudResolver, CrudJoiner, CrudGraph, StrictHttpResponse } from '@portal/core';
 import { BlogProvider } from 'src/realm/blog/blog.provider';
 import { ListComponent } from 'src/views/list.component';
-import { mergeMap, tap, map } from 'rxjs/operators';
 
 @Component({
     selector: 'blog-list-component',
@@ -14,7 +15,9 @@ import { mergeMap, tap, map } from 'rxjs/operators';
 export class BlogListComponent extends ListComponent implements OnInit {
 
   public static readonly imports = [];
+
   public blogs: BlogModel[] = [];
+
   private graph: CrudGraph = CrudJoiner.of(BlogModel).with('activity').graph;
 
   constructor(
@@ -25,18 +28,7 @@ export class BlogListComponent extends ListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.basic();
     this.complex();
-  }
-
-  private basic(): void {
-    this.blogProvider.readAll({
-      page: this.pageNumber,
-      size: this.pageSize,
-      sort: 'title'
-    }).pipe(mergeMap(
-      (blogs: any) => this.crudResolver.refine(blogs, this.graph))
-    ).subscribe((blogs: any) => console.log('basic', blogs));
   }
 
   private complex(): void {
@@ -48,7 +40,8 @@ export class BlogListComponent extends ListComponent implements OnInit {
     }).pipe(
       tap((response) => this.intercept(response as any)),
       map((response) => provider.cast(response)),
-      mergeMap((blogs: any) => this.crudResolver.refine(blogs, this.graph))
+      mergeMap((blogs: any) => this.crudResolver.refine(blogs, this.graph)),
+      catchError(() => of([]))
     ).subscribe((blogs: any) => this.blogs = blogs);
   }
 
@@ -58,18 +51,15 @@ export class BlogListComponent extends ListComponent implements OnInit {
     this.pageSize = response.body.page.size;
   }
 
-
   nextPage(): void {
     this.blogs = null;
     this.pageNumber++;
-    this.basic();
     this.complex();
   }
 
   previousPage(): void {
     this.blogs = null;
     this.pageNumber--;
-    this.basic();
     this.complex();
   }
 
