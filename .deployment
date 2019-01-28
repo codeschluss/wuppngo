@@ -31,7 +31,7 @@ mvn -B install -DskipTests=true \
 mkdir -p /usr/share/webapps/wuppngo && \
 mv /tmp/client/target /usr/share/webapps/wuppngo/client && \
 mv /tmp/server/target/*.jar /usr/share/webapps/wuppngo/server.jar && \
-ln -fs /conf/application-int.properties /usr/share/webapps/wuppngo && \
+ln -fs /conf/application-default.properties /usr/share/webapps/wuppngo && \
 #
 # cleanup
 apk del --purge build && \
@@ -44,7 +44,7 @@ EXPOSE 80
 CMD \
   nginx -c /conf/nginx.conf && \
   cd /usr/share/webapps/wuppngo && \
-  java -jar -Dspring.profiles.active=int server.jar
+  java -jar server.jar
 EOF
 
 DOCKERIGNORE<<'EOF'
