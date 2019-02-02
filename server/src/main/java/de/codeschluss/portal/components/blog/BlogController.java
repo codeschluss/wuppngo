@@ -84,7 +84,7 @@ public class BlogController extends CrudController<BlogEntity, BlogService> {
   @Override
   @PostMapping("/blogs")
   @BloggerPermission
-  public ResponseEntity<?> create(@RequestBody BlogEntity newBlog) throws URISyntaxException {
+  public ResponseEntity<?> create(@RequestBody BlogEntity newBlog) throws Exception {
     newBlog.setBlogger(getBlogger());
     return super.create(newBlog);
   }

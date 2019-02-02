@@ -8,6 +8,8 @@ import de.codeschluss.portal.core.push.PortalPushService;
 import de.codeschluss.portal.core.push.subscription.SubscriptionEntity;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
 
+import javax.naming.ServiceUnavailableException;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,9 +38,11 @@ public class NewsController {
    *
    * @param newSubscription the new subscription
    * @return the response entity
+   * @throws ServiceUnavailableException the service unavailable exception
    */
   @PostMapping("/news/subscribe")
-  public ResponseEntity<?> subscribe(@RequestBody SubscriptionEntity newSubscription) {
+  public ResponseEntity<?> subscribe(@RequestBody SubscriptionEntity newSubscription) 
+      throws ServiceUnavailableException {
     SubscriptionEntity savedSubscription = pushService.subscribe(newSubscription);
     if (savedSubscription == null) {
       throw new BadParamsException("Subscription is not valid. All field must be set");

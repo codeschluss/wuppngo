@@ -8,8 +8,6 @@ import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 
-import java.net.URISyntaxException;
-
 import org.assertj.core.api.Condition;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +30,7 @@ public class TopicControllerCreateTest {
   @Test
   @WithUserDetails("super@user")
   @SuppressWarnings("unchecked")
-  public void createSuperUserOk() throws URISyntaxException {
+  public void createSuperUserOk() throws Exception {
     TopicEntity topic = newTopic("createSuperUserOk");
 
     controller.create(topic);
@@ -45,7 +43,7 @@ public class TopicControllerCreateTest {
 
   @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
-  public void createNotValidNameDenied() throws URISyntaxException {
+  public void createNotValidNameDenied() throws Exception {
     TopicEntity topic = newTopic(null);
 
     controller.create(topic);
@@ -53,7 +51,7 @@ public class TopicControllerCreateTest {
 
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
-  public void createSuperUserDuplicated() throws URISyntaxException {
+  public void createSuperUserDuplicated() throws Exception {
     TopicEntity topic = newTopic("topic1");
 
     controller.create(topic);
@@ -61,14 +59,14 @@ public class TopicControllerCreateTest {
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
-  public void createProviderDenied() throws URISyntaxException {
+  public void createProviderDenied() throws Exception {
     TopicEntity topic = newTopic("createProviderDenied");
 
     controller.create(topic);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
-  public void createNoUserDenied() throws URISyntaxException {
+  public void createNoUserDenied() throws Exception {
     TopicEntity topic = newTopic("createNoUserDenied");
 
     controller.create(topic);

@@ -73,7 +73,7 @@ public class PageController extends CrudController<PageEntity, PageService> {
   @PostMapping("/pages")
   @SuperUserPermission
   public ResponseEntity<?> create(@RequestBody PageEntity newPage) 
-      throws URISyntaxException {
+      throws Exception {
     try {
       TopicEntity topic = topicService.getById(newPage.getTopicId());
       newPage.setTopic(topic);

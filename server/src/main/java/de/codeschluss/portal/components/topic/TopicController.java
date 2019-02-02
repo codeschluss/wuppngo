@@ -70,7 +70,7 @@ public class TopicController extends CrudController<TopicEntity, TopicService> {
   @PostMapping("/topics")
   @SuperUserPermission
   public ResponseEntity<?> create(@RequestBody TopicEntity newTopic) 
-      throws URISyntaxException {
+      throws Exception {
     return super.create(newTopic);
   }
 

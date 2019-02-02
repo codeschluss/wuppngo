@@ -8,8 +8,6 @@ import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 
-import java.net.URISyntaxException;
-
 import org.assertj.core.api.Condition;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +30,7 @@ public class PageControllerCreateTest {
   @Test
   @WithUserDetails("super@user")
   @SuppressWarnings("unchecked")
-  public void createSuperUserOk() throws URISyntaxException {
+  public void createSuperUserOk() throws Exception {
     String topicId = "00000000-0000-0000-0014-100000000000";
     PageEntity page = newPage("createSuperUserOk", "createSuperUserOk", topicId);
 
@@ -46,7 +44,7 @@ public class PageControllerCreateTest {
 
   @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
-  public void createNotValidTitleDenied() throws URISyntaxException {
+  public void createNotValidTitleDenied() throws Exception {
     String topicId = "00000000-0000-0000-0014-100000000000";
     PageEntity page = newPage(null, "createNotValidTitleDenied", topicId);
 
@@ -55,7 +53,7 @@ public class PageControllerCreateTest {
   
   @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
-  public void createNotValidContentDenied() throws URISyntaxException {
+  public void createNotValidContentDenied() throws Exception {
     String topicId = "00000000-0000-0000-0014-100000000000";
     PageEntity page = newPage("createNotValidContentDenied", null, topicId);
 
@@ -64,7 +62,7 @@ public class PageControllerCreateTest {
 
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
-  public void createSuperUserDuplicated() throws URISyntaxException {
+  public void createSuperUserDuplicated() throws Exception {
     String topicId = "00000000-0000-0000-0014-100000000000";
     PageEntity page = newPage("page1", "createSuperUserDuplicated", topicId);
 
@@ -73,7 +71,7 @@ public class PageControllerCreateTest {
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
-  public void createProviderDenied() throws URISyntaxException {
+  public void createProviderDenied() throws Exception {
     String topicId = "00000000-0000-0000-0014-100000000000";
     PageEntity page = newPage("createProviderDenied", "createProviderDenied", topicId);
 
@@ -81,7 +79,7 @@ public class PageControllerCreateTest {
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
-  public void createNoUserDenied() throws URISyntaxException {
+  public void createNoUserDenied() throws Exception {
     String topicId = "00000000-0000-0000-0014-100000000000";
     PageEntity page = newPage("createNoUserDenied", "createNoUserDenied", topicId);
 

@@ -66,7 +66,7 @@ public class AddressController extends CrudController<AddressEntity, AddressServ
   @Override
   @PostMapping("/addresses")
   @Authenticated
-  public ResponseEntity<?> create(@RequestBody AddressEntity newAddress) throws URISyntaxException {
+  public ResponseEntity<?> create(@RequestBody AddressEntity newAddress) throws Exception {
     validateCreate(newAddress);
 
     try {

@@ -15,6 +15,8 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import javax.naming.ServiceUnavailableException;
+
 import nl.martijndwars.webpush.Notification;
 import nl.martijndwars.webpush.PushService;
 import nl.martijndwars.webpush.Utils;
@@ -81,10 +83,12 @@ public class PortalPushService {
   /**
    * Subscribe.
    *
-   * @param newSubscription
-   *          the new subscription
+   * @param newSubscription the new subscription
+   * @return the subscription entity
+   * @throws ServiceUnavailableException the service unavailable exception
    */
-  public SubscriptionEntity subscribe(SubscriptionEntity newSubscription) {
+  public SubscriptionEntity subscribe(SubscriptionEntity newSubscription) 
+      throws ServiceUnavailableException {
     if (subscriptionService.validCreateFieldConstraints(newSubscription)) {
       return subscriptionService.add(newSubscription);
     }

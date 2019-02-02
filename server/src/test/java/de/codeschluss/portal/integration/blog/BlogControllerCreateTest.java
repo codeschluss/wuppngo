@@ -7,8 +7,6 @@ import de.codeschluss.portal.components.blog.BlogEntity;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.exception.BadParamsException;
 
-import java.net.URISyntaxException;
-
 import org.assertj.core.api.Condition;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +29,7 @@ public class BlogControllerCreateTest {
   @Test
   @WithUserDetails("blog1@user")
   @SuppressWarnings("unchecked")
-  public void createBloggerOk() throws URISyntaxException {
+  public void createBloggerOk() throws Exception {
     BlogEntity blog = newBlog("createBloggerOk", "createBloggerOk");
 
     controller.create(blog);
@@ -44,7 +42,7 @@ public class BlogControllerCreateTest {
   
   @Test(expected = BadParamsException.class)
   @WithUserDetails("blog1@user")
-  public void createNotValidTitleDenied() throws URISyntaxException {
+  public void createNotValidTitleDenied() throws Exception {
     BlogEntity blog = newBlog(null, "createNotValidDenied");
 
     controller.create(blog);
@@ -52,7 +50,7 @@ public class BlogControllerCreateTest {
   
   @Test(expected = BadParamsException.class)
   @WithUserDetails("blog1@user")
-  public void createNotValidContentDenied() throws URISyntaxException {
+  public void createNotValidContentDenied() throws Exception {
     BlogEntity blog = newBlog("createNotValidDenied", null);
 
     controller.create(blog);
@@ -60,14 +58,14 @@ public class BlogControllerCreateTest {
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("super@user")
-  public void createSuperUserDenied() throws URISyntaxException {
+  public void createSuperUserDenied() throws Exception {
     BlogEntity blog = newBlog("createSuperUserDenied", "createSuperUserDenied");
 
     controller.create(blog);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
-  public void createNoUserDenied() throws URISyntaxException {
+  public void createNoUserDenied() throws Exception {
     BlogEntity blog = newBlog("createNoUserDenied", "createNoUserDenied");
 
     controller.create(blog);

@@ -3,6 +3,8 @@ package de.codeschluss.portal.core.api.advice;
 import de.codeschluss.portal.core.api.dto.ApiError;
 import de.codeschluss.portal.core.exception.ThirdPartyServiceException;
 
+import javax.naming.ServiceUnavailableException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -26,9 +28,10 @@ public class ServiceUnavailableAdvice {
    */
   @ExceptionHandler(value = {
       WebClientException.class,
-      ThirdPartyServiceException.class
+      ThirdPartyServiceException.class,
+      ServiceUnavailableException.class
   })
-  public ResponseEntity<ApiError> notAvailableHandler(RuntimeException ex) {
+  public ResponseEntity<ApiError> notAvailableHandler(Exception ex) {
     HttpStatus status = HttpStatus.SERVICE_UNAVAILABLE;
     return new ResponseEntity<ApiError>(
         new ApiError(status, "Unavailable", ex.getMessage()), status);
