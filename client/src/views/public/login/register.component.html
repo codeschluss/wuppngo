@@ -61,6 +61,7 @@
       <mat-form-field [style.width]="'100%'">
           <input matInput
               placeholder="Neues Passwort"
+              #passwordInput="ngModel"
               name="password"
               type="password"
               [(ngModel)]="password"
@@ -70,6 +71,7 @@
       <mat-form-field [style.width]="'100%'">
           <input matInput
               placeholder="Passwort wiederholen"
+              #passwordRepeatInput="ngModel"
               name="passwordRepeat"
               type="password"
               [(ngModel)]="passwordRepeat"
@@ -105,8 +107,8 @@
             </mat-error>
             <mat-error *ngSwitchDefault>{{error}}</mat-error>
         </div>
-        <mat-error *ngIf="password != passwordRepeat">
-            <i18n i18n="@@notSamePassword">notSamePassword</i18n>
-        </mat-error>
     </div>
+    <mat-error *ngIf="password != passwordRepeat && (passwordInput.dirty || passwordInput.touched) && (passwordRepeatInput.dirty || passwordRepeatInput.touched)">
+      <i18n i18n="@@notSamePassword">notSamePassword</i18n>
+    </mat-error>
 </div>

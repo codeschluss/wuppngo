@@ -1,9 +1,9 @@
 
-import { CrudResolver, CrudGraph, CrudJoiner } from '@portal/core';
-import { OrganisationModel } from 'src/realm/organisation/organisation.model';
-import { tap, map, mergeMap } from 'rxjs/operators';
-import { StrictHttpResponse } from 'src/api/strict-http-response';
 import { Component, OnInit } from '@angular/core';
+import { CrudGraph, CrudJoiner, CrudResolver } from '@portal/core';
+import { map, mergeMap, tap } from 'rxjs/operators';
+import { StrictHttpResponse } from 'src/api/strict-http-response';
+import { OrganisationModel } from 'src/realm/organisation/organisation.model';
 import { OrganisationProvider } from 'src/realm/organisation/organisation.provider';
 import { ListComponent } from 'src/views/list.component';
 
@@ -38,7 +38,8 @@ export class OrganisationListComponent extends ListComponent implements OnInit {
             embeddings: CrudJoiner.to(this.graph),
             page: this.pageNumber,
             size: this.pageSize,
-            sort: 'name'
+            sort: 'name',
+            approved: true
           }
           ).pipe(mergeMap(
             (orgas: any) => this.crudResolver.refine(orgas, this.graph))

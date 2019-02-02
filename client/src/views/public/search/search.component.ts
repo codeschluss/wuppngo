@@ -101,7 +101,8 @@ export class SearchComponent implements OnInit, OnChanges {
 
     const params = {
       filter: this.query,
-      embeddings: this.embed(graph)
+      embeddings: this.embed(graph),
+      approved: true
     };
 
     this.basicOrga(graph, params);

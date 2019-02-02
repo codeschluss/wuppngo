@@ -42,7 +42,9 @@ export class RegisterComponent implements OnInit {
         private organisationProvider: OrganisationProvider,
         private bottomSheet: MatBottomSheet
         ) {
-          this.organisationProvider.readAll().subscribe(orgas => {
+          this.organisationProvider.readAll(
+            {approved: true}
+            ).subscribe(orgas => {
             this.organisations = orgas;
           });
         }

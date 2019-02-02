@@ -7,10 +7,10 @@
     <span class="color-primary" [style.marginRight]="'10px'">{{entity.likes}}</span>
   </ng-container>
     <fb-like *ngIf="cookiesAccepted" [ngStyle]="{'margin-right': '10px'}" ></fb-like>
-    <a class="iconContainer"
+    <a [ngStyle]="{'height': '30px'}"
     *ngIf="isMobile()"
     (click)="sendWhatsAppText()">
-        <img src="imgs/whatsApp.svg">
+        <img [ngStyle]="{'height': '30px'}" src="imgs/whatsApp.svg">
     </a>
 </div>
 
