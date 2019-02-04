@@ -22,7 +22,6 @@ export class BlogViewComponent implements OnInit {
 
     ngOnInit() {
       this.blog = this.route.snapshot.data.blog;
-      console.log(this.blog.activity);
     }
 
   public getDate(dateString: string): string {

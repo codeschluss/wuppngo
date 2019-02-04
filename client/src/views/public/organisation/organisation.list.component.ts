@@ -28,22 +28,7 @@ export class OrganisationListComponent extends ListComponent implements OnInit {
     }
 
       ngOnInit(): void {
-        this.basic();
         this.complex();
-      }
-
-      private basic(): void {
-          this.organisationProvider.readAll(
-            {
-            embeddings: CrudJoiner.to(this.graph),
-            page: this.pageNumber,
-            size: this.pageSize,
-            sort: 'name',
-            approved: true
-          }
-          ).pipe(mergeMap(
-            (orgas: any) => this.crudResolver.refine(orgas, this.graph))
-        ).subscribe((orgas: any) => console.log('basic', orgas));
       }
 
       private complex(): void {
@@ -52,7 +37,9 @@ export class OrganisationListComponent extends ListComponent implements OnInit {
           embeddings: CrudJoiner.to(this.graph),
           page: this.pageNumber,
           size: this.pageSize,
-          sort: 'name'}
+          sort: 'name',
+          approved: true
+        }
         ).pipe(
           tap((response) => this.intercept(response as any)),
           map((response) => provider.cast(response)),
@@ -69,14 +56,12 @@ export class OrganisationListComponent extends ListComponent implements OnInit {
       nextPage(): void {
         this.organisations = null;
         this.pageNumber++;
-        this.basic();
         this.complex();
       }
 
       previousPage(): void {
         this.organisations = null;
         this.pageNumber--;
-        this.basic();
         this.complex();
       }
 

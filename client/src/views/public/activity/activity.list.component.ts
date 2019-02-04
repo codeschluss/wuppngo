@@ -1,19 +1,19 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MatFormFieldModule, MatSelectModule } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CrudGraph, CrudJoiner, CrudResolver } from '@portal/core';
 import { Observable } from 'rxjs';
+import { map, mergeMap, tap } from 'rxjs/operators';
+import { StrictHttpResponse } from 'src/api/strict-http-response';
+import { ActivityProvider } from 'src/realm/activity/activity.provider';
+import { ConfigurationModel } from 'src/realm/configuration/configuration.model';
+import { ListComponent } from 'src/views/list.component';
 import { ActivityModel } from '../../../realm/activity/activity.model';
 import { CategoryModel } from '../../../realm/category/category.model';
 import { SuburbModel } from '../../../realm/suburb/suburb.model';
 import { TargetGroupModel } from '../../../realm/target-group/target-group.model';
 import { MappingComponent } from '../mapping/mapping.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ActivityProvider } from 'src/realm/activity/activity.provider';
-import { CrudResolver, CrudJoiner, CrudGraph } from '@portal/core';
-import { StrictHttpResponse } from 'src/api/strict-http-response';
-import { ListComponent } from 'src/views/list.component';
-import { mergeMap, tap, map } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
-import { MatSelectModule, MatFormFieldModule } from '@angular/material';
-import { ConfigurationModel } from 'src/realm/configuration/configuration.model';
 
 
 @Component({
@@ -75,7 +75,7 @@ export class ActivityListComponent extends ListComponent implements OnInit {
   }
 
   public retrieveData() {
-    this.basic();
+    // this.basic();
     this.complex();
   }
 
@@ -83,22 +83,22 @@ export class ActivityListComponent extends ListComponent implements OnInit {
     return this.categoryFilter.find(item => item === id) ? true : false;
   }
 
-  private basic(): void {
-    this.activityProvider.readAll({
-      embeddings: CrudJoiner.to(this.graph),
-      page: this.pageNumber,
-      size: this.pageSize,
-      sort: 'name',
-      categories: this.categoryFilter,
-      targetgroups: this.targetGroupCtrl.value,
-      suburbs: this.suburbCtrl.value,
-      current: true
-    }).pipe(mergeMap(
-      (acts: any) => this.crudResolver.refine(acts, this.graph))
-    ).subscribe((acts: any) => { }, () => {
-      console.log('nothing found');
-    });
-  }
+  // private basic(): void {
+  //   this.activityProvider.readAll({
+  //     embeddings: CrudJoiner.to(this.graph),
+  //     page: this.pageNumber,
+  //     size: this.pageSize,
+  //     sort: 'name',
+  //     categories: this.categoryFilter,
+  //     targetgroups: this.targetGroupCtrl.value,
+  //     suburbs: this.suburbCtrl.value,
+  //     current: true
+  //   }).pipe(mergeMap(
+  //     (acts: any) => this.crudResolver.refine(acts, this.graph))
+  //   ).subscribe((acts: any) => { }, () => {
+  //     console.log('nothing found');
+  //   });
+  // }
 
   private complex(): void {
     const provider = this.activityProvider.system;
