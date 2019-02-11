@@ -1,33 +1,33 @@
 <div id="carousel">
     <ng-container *ngIf="images.length">
-      <ngx-hm-carousel id="bigCarousel" 
-        [(ngModel)]="index" 
+      <ngx-hm-carousel id="bigCarousel"
+        [(ngModel)]="index"
         [autoplay-speed]="speed"
-        [autoplay]="autoplay" 
-        [autoplay-direction]="direction" 
-        [infinite]="infinite" 
-        [between-delay]="2000" 
+        [autoplay]="autoplay"
+        [autoplay-direction]="direction"
+        [infinite]="infinite"
+        [between-delay]="2000"
         class="carousel c-accent">
-  
+
         <section ngx-hm-carousel-container class="content">
-          <article class="item cursor-pointer visible_important" 
-            ngx-hm-carousel-item 
+          <article class="item cursor-pointer visible_important"
+            ngx-hm-carousel-item
             *ngFor="let image of images">
-            <div class="img">
+            <div class="img" [style.text-align]="'center'">
                 <img class="orgaImg" [src]="image.url">
                 <div>{{image.caption}}</div>
             </div>
           </article>
-          <article *ngIf="videoUrl" 
-            class="item cursor-pointer visible_important" 
+          <article *ngIf="videoUrl"
+            class="item cursor-pointer visible_important"
             ngx-hm-carousel-item >
-              <iframe class="videoContent" 
-                [src]='videoUrl' 
-                frameborder="0" 
+              <iframe class="videoContent"
+                [src]='videoUrl'
+                frameborder="0"
                 allowfullscreen></iframe>
           </article>
         </section>
-  
+
         <ng-template #carouselPrev>
           <div class="click-area">
             <i class="material-icons">&lt;</i>
@@ -39,8 +39,7 @@
             <i class="material-icons">&gt;</i>
           </div>
         </ng-template>
-        
+
       </ngx-hm-carousel>
     </ng-container>
   </div>
-  

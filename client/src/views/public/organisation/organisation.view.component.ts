@@ -18,7 +18,8 @@ export class OrganisationViewComponent {
   public organisation: any;
   public activities: ActivityModel[] = [];
   public images: any[] = [];
-  public videoUrl;
+  public videoUrl: SafeResourceUrl;
+  public channelUrl: string;
 
   constructor(
     private router: Router,
@@ -31,8 +32,11 @@ export class OrganisationViewComponent {
       this.initOrgaImg(this.organisation.images);
     }
     if (this.organisation.videoUrl) {
-      this.videoUrl = this.parseVideo();
-      }
+      if (this.organisation.videoUrl.includes('www.youtube.com/channel/')) {
+        this.channelUrl = this.organisation.videoUrl;
+      } else {
+        this.videoUrl = this.parseVideo();
+      }}
   }
 
   openActivityView(activityId: string): void {
