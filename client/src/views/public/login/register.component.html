@@ -98,13 +98,16 @@
 
     <div *ngIf="error">
         <!-- TODO: Refactor -->
-        <div [ngSwitch]="error">
-            <mat-error *ngSwitchCase="'bad gateway'">
+        <div [ngSwitch]="error.status">
+            <mat-error *ngSwitchCase="'502'">
                 <i18n i18n="@@serverNotReachable">serverNotReachable</i18n>
             </mat-error>
-            <mat-error *ngSwitchCase="'unauthorized'">
-                <i18n i18n="@@wrongUserNameOrPassword">wrongUserNameOrPassword</i18n>
+            <mat-error *ngSwitchCase="'401'">
+                <i18n i18n="@@unauthorized">unauthorized</i18n>
             </mat-error>
+            <mat-error *ngSwitchCase="'409'">
+               <i18n i18n="@@userNameAlreadyExists">userNameAlreadyExists</i18n>
+          </mat-error>
             <mat-error *ngSwitchDefault>{{error}}</mat-error>
         </div>
     </div>

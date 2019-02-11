@@ -81,9 +81,8 @@ export class RegisterComponent implements OnInit {
                 }
             );
         },
-        error => {
-            this.error = error;
-        });
+        error => this.error = error
+        );
     }
 
     goToLogin(): void {
