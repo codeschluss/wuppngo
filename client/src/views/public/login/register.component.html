@@ -97,7 +97,6 @@
     </form>
 
     <div *ngIf="error">
-        <!-- TODO: Refactor -->
         <div [ngSwitch]="error.status">
             <mat-error *ngSwitchCase="'502'">
                 <i18n i18n="@@serverNotReachable">serverNotReachable</i18n>
