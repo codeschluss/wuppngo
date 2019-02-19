@@ -76,9 +76,11 @@ export class ActivityViewComponent implements OnInit {
   }
 
   createTargetGroupView(targetGroups: TargetGroupModel[]): string {
-    return targetGroups
-      .map(tg => tg.name)
-      .join(' / ');
+    if (targetGroups.length && targetGroups.length > 0) {
+      return targetGroups
+        .map(tg => tg.name)
+        .join(' / ');
+    }
   }
 
 }

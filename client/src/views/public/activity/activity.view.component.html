@@ -6,7 +6,7 @@
         {{ activity.category.name }}
       </mat-chip>
     </mat-chip-list>
-    <div>
+    <div *ngIf="activity.targetGroups">
       <span class="color-primary">
         {{createTargetGroupView(activity.targetGroups)}}
       </span>
