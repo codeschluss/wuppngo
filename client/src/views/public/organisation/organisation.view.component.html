@@ -1,82 +1,60 @@
-<div fxLayout="column"
-    fxLayoutGap="50px"
-    class="organisation-view-container"
-    fxFlex="90"
-    fxLayoutAlign="space-between">
+<div fxLayout="column" fxLayoutGap="50px" class="organisation-view-container" fxFlex="90" fxLayoutAlign="space-between">
 
-    <h2>{{organisation.name}}</h2>
-    <div fxLayout="row"
-      fxLayout.lt-md="column"
-      fxLayoutAlign.lt-md="space-around"
-      fxLayoutGap="20px"
-      fxLayoutAlign="space-between">
-      <div fxFlex="20" fxFlex.lt-md="100">
-        <div id="imagePreviewSection" *ngIf="images && images.length">
-          <img (click)="openImagesPopUp()" class="previewImage clickable" [src]="images[0].url">
-          <!-- <i18n i18n="@@clickForMorePictures" class="smallText">clickForMorePictures</i18n> -->
+  <h2>{{organisation.name}}</h2>
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign.lt-md="space-around" fxLayoutGap="20px" fxLayoutAlign="space-between">
+    <div fxFlex="20" fxFlex.lt-md="100">
+      <div id="imagePreviewSection" *ngIf="images && images.length">
+        <img (click)="openImagesPopUp()" class="previewImage clickable" [src]="images[0].url">
+        <!-- <i18n i18n="@@clickForMorePictures" class="smallText">clickForMorePictures</i18n> -->
+      </div>
+      <div [style.text-align]="'center'">
+        <iframe *ngIf="videoUrl" class="videoContent" [src]='videoUrl' frameborder="0" allowfullscreen></iframe>
+        <a *ngIf="channelUrl" [href]="channelUrl" target="_blank">
+          <button mat-raised-button type="button" color="primary" [style.white-space]="'normal'">
+            <i18n i18n="@@toYouTubeChannel">toYouTubeChannel</i18n>
+          </button>
+        </a>
+      </div>
+    </div>
+    <div fxFlex fxFlex.lt-md="100">
+      {{organisation.description}}
+    </div>
+    <div fxFlex="20" fxLayout="column" fxFlex.lt-md="100" fxLayoutGap="20px" [style.height]="'100%'" class="background-color-secondary organisation-contact-card">
+      <div fxLayout="column" *ngIf="organisation.address" class="contactCard">
+        <div>{{organisation.address.street + ' ' + organisation.address.houseNumber}}</div>
+        <div>{{organisation.address.postalCode}}</div>
+        <div>{{organisation.address.place}}</div>
+      </div>
+      <div fxLayout="column" class="contactCard">
+        <div *ngIf="organisation.phone">
+          <a [href]="'tel:' + organisation.phone">
+            T: {{organisation.phone}}
+          </a>
         </div>
-        <div [style.text-align]="'center'">
-          <iframe *ngIf="videoUrl"
-            class="videoContent"
-            [src]='videoUrl'
-            frameborder="0"
-            allowfullscreen></iframe>
-          <a *ngIf="channelUrl"
-            [href]="channelUrl"
-            target="_blank">
-            <button mat-raised-button type="button" color="primary" [style.white-space]="'normal'">
-              <i18n i18n="@@toYouTubeChannel">toYouTubeChannel</i18n>
-            </button>
+        <div *ngIf="organisation.mail">
+          <a [href]="'mailto:' + organisation.mail">
+            E: {{organisation.mail}}
+          </a>
+        </div>
+        <div *ngIf="organisation.website">
+          <a [href]="organisation.website">
+            W: {{organisation.website}}
           </a>
         </div>
       </div>
-      <div fxFlex fxFlex.lt-md="100">
-        {{organisation.description}}
-      </div>
-      <div fxFlex="20"
-        fxLayout="column"
-        fxFlex.lt-md="100"
-        fxLayoutGap="20px"
-        [style.height]="'100%'"
-        class="background-color-secondary organisation-contact-card">
-        <div fxLayout="column"
-          *ngIf="organisation.address"
-          class="contactCard">
-          <div>{{organisation.address.street + ' ' + organisation.address.houseNumber}}</div>
-          <div>{{organisation.address.postalCode}}</div>
-          <div>{{organisation.address.place}}</div>
-        </div>
-        <div fxLayout="column" class="contactCard">
-          <div *ngIf="organisation.phone">
-            <a [href]="'tel:' + organisation.phone">
-              T: {{organisation.phone}}
-            </a>
-          </div>
-          <div *ngIf="organisation.mail">
-            <a [href]="'mailto:' + organisation.mail">
-              E: {{organisation.mail}}
-            </a>
-          </div>
-        </div>
+    </div>
+  </div>
+  <div fxLayout="row" fxLayout.lt-md="column">
+    <div fxFlex="20" class="color-primary">
+      <i18n i18n="@@enteredActivities" class="h3">enteredActivities</i18n>
+    </div>
+    <div fxFlex="80" fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="space-between">
+      <div fxLayout="row" fxLayoutAlign="space-between" class="activityListItem" *ngFor="let activity of organisation.activities">
+        <div [style.fontWeight]="'20px'">{{activity.name}}</div>
+        <span class="color-primary clickable" (click)="openActivityView(activity.id)">
+          <i18n i18n="@@toActivity" [style.font-weight]="'bold'">toActivity</i18n>
+        </span>
       </div>
     </div>
-    <div fxLayout="row" fxLayout.lt-md="column">
-      <div fxFlex="20" class="color-primary">
-        <i18n i18n="@@enteredActivities" class="h3">enteredActivities</i18n>
-      </div>
-      <div fxFlex="80"
-        fxLayout="column"
-        fxLayoutGap="20px"
-        fxLayoutAlign="space-between">
-        <div fxLayout="row"
-          fxLayoutAlign="space-between"
-          class="activityListItem"
-          *ngFor="let activity of organisation.activities">
-          <div [style.fontWeight]="'20px'">{{activity.name}}</div>
-          <span class="color-primary clickable" (click)="openActivityView(activity.id)">
-              <i18n i18n="@@toActivity" [style.font-weight]="'bold'">toActivity</i18n>
-          </span>
-        </div>
-      </div>
-    </div>
+  </div>
 </div>

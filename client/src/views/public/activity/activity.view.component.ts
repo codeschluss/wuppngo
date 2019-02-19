@@ -75,4 +75,10 @@ export class ActivityViewComponent implements OnInit {
     this.router.navigate(['/map/activities/' + this.activity.id]);
   }
 
+  createTargetGroupView(targetGroups: TargetGroupModel[]): string {
+    return targetGroups
+      .map(tg => tg.name)
+      .join(' / ');
+  }
+
 }
