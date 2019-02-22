@@ -13,7 +13,7 @@
     </div>
     <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
       <div fxFlex="60" fxLayout="column">
-        <p>{{activity.description}}</p>
+        <p style="white-space: pre;">{{activity.description}}</p>
         <div>
           <social-media-component *ngIf="activity" [entity]="activity" [modelName]="'ActivityModel'">
           </social-media-component>
@@ -63,7 +63,7 @@
             <h4 class="color-primary">{{ activity.organisation.name }}</h4>
           </div>
           <div>
-            <div>{{ activity.organisation.description }}</div>
+            <div style="white-space: pre;">{{ activity.organisation.description }}</div>
           </div>
         </div>
       </div>
