@@ -16,7 +16,7 @@
         </a>
       </div>
     </div>
-    <div fxFlex fxFlex.lt-md="100" style="white-space: pre;">{{organisation.description}}</div>
+    <div fxFlex fxFlex.lt-md="100" style="white-space: pre-wrap;">{{organisation.description}}</div>
     <div fxFlex="20" fxLayout="column" fxFlex.lt-md="100" fxLayoutGap="20px" [style.height]="'100%'" class="background-color-secondary organisation-contact-card">
       <div fxLayout="column" *ngIf="organisation.address" class="contactCard">
         <div>{{organisation.address.street + ' ' + organisation.address.houseNumber}}</div>
