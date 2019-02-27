@@ -1,10 +1,8 @@
 package de.codeschluss.portal.components.blogger;
 
 import com.querydsl.core.types.Predicate;
-
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.service.QueryBuilder;
-
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class BloggerQueryBuilder extends QueryBuilder<QBloggerEntity> {
 
   public BloggerQueryBuilder() {
-    super(QBloggerEntity.bloggerEntity, "user.title");
+    super(QBloggerEntity.bloggerEntity, "user.username");
   }
   
   @Override
