@@ -7,7 +7,7 @@
       <div fxLayout="column" fxLayoutAlign="end">
         <div class="smallText">
           <div [style.fontWeight]="'bold'" *ngIf="activity.schedules && activity.schedules[0]">
-            {{ getNextdate(activity.schedules[0].startDate) }}
+            {{ getNextdate(activity.schedules()) }}
           </div>
           <div *ngIf="activity.address && activity.address.suburb" id="suburbField">
             {{ activity.address.suburb.name }}

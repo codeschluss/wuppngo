@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { ActivityModel } from 'src/realm/activity/activity.model';
+import { ScheduleModel } from 'src/realm/schedule/schedule.model';
 
 @Component({
   selector: 'activity-card',
@@ -18,10 +19,13 @@ export class ActivityCardComponent {
     private router: Router,
   ) {
     moment.locale('de');
-   }
+  }
 
-   getNextdate(date: string): string {
-    return moment(date).format('L');
+  getNextdate(schedules: ScheduleModel[]): string {
+    const nextSchedule: string = schedules.reduce((prev, current) => {
+      return (prev.startDate > current.startDate) ? prev : current;
+    }).startDate;
+    return moment(nextSchedule).format('L');
   }
 
   getCategoryImageURI(categoryName: string): string {
