@@ -22,10 +22,12 @@ export class ActivityCardComponent {
   }
 
   getNextdate(schedules: ScheduleModel[]): string {
-    const nextSchedule: string = schedules.reduce((prev, current) => {
-      return (prev.startDate > current.startDate) ? prev : current;
-    }).startDate;
-    return moment(nextSchedule).format('L');
+    if (schedules.length && schedules.length > 0) {
+      const nextSchedule: string = schedules.reduce((prev, current) => {
+        return (prev.startDate > current.startDate) ? prev : current;
+      }).startDate;
+      return moment(nextSchedule).format('L');
+    }
   }
 
   getCategoryImageURI(categoryName: string): string {
