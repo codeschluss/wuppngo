@@ -10,11 +10,11 @@ RUN \
 # packages
 apk --no-cache add \
   nginx \
+  nss \
   openjdk8-jre && \
 apk --no-cache --virtual build add \
   maven \
   ncurses \
-  nss \
   nodejs-npm \
   openjdk8 && \
 #
