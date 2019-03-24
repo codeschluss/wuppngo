@@ -24,7 +24,6 @@ export class ActivityCardComponent {
   getNextdate(schedules: ScheduleModel[]): string {
     if (schedules.length && schedules.length > 0) {
       const nextSchedule: string = schedules.reduce((prev, current) => {
-        console.log('new Date(prev.startDate)', new Date(prev.startDate));
         return (prev.startDate < current.startDate
           && new Date(prev.startDate) > new Date()) ? prev : current;
       }).startDate;
