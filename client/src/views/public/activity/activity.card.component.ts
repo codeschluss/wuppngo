@@ -23,10 +23,11 @@ export class ActivityCardComponent {
 
   getNextdate(schedules: ScheduleModel[]): string {
     if (schedules.length && schedules.length > 0) {
-      const nextSchedule: string = schedules.reduce((prev, current) => {
-        return (prev.startDate < current.startDate
-          && new Date(prev.startDate) > new Date()) ? prev : current;
-      }).startDate;
+      const nextSchedule: string = schedules
+        .filter(schedule => new Date(schedule.startDate) >= new Date())
+        .reduce((prev, current) =>
+          prev.startDate > current.startDate ? current : prev)
+        .startDate;
       return moment(nextSchedule).format('L');
     }
   }
