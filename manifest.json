@@ -1,12 +1,12 @@
 {
-  "short_name": "wooportal",
-  "name": "@wooportal/client",
-  "description": "client for wooportal - conventional event mapping",
+  "short_name": "Wupp'n'go",
+  "name": "Wupp'n'go",
+  "description": "An informative portal for Wuppertals youth",
 
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "theme_color": "#0d47a1",
+  "theme_color": "#dd574a",
   "icons": [
     {
       "src": "/images/icon.png",

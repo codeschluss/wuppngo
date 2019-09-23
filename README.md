@@ -1,3 +1,3 @@
-# @wooportal/client
+# Wupp'n'go
 
-client for wooportal - conventional event mapping
+An informative portal for Wuppertals youth
