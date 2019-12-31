@@ -1,6 +1,6 @@
 <scroll-view class="topoff">
   <stack-layout>
-    <absolute-layout>
+    <absolute-layout ios:style="margin-top: 1">
       <stack-layout>
         <label [text]="(name | async) + ' &mdash;'"></label>
         <i18n i18n="@@newActivities" unit="newActivities"></i18n>
@@ -45,15 +45,15 @@ selbst hier ein. Auch Ihr könnt ein Teil des Wupp\'n\'go-Teams werden!
     </stack-layout>
     <flexbox-layout>
       <stack-layout>
-        <img [src]="src('/images/ministry.png')">
+        <img src="~/images/ministry.png">
         <label text="MKFFI NRW"></label>
       </stack-layout>
       <stack-layout>
-        <img [src]="src('/images/municipality.png')">
+        <img src="~/images/municipality.png">
         <label text="Ressort Jugend und Freizeit"></label>
       </stack-layout>
       <stack-layout>
-        <img [src]="src('/images/university.png')">
+        <img src="~/images/university.png">
         <label text="Institut für Digital Humanities"></label>
       </stack-layout>
     </flexbox-layout>
