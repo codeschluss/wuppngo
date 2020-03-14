@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>API_KEY</key>
+    <string>AIzaSyAlJnizoPgQ9RxxRoKyoy1uTqSPC1OEArE</string>
+
+    <key>BUNDLE_ID</key>
+    <string>de.codeschluss.wuppngo</string>
+
+    <key>FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED</key>
+    <true/>
+
+    <key>GCM_SENDER_ID</key>
+    <string>286476933000</string>
+
+    <key>GOOGLE_APP_ID</key>
+    <string>1:286476933000:ios:fdda7870fae0741b788c3d</string>
+
+    <key>PROJECT_ID</key>
+    <string>wuppngo-id</string>
+  </dict>
+</plist>

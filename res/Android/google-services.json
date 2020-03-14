@@ -1,0 +1,22 @@
+{
+  "configuration_version": "1",
+  "project_info": {
+    "project_id": "wuppngo-id",
+    "project_number": "286476933000"
+  },
+  "client": [
+    {
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLJFyT4M0ArHPGnXNOy0EL-aoP3mPTUC8"
+        }
+      ],
+      "client_info": {
+        "android_client_info": {
+          "package_name": "de.codeschluss.wuppngo"
+        },
+        "mobilesdk_app_id": "1:286476933000:android:9dc10f7a695e3a89788c3d"
+      }
+    }
+  ]
+}
