@@ -1,0 +1,34 @@
+{
+  "api": {
+    "rootUrl": "/api",
+    "authUrl": "/api/login",
+    "refreshUrl": "/api/refresh"
+  },
+  "app": {
+    "baseUrl": "https://www.wuppngo.de",
+    "profile": "production"
+  },
+  "defaults": {
+    "city": "Wuppertal",
+    "language": "de",
+    "title": "Wupp'n'go"
+  },
+  "jwtClaims": {
+    "activityProvider": "createdActivities",
+    "blogger": "blogger",
+    "blogpostAuthor": "blogAuthor",
+    "organisationAdmin": "adminOrgas",
+    "organisationUser": "approvedOrgas",
+    "superUser": "superuser",
+    "translator": "translator",
+    "userId": "id"
+  },
+  "labelHeader": {
+    "read": "accept-language",
+    "write": "content-language"
+  },
+  "storeIds": {
+    "android": "de.codeschluss.wuppngo",
+    "ios": "1497425335"
+  }
+}

@@ -3,7 +3,7 @@
     <aside>
       <h2 class="mat-headline">
         {{ name | async }} &mdash;<br>
-        <i18n i18n="@@newActivities">newActivities</i18n>
+        <i18n>newActivities</i18n>
       </h2>
       <strong class="mat-title">
         {{ tagline }}
@@ -16,35 +16,14 @@
     </aside>
   </section>
   <section>
-    <article>
-      <marked-component class="mat-title" [data]="'
-
-<h2>Wupp\'n\'go</h2>
-<p>Ob Zuhause, im Internetcafé oder auf dem Smartphone, das Wupp\'n\'go versorgt
-Dich von überall mit den Infos zu den neusten Veranstaltungen in Wuppertal.
-Einfach nach Kategorien, Stadtteilen oder Zielgruppen filtern und nur die
-Veranstaltungen sehen, die Du gerade brauchst.</p>
-
-<h2>Wieso, weshalb, warum...</h2>
-<p>Diese Seite ist ein Timer für Jugendliche und junge Erwachsene. Sie enthält
-eine Übersicht über Veranstaltungen und Events in Wuppertal und über die Orte,
-an denen sie stattfinden. Wir haben Wupp\'n\'go geschaffen, weil eine solche
-Seite bisher fehlt. Sie soll Euch und uns informieren und Menschen
-zusammenbringen. Den neu Zugezogenen möchte sie im Wuppertaler Alltag helfen.
-Wir sind ein Team aus Jugendlichen und Erwachsenen, das diese Seite ehrenamtlich
-im Auftrag der Stadt betreut und mit Inhalten füllt. Die Veranstalter setzen
-ihre Termine selbst hier ein. Auch Ihr könnt ein Teil des Wupp\'n\'go-Teams
-werden!</p>
-
-      '"></marked-component>
-    </article>
+    <article class="mat-title" [innerHTML]="content"></article>
     <aside>
       <figure>
         <video controls>
-          <source src="/videos/intro.mp4" type="video/mp4">
+          <source src="videos/intro.mp4" type="video/mp4">
         </video>
         <figcaption>
-          <icon-compat icon="poo"></icon-compat>
+          <fa-icon icon="poo"></fa-icon>
           <strong class="mat-title">
             <i18n i18n="@@videoError">videoError</i18n>
           </strong>
@@ -56,7 +35,7 @@ werden!</p>
     <figure>
       <img
         alt="Ministerium für Kinder, Familie, Flüchtlinge und Integration"
-        src="/images/ministry.png"
+        src="images/ministry.png"
         title="Ministerium für Kinder, Familie, Flüchtlinge und Integration">
       <figcaption class="mat-body-strong">
         <a
@@ -70,7 +49,7 @@ werden!</p>
     <figure>
       <img
         alt="Stadt Wuppertal Ressort Jugend und Freizeit"
-        src="/images/municipality.png"
+        src="images/municipality.png"
         title="Stadt Wuppertal Ressort Jugend und Freizeit">
       <figcaption class="mat-body-strong">
         <a
@@ -84,7 +63,7 @@ werden!</p>
     <figure>
       <img
         alt="Institut für Digital Humanities der Universität zu Köln"
-        src="/images/university.png"
+        src="images/university.png"
         title="Institut für Digital Humanities der Universität zu Köln">
       <figcaption class="mat-body-strong">
         <a

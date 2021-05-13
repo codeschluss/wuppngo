@@ -1,0 +1,18 @@
+{
+  "short_name": "Wupp'n'go",
+  "name": "Wupp'n'go",
+  "description": "An informative portal for Wuppertals youth",
+
+  "scope": "/",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#dd574a",
+  "icons": [
+    {
+      "src": "/images/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
