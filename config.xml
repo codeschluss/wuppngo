@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <widget xmlns="http://www.w3.org/ns/widgets"
   xmlns:cdv="http://cordova.apache.org/ns/1.0"
-  id="de.codeschluss.wooportal.client"
+  id="de.codeschluss.wuppngo"
   android-versionCode="0340"
   ios-CFBundleVersion="0.3.4.0"
   version="0.3.4">
