@@ -76,6 +76,7 @@ ARG PROFILE
 COPY / /src
 COPY --from=android /client.apk /client.apk
 ENV NODE_ENV=$PROFILE
+ENV NODE_OPTIONS=--openssl-legacy-provider
 RUN \
 #
 # packages

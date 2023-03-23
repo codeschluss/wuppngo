@@ -2,7 +2,7 @@
   "name": "wuppngo",
   "description": "An informative portal for Wuppertals youth",
   "homepage": "https://www.wuppngo.de",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "author": {
     "name": "codeschluss",
     "email": "info@codeschluss.de",
@@ -74,6 +74,7 @@
     "@nguniversal/common": "12.1.3",
     "@nguniversal/express-engine": "12.1.3",
     "@ngx-pwa/local-storage": "12.1.0",
+    "@types/estree": "1.0.0",
     "color-convert": "2.0.1",
     "express": "4.17.3",
     "express-robots-txt": "1.0.0",
